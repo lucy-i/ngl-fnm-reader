@@ -2,6 +2,21 @@
   "name": "fnm-reader",
   "version": "0.0.0",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MasterRam/fnm-reaser.git"
+  },
+  "author": {
+    "name": "ramkumar.murugarasan@hotmail.com",
+    "email": "ramkumar.murugarasan@hotmail.com"
+  },
+  "keywords": [
+    "angular",
+    "fnm",
+    "fnm parser",
+    "fnm reaser",
+    "fnm validator"
+  ],
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

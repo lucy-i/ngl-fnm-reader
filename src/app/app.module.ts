@@ -2,12 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { ReaderComponent } from "app/reader/reader.component";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ReaderComponent
   ],
   imports: [
     BrowserModule,
@@ -15,6 +18,10 @@ import { AppComponent } from './app.component';
     HttpModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,ReaderComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+
+
+}

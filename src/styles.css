@@ -1,1 +1,118 @@
 /* You can add global styles to this file, and also import other style files */
+
+.text-center {
+    text-align: center;
+}
+
+input#fileInput {
+    /* border: 1px solid black; */
+    content: "";
+    /* opacity: 0; */
+    width: 0px;
+    margin: 0px auto;
+}
+
+input#fileInput:before {
+    content: "Browse";
+    opacity: 1;
+    width: 100px;
+    border: 1px solid black;
+    position: relative;
+    background-color: azure;
+    border-radius: 3px;
+    padding: 5px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+}
+
+input#fileInput:active,
+input#fileInput:focus {
+    border: 0px;
+    outline: -webkit-focus-ring-color auto 5px;
+    outline-color: #fff;
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+input#fileInput:focus:before {
+    /* border: 0px; */
+    outline: -webkit-focus-ring-color auto 5px;
+    outline-color: #ffebcd;
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+.fixed-ele {
+    position: fixed;
+}
+
+.on-scroll .fixed-ele:hover {
+    opacity: 1;
+}
+
+.on-scroll .fixed-ele {
+    opacity: 0.5;
+}
+
+.border-left{
+    border-left:solid 1px #000;
+}
+.border-right{
+    border-right:solid 1px #000;
+}
+.border-top{
+    border-top:solid 1px #000;
+}
+.border-bottom{
+    border-bottom:solid 1px #000;
+}
+.flex {
+    display: flex;
+}
+
+.flex-width {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+}
+.flex-full{
+    flex: 1 1 auto;
+    display: flex;
+}
+
+.flex .row,
+.row {
+    display: flex;
+    flex-direction: row;
+    flex:1 1 auto;
+}
+
+.flex .column,
+.column {
+    flex-direction: column;
+    display: flex;
+}
+.width-60p {
+    width: 60%;
+    flex: 60%;
+}
+
+.width-40p {
+    width: 40%;
+    flex: 40%;
+}
+.width-30p{
+    width: 30%;
+    flex: 30%;
+}
+.min-width-30p{
+    width: 30%;
+}
+.width-100 {
+    width: 100px;
+}
+.width-10p{
+    width: 10%;
+    flex: 10%;
+}

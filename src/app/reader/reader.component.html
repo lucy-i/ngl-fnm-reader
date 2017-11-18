@@ -106,50 +106,153 @@
                     <span>{{loan.LoanApplication.Property.YearBuilt}}</span>
                 </div>
             </div>
-            <div class="flex row border-top">
+            <div class="flex row border-top border-bottom">
                 <div class="flex-width column">
                     <span>Purpose of Loan
-
                     </span>
-                    <span>{{loan.LoanApplication.Property.SubjectPropertyCode}} - {{loan.LoanApplication.Property.SubjectProperty}}
+                    <span>
+                        <span class="min-width-30p" *ngFor="let radio of loanMetadata.PuposeOfLoan">
+                            <input type="radio" name="PuposeOfLoan" id="" value="{{radio.value}}"> {{radio.text}}{{loan.LoanApplication.PurposeOfLoan.PurposeOfLoan?": "+loan.LoanApplication.PurposeOfLoan.PurposeOfLoan:""}}
+                        </span>
                     </span>
                 </div>
                 <div class="flex-width column border-left">
-                    <span>Property will be:  </span>
-                    <span>{{loan.LoanApplication.Property.YearBuilt}}</span>
+                    <span>Property will be: </span>
+                    <span>
+                        <span class="min-width-30p" *ngFor="let radio of loanMetadata.ResidenceType">
+                            <input type="radio" name="PuposeOfLoan" id="" value="{{radio.value}}"> {{radio.text}}{{loan.LoanApplication.PurposeOfLoan.ResidenceType?": "+loan.LoanApplication.PurposeOfLoan.ResidenceType:""}}
+                        </span>
+                    </span>
                 </div>
             </div>
+            <p class="flex row italic">Complete this line if construction or construction-permanent loan.</p>
+            <div class="flex row min-height-60 border-bottom">
+                <div class="flex-width row">
+                    <span class="flex-width min-width-20p column">
+                        <span>Year Lot Acquired
+                        </span>
+                        <!-- <input type="text" name="YearsLotRequired" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired"> -->
+                        {{loan.LoanApplication.RefinanceData?.YearsLotRequired}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>Original Cost </span>
+                        <!-- <input type="text" name="OriginalCosts" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts"> -->
+                        {{loan.LoanApplication.RefinanceData?.OriginalCosts}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>Amount Existing Liens</span>
+                        <!-- <input type="text" name="AmountExistingLiens" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens"> -->
+                        {{loan.LoanApplication.RefinanceData?.AmountExistingLiens}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>(a) Present Value of Lot </span>
+                        <!-- <input type="text" name="PresentValueofLot" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.PresentValueofLot"> -->
+                        {{loan.LoanApplication.RefinanceData?.PresentValueofLot}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>(b) Cost of Improvements </span>
+                        <!-- <input type="text" name="CostofImprovements" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.CostofImprovements"> -->
+                        {{loan.LoanApplication.RefinanceData?.CostofImprovements}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>Total (a + b) </span>
+                        <!-- <input type="text" name="Total" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Total">  -->
+                        {{loan.LoanApplication.RefinanceData?.Total}}
+                    </span>
+                </div>
+            </div>
+            <p class="flex row italic">Complete this line if this is a refinance loan.</p>
+            <div class="flex row min-height-60 border-bottom">
+                <div class="flex-width row">
+                    <span class="flex-width min-width-20p column">
+                        <span>Year Lot Acquired
+                        </span>
+                        <!-- <input type="text" name="YearsLotRequired" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired"> -->
+                        {{loan.LoanApplication.RefinanceData?.YearsLotRequired}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>Original Cost </span>
+                        <!-- <input type="text" name="OriginalCosts" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts"> -->
+                        {{loan.LoanApplication.RefinanceData?.OriginalCosts}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>Amount Existing Liens</span>
+                        <!-- <input type="text" name="AmountExistingLiens" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens"> -->
+                        {{loan.LoanApplication.RefinanceData?.AmountExistingLiens}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>Purpose of Refinance </span>
+                        <!-- <input type="text" name="PresentValueofLot" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.PresentValueofLot"> -->
+                        {{loan.LoanApplication.RefinanceData?.PurposeofRefinance}}
+                    </span>
+                    <span class="flex-width border-left column">
+                        <span>Describe Improvements </span>
+                        <!-- <input type="text" name="CostofImprovements" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.CostofImprovements"> -->
+                        {{loan.LoanApplication.RefinanceData?.DescribeImprovements}}
+                    </span>
+                    <span class="flex-width column">
+                        <span class="row">
+                            <input type="radio" name="Total" id="">made
+                            <input type="radio" name="Total" id=""> to be made</span>
+                        <!-- <input type="text" name="Total" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Total">  -->
+                        <span class="row">
+                            <span>Cost</span>
+                            <span>{{loan.LoanApplication.RefinanceData?.Cost}}</span>
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="flex row min-height-60 border-bottom">
+                <div class="flex-width row">
+                    <div class="flex-width  column">
+                        <div class="row border-bottom">
+                            <div class="flex-width">Title will be held in what Name(s): {{loan.LoanApplication.PurposeOfLoan?.TitleManner}}</div>
+                            <div class="min-width-30p border-left">Manner in which Title will be held: {{loan.LoanApplication.PurposeOfLoan?.TitleManner}} </div>
+                        </div>
+                        <div class="min-height-60">Source of Down Payment, Settlement Charges, and/or Subordinate Financing (explain): {{loan.LoanApplication.PurposeOfLoan?.PurposeofLoanOther}}
+                        </div>
 
+
+                    </div>
+                    <div class="min-width-20p border-left column">
+                        Estate will be held in: ({{loan.LoanApplication.PurposeOfLoan?.EstateHeldIn}})
+                        <div class="row">
+                            <input type="radio" name="Total" id="">Fee Simple
+                            <input type="radio" name="Total" id=""> Leasehold (show expiration date)</div>
+
+                        <!-- <input type="text" name="Total" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Total">  -->
+                        <div class="row">
+                            {{loan.LoanApplication.PurposeOfLoan?.LeasholdExpirationDate}}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
-        <h4 class="text-center">III. BORROWER INFORMATION </h4>
+        <h4 class="text-center space-around">
+            <div>Borrower</div>
+            <div>III. BORROWER INFORMATION</div>
+            <div>Co-Borrower</div>
+        </h4>
         <div class="flex row">
 
-            <div class="flex column flex-width" *ngFor="let item of loan.LoanApplication.Applicants">
+            <div class="flex column flex-width-50 border-left" *ngFor="let item of loan.LoanApplication.Applicants">
                 <div class="flex column">
-                    <h4 class="text-center">
+                    <!-- <h4 class="text-center">
                         {{item.Indicator==="BW"?"Applicant":"Co-Applicant"}} Information
-                    </h4>
-                    <span class="flex row">
-                        <span class="flex flex-width">SSN </span>
-                        <span class="flex-width">: {{item.SSN}}</span>
+                    </h4> -->
+                    <span class="flex row border-bottom">
+                        <span class="flex flex-width min-height-60">Borrower’s Name (include Jr. or Sr. if applicable) : {{item.FirstName}} {{item.MiddleName}} {{item.LastName}}
+                        </span>
                     </span>
-                    <span class="flex row">
-                        <span class="flex flex-width"> First Name </span>
-                        <span class="flex-width">: {{item.FirstName}}</span>
-                    </span>
-                    <span class="flex row">
-                        <span class="flex flex-width"> Last Name </span>
-                        <span class="flex-width">: {{item.LastName}}</span>
-                    </span>
-                    <span class="flex row">
-                        <span class="flex flex-width">Middle Name </span>
-                        <span class="flex-width">: {{item.MiddleName}}</span>
-                    </span>
-                    <span class="flex row">
-                        <span class="flex flex-width">DOB </span>
-                        <span class="flex-width">: {{item.DateofBirth}}</span>
+                    <span class="min-height-60 flex row border-bottom">
+                        <span class="flex-width">Social Security Number {{item.SSN}} </span>
+                        <span class="flex-width border-left">Home Phone
+                                (incl. area code) {{item.HomePhone}} </span>
+                        <span class="flex-width border-left">
+                                DOB (mm/dd/yyyy)  : {{item.DateofBirth}}</span>
+                        <span class="flex-width border-left">Yrs. School {{item.YrsInSchool}} </span>
                     </span>
                     <span class="flex row">
                         <span class="flex flex-width">Generation </span>

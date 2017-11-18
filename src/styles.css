@@ -55,18 +55,22 @@ input#fileInput:focus:before {
     opacity: 0.5;
 }
 
-.border-left{
-    border-left:solid 1px #000;
+.border-left {
+    border-left: solid 1px #000;
 }
-.border-right{
-    border-right:solid 1px #000;
+
+.border-right {
+    border-right: solid 1px #000;
 }
-.border-top{
-    border-top:solid 1px #000;
+
+.border-top {
+    border-top: solid 1px #000;
 }
-.border-bottom{
-    border-bottom:solid 1px #000;
+
+.border-bottom {
+    border-bottom: solid 1px #000;
 }
+
 .flex {
     display: flex;
 }
@@ -76,7 +80,8 @@ input#fileInput:focus:before {
     display: flex;
     flex-wrap: wrap;
 }
-.flex-full{
+
+.flex-full {
     flex: 1 1 auto;
     display: flex;
 }
@@ -85,7 +90,7 @@ input#fileInput:focus:before {
 .row {
     display: flex;
     flex-direction: row;
-    flex:1 1 auto;
+    flex: 1 1 auto;
 }
 
 .flex .column,
@@ -93,6 +98,7 @@ input#fileInput:focus:before {
     flex-direction: column;
     display: flex;
 }
+
 .width-60p {
     width: 60%;
     flex: 60%;
@@ -102,17 +108,45 @@ input#fileInput:focus:before {
     width: 40%;
     flex: 40%;
 }
-.width-30p{
+
+.width-30p {
     width: 30%;
     flex: 30%;
 }
-.min-width-30p{
+
+.min-width-30p {
     width: 30%;
 }
+
+.min-width-20p {
+    width: 20%;
+}
+
+.min-width-10p {
+    width: 10%;
+}
+
+.min-height-60 {
+    min-height: 60px;
+}
+
 .width-100 {
     width: 100px;
 }
-.width-10p{
+
+.width-10p {
     width: 10%;
     flex: 10%;
+}
+
+.italic {
+    font-style: italic;
+}
+.flex-width-50{
+    flex:1 1 50%;
+    max-width: 50%;
+}
+.space-around {
+    display: flex;
+    justify-content: space-around;
 }

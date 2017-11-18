@@ -161,18 +161,45 @@ export class ProcessingInfo {
 
 
 }
+export class AdditionalDataSegment{
+    get id(){
+        return "ADS";
+    }
+    public get length():number{
+        return 88;
+    }
+    constructor(fnmdata:string){
+        this.LoanOrginatorId=fnmdata.substr(3,35).trim();
+        this.Value=fnmdata.substr(38,50).trim();
+
+    }
+    //Must equal: LoanOriginatorID
+    //020
+    //#4#35
+    LoanOrginatorId:string;
+    //030
+    //#39#50
+    Value:string;
+
+}
 export class FileIdentification {
     get id() {
         return "000"
     }
+    public get length(): number {
+        return 11;
+    }
+
     constructor(fnmdata: string) {
         this.FileType = fnmdata.substr(3, 3).trim();
         this.FileVersionID = fnmdata.substr(6, 5).trim();
         this.ExportVersionIndicator = fnmdata.substr(10, 1).trim();
     }
+    //70 = Additional Case Data
     //#020
     //#3#3
     FileType: string;
+    //3.20
     //#030
     //#7#5
     FileVersionID: string;
@@ -1582,9 +1609,19 @@ export class OtherCredit {
         this.CreditType = fnmdata.substr(3, 2).trim();
         this.Amount = fnmdata.substr(5, 15).trim();
     }
+    /**Fannie Mae data element Other Credit Type Code:
+     01 = Cash Deposit on sales contract
+     02 = Seller Credit
+     03 = Lender Credit
+     04 = Relocation Funds
+     05 = Employer Assisted Housing
+     06 = Lease Purchase Fund
+     07 = Other
+     08 = Borrower Paid Fees
+     09 = Sweat Equity*/
     //020
     //#4#2
-    public CreditType: string;
+        public CreditType: string;
     //030
     //#6#15
     public Amount: string;
@@ -1797,68 +1834,387 @@ export class GovernmentMonitoring {
 
 export class LoanOriginator {
     public get id(): string {
-        return "03C";
+        return "10B";
     }
 
     public get length(): number {
-        return 15;
+        return 223;
     }
 
     constructor(fnmdata: string) {
-        this.SSN = fnmdata.substr(3, 9).trim();
+        this.ApplicationTakenBy = fnmdata.substr(3, 1).trim();
+        this.LoanOriginatorName = fnmdata.substr(4,60).trim();
+        this.InterviewDate = fnmdata.substr(64,8).trim();
+        this.PhoneNumber = fnmdata.substr(72,10).trim();
+        this.CompanyName = fnmdata.substr(82,35).trim();
+        this.CompanyStreetAddress = fnmdata.substr(117,35).trim();
+        this.CompanyStreetAddress2 = fnmdata.substr(152,35).trim();
+        this.CompanyCity = fnmdata.substr(187,35).trim();
+        this.CompanyStateCode = fnmdata.substr(222,2).trim();
+        this.CompanyZipCode = fnmdata.substr(224,5).trim();
+        this.CompanyZipCodePlusFour = fnmdata.substr(229,4).trim();
     }
+    /*EDI Data Element 1079:
+F = Face-to-Face
+M = Mail or Fax
+T = Telephone
+I = Internet or E-Mail*/
     //020
-    //#4#9
-    SSN: string;
+    //#4#1
+    ApplicationTakenBy: string;
+    //030
+    //#5#60
+    LoanOriginatorName:string;
+    //040
+    //#65#8
+    InterviewDate:string;
+    //050
+    //#73#10
+    PhoneNumber:string;
+    //060
+    //#83#35
+    CompanyName:string;
+    //070
+    //#118#35
+    CompanyStreetAddress:string;
+    //080
+    //#153#35
+    CompanyStreetAddress2:string;
+    //090
+    //#188#35
+    CompanyCity:string;
+    //100
+    //#223#2
+    CompanyStateCode:string;
+    //110
+    //#225#5
+    CompanyZipCode:string;
+    //120
+    //#230#4
+    CompanyZipCodePlusFour:string;
 }
 
 export class GovernmentMonitoringPurpose {
     public get id(): string {
-        return "03C";
+        return "10R";
     }
 
     public get length(): number {
-        return 15;
+        return 14;
     }
 
     constructor(fnmdata: string) {
         this.SSN = fnmdata.substr(3, 9).trim();
+        this.RaceType = fnmdata.substr(12,2).trim();
     }
     //020
     //#4#9
     SSN: string;
+    /*1107 Race Code:
+1= American Indian or Alaska Native
+2 = Asian
+3 = Black or African American
+4 = Native Hawaiian or Other Pacific Islander
+5 = White
+6 = Information not provided by applicant in mail, internet, or telephone application
+7 = Not applicable*/
+    //030
+    //#13#2
+    RaceType:string;
+}
+export class LoanCharacteristics{
+    public get id():string{
+        return "LNC";
+    }
+    public get length():number{
+        return 91;
+    }
+    constructor(fnmdata:string){
+        this.LienTypeCode=fnmdata.substr(3,1).trim();
+        this.LoanDocumentTypeCode=fnmdata.substr(4,1).trim();
+        this.SubjectPropertyTypeCode=fnmdata.substr(5,2).trim();
+        this.ReservedForFutureUse=fnmdata.substr(7,2).trim();
+        this.ReservedForFutureUse2=fnmdata.substr(9,2).trim();
+        this.ReservedForFutureUse3=fnmdata.substr(11,2).trim();
+        this.ReservedForFutureUse4=fnmdata.substr(13,2).trim();
+        this.ProjectClassificationCode=fnmdata.substr(15,2).trim();
+        this.NegativeAmortizationLimitPercent=fnmdata.substr(17,7).trim();
+        this.BalloonIndicator=fnmdata.substr(24,1).trim();
+        this.Filter=fnmdata.substr(25,1).trim();
+        this.Filter2=fnmdata.substr(26,1).trim();
+        this.EducationCompletionIndicator=fnmdata.substr(27,1).trim();
+        this.MaximumLifetimeRateIncrease=fnmdata.substr(28,7).trim();
+        this.PaymentAdjustmentPercent=fnmdata.substr(35,7).trim();
+        this.PaymentAdjustmentAmount=fnmdata.substr(42,15).trim();
+        this.WilEscrowWaived=fnmdata.substr(57,1).trim();
+        this.LoanClosingDate=fnmdata.substr(58,8).trim();
+        this.FirstPaymentDate=fnmdata.substr(66,8).trim();
+        this.MiCoveragePercent=fnmdata.substr(74,7).trim();
+        this.MiInsurerCode=fnmdata.substr(81,3).trim();
+        this.APRSpread=fnmdata.substr(84,5).trim();
+        this.HOEPA=fnmdata.substr(89,1).trim();
+        this.PreApproval=fnmdata.substr(90,1).trim();
+    }
+    /*EDI Data Element 1101:
+1 = First Mortgage
+2 = Second Mortgage
+F = Other Mortgage*/
+    //020
+    //#4#1
+    LienTypeCode:string;
+    /*EDI Data Element 1103, Loan Documentation Type Code:
+
+A = Alternative (Non-traditional documentation used to determine the credit worthiness of a borrower)
+F = Full
+R = Reduced
+B = Streamlined Refinance
+C = No documentation
+D = No Ratio
+E = Limited Documentation
+U = No Income, No Employment and No Assets on 1003
+G = No Income and No Assets on 1003
+H = No Assets on 1003
+I = No Income and No Employment on 1003
+J = No Income on 1003
+K = No Verification of Stated Income, Employment or Assets
+L = No Verification of Stated Income or Assets
+M = No Verification of Stated Assets
+N = No Verification of Stated Income or Employment
+O = No Verification of Stated Income
+P = Verbal Verification of Employment
+Q = One paystub
+S = One paystub and VVOE
+T = One paystub and one W-2 and VVOE or one yr 1040
+*/
+    //030
+    //#5#1
+    LoanDocumentTypeCode:string;
+    /*Fannie Mae Property Type Code:
+01 = Detached
+02 = Attached
+03 = Condominium
+04 = Planned Unit Development (PUD)
+05 = Co-Operative (Co-Op)
+07 = High Rise Condo
+08 = Manufactured Home
+09 = Detached Condo
+10 = Manufactured Home: Condo/PUD/Co-Op*/
+    //040
+    //#6#2
+    SubjectPropertyTypeCode:string;
+    //050
+    //#8#2
+    ReservedForFutureUse:string;
+    //060
+    //#10#2
+    ReservedForFutureUse2:string;
+    //070
+    //#12#2
+    ReservedForFutureUse3:string;
+    //080
+    //#14#2
+    ReservedForFutureUse4:string;
+    /*Fannie Project Classification Codes:
+
+04 = E PUD
+05 = F PUD"
+07 = 1 CO-OP
+08 = 2 CO-OP
+09 = P Condo
+10 = Q Condo
+11 = R Condo
+12 = S Condo
+13 = T Condo
+14 = U Condo
+15 = V Condo
+16 = G, not in a project or development*/
+    //090
+    //#16#2
+    ProjectClassificationCode:string;
+    //100
+    //#18#7
+    NegativeAmortizationLimitPercent:string;
+    //Y=Yes  N=No
+    //110
+    //#25#1
+    BalloonIndicator:string;
+    //120
+    //#26#1
+    Filter:string;
+    //130
+    //#27#1
+    Filter2:string;
+    /*1 = HomeBuyer Education complete
+2 = One-on-one counseling complete*/
+    //140
+    //#28#1
+    EducationCompletionIndicator:string;
+    //150
+    //#29#7
+    MaximumLifetimeRateIncrease:string;
+    //160
+    //#36#7
+    PaymentAdjustmentPercent:string;
+    //170
+    //#43#15
+    PaymentAdjustmentAmount:string;
+    //180
+    //#58#1
+    WilEscrowWaived:string;
+    //190
+    //#59#8
+    LoanClosingDate:string;
+    //200
+    //#67#8
+    FirstPaymentDate:string;
+    //210
+    //#75#7
+    MiCoveragePercent:string;
+    /*Fannie “ MI Insurer Code:
+
+001 = GE Mortgage Insurance Corporation, GE"
+006 = Mortgage Guarantee Insurance Corporation, MGIC
+011 = PMI Mortgage Insurance Company, PMI
+012 = United Guarantee Residential Insurance Company, UG
+013 = Republic Mortgage Insurance Company, RMIC
+017 = Radian Guaranty Incorporated
+024 = Triad Guarantee Residential Insurance Company, Triad
+038 = CMG Mortgage Insurance Co., an affiliate of PMI (credit unions only),CMG
+043 = Essent Guaranty, Inc
+044 = National Mortgage Insurance Company, NMIFannie “ MI Insurer Code:
+
+001 = GE Mortgage Insurance Corporation, GE"
+006 = Mortgage Guarantee Insurance Corporation, MGIC
+011 = PMI Mortgage Insurance Company, PMI
+012 = United Guarantee Residential Insurance Company, UG
+013 = Republic Mortgage Insurance Company, RMIC
+017 = Radian Guaranty Incorporated
+024 = Triad Guarantee Residential Insurance Company, Triad
+038 = CMG Mortgage Insurance Co., an affiliate of PMI (credit unions only),CMG
+043 = Essent Guaranty, Inc
+044 = National Mortgage Insurance Company, NMI*/
+    //220
+    //#82#3
+    MiInsurerCode:string;
+    //230
+    //#85#5
+    APRSpread:string;
+    /*Y = Loan is covered under act
+N = Loan is not covered under act*/
+    //240
+    //#90#1
+    HOEPA:string;
+    /*Y = Pre-Approval loan
+N = Not a Pre-Approval loan*/
+    //250
+    //#91#1
+    PreApproval:string;
+
 }
 export class TransmittalData {
     public get id(): string {
-        return "03C";
+        return "99B";
     }
 
     public get length(): number {
-        return 15;
+        return 145;
     }
 
     constructor(fnmdata: string) {
-        this.SSN = fnmdata.substr(3, 9).trim();
+        this.BelowMarketFinance = fnmdata.substr(3, 1).trim();
+        this.ExistingMortgage = fnmdata.substr(4,2).trim(); 
+        this.PropertyAppraisedValue = fnmdata.substr(6,15).trim();
+        this.BuydownRate = fnmdata.substr(21,7).trim();
+        this.AppraisedValueType = fnmdata.substr(28,2).trim();
+        this.AppraiserName = fnmdata.substr(33,60).trim();
+        this.AppraiserCompany = fnmdata.substr(93,35).trim();
+        this.AppraiserLicenseNumber = fnmdata.substr(128,15).trim();
+        this.AppraiserLicenseStateCode = fnmdata.substr(143,2).trim();
     }
+    /*Y = Yes
+    N = No*/
     //020
-    //#4#9
-    SSN: string;
+    //#4#1
+    BelowMarketFinance: string;
+    /*Fannie Mae Owner of Existing Mortgage Codes:
+01 = Fannie Mae
+02 = Freddie Mac
+03 = Seller/Other
+F1 = Unknown*/
+    //030
+    //#5#2
+    ExistingMortgage:string;
+    //040
+    //#7#15
+    PropertyAppraisedValue:string;
+    //050
+    //#22#7
+    BuydownRate:string;
+    /*Fannie Mae Code:
+01 = Actual
+02 = Estimated
+
+Fanne Mae Property Documentation Obtained Codes:
+102 = No appraisal/inspection obtained
+103 = Form 2075 exterior inspection
+104 = Form 2055 appraisal with exterior only inspection
+110 = Form 2095 cooperative appraisal with exterior only inspection
+114 = Form 1025 appraisal with interior/exterior inspection
+116 = Form 1004 appraisal with interior/exterior inspection
+120 = Prior appraisal used for the transaction
+125 = Other
+130 = Form 26-1805, Certificate of Reasonable Value for VA
+131 = Form 26-8712, Manufactured Home Appraisal Report for VA
+132 = Form 1004C, Manufactured Home Appraisal Report with interior/exterior inspection*
+133 = Form 1073 condominium appraisal with interior/exterior inspection*
+134 = Form 1075 condominium appraisal with exterior inspection*
+135 = Form 2090 cooperative appraisal with interior/exterior inspection*
+136 = Form 1004D appraisal updated/completion report*
+137 = Form 2000 Field review one-unit*
+138 = Form 2000A Field review 2-4**/
+    //060
+    //#29#2
+    AppraisedValueType:string;
+    //080
+    //#34#60
+    AppraiserName:string;
+    //090
+    //#94#35
+    AppraiserCompany:string;
+    //100
+    //#129#15
+    AppraiserLicenseNumber:string;
+    //110
+    //#144#2
+    AppraiserLicenseStateCode:string;
 }
 export class Score {
     public get id(): string {
-        return "03C";
+        return "SCA";
     }
 
     public get length(): number {
-        return 15;
+        return 17;
     }
 
     constructor(fnmdata: string) {
-        this.SSN = fnmdata.substr(3, 9).trim();
+        this.ScoreId = fnmdata.substr(3, 3).trim();
+        this.Score = fnmdata.substr(6,3).trim();
+        this.ScoreDate = fnmdata.substr(9, 8).trim();
     }
+    /*Fannie Mae “Score ID” :
+    001 = PMI Aura AQI Score
+    002 = GE IQ Score
+    003 = UGI Accuscore*/
     //020
-    //#4#9
-    SSN: string;
+    //#4#3
+    ScoreId: string;
+    //030
+    //#7#3
+    Score:string;
+    //040
+    //#10#8
+    ScoreDate:string;
 }
 
 export class Eligibility {
@@ -1879,35 +2235,84 @@ export class Eligibility {
 }
 export class ProductIdentification {
     public get id(): string {
-        return "03C";
+        return "PID";
     }
 
     public get length(): number {
-        return 15;
+        return 53;
     }
 
     constructor(fnmdata: string) {
-        this.SSN = fnmdata.substr(3, 9).trim();
+        this.ProductDescription = fnmdata.substr(3, 30).trim();
+        this.ProductCode = fnmdata.substr(33, 15).trim();
+        this.ProductPlanNumber = fnmdata.substr(48, 5).trim();
     }
+    /*StandardLICOR
+Affordable LTV*/
     //020
-    //#4#9
-    SSN: string;
+    //#4#30
+    ProductDescription: string;
+    //030
+    //#34#15
+    ProductCode:string;
+    /*Fannie Mae ARM Plan Number for Fannie Mae products.
+Fannie Mae Generic ARM plans:
+
+NGAM = Negative Amortization
+GEN06 = 6 Month
+GEN1A = 1 yr, 1% annual cap
+GEN1B = 1 yr, 2% annual cap
+GEN3 = 3 yr
+GEN5 = 5 yr
+GEN7 = 7 yr
+GEN10 = 10 yr
+251 = FHA 1 yr
+FHAHY = FHA Hybrid ARM
+VA1YR = VA 1 yr
+VAARM = VA Hybrid ARM
+For a complete list of all active ARM Index Codes, go to the Data Standards Supporting Resources section of the Technology Integration Web page: https://www.fanniemae.com/singlefamily/technology-integration*/
+//040
+//#49#5
+ProductPlanNumber:string;
 }
 export class ProductCharacteristics {
     public get id(): string {
-        return "03C";
+        return "PCH";
     }
 
     public get length(): number {
-        return 15;
+        return 13;
     }
 
     constructor(fnmdata: string) {
-        this.SSN = fnmdata.substr(3, 9).trim();
+        this.MortgageTerm = fnmdata.substr(3, 3).trim();
+        this.AssumableLoanIndicator = fnmdata.substr(6, 1).trim();
+        this.PaymentFrequencyCode = fnmdata.substr(7, 2).trim();
+        this.PrepaymentPenalityIndicator = fnmdata.substr(9, 1).trim();
+        this.PrepaymentRestrictedIndicator = fnmdata.substr(10, 1).trim();
+        this.RepaymentTypeCode = fnmdata.substr(11, 2).trim();
     }
     //020
-    //#4#9
-    SSN: string;
+    //#4#3
+    MortgageTerm: string;
+    //030
+    //#7#1
+    AssumableLoanIndicator:string;
+    /*Fannie Mae Payment Frequency Codes:
+01 = Monthly
+02 = Bi-weekly*/
+    //040
+    //#8#2
+    PaymentFrequencyCode:string;
+    //050
+    //#10#1
+    PrepaymentPenalityIndicator:string;
+    //060
+    //#11#1
+    PrepaymentRestrictedIndicator:string;
+    //070
+    //#12#2
+    RepaymentTypeCode:string;
 }
 export class PaymentAdjustmentOccurence {
     constructor(fnmdata: string) {

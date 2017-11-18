@@ -6,11 +6,14 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { ReaderComponent } from "app/reader/reader.component";
+import { FNMDatePipe } from 'app/reader/reader.pipes';
+import { externString } from 'app/libs/string';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ReaderComponent
+    ReaderComponent,
+    FNMDatePipe
   ],
   imports: [
     BrowserModule,
@@ -18,10 +21,12 @@ import { ReaderComponent } from "app/reader/reader.component";
     HttpModule
   ],
   providers: [],
-  bootstrap: [AppComponent,ReaderComponent]
+  bootstrap: [AppComponent, ReaderComponent]
 })
-export class AppModule { 
+export class AppModule {
 
-
+  constructor() {
+    externString();
+  }
 
 }

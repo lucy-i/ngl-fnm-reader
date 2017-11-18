@@ -13,6 +13,9 @@ fnm-reader{
 .text-center {
     text-align: center;
 }
+.value{
+    background-color: #f3f31896;
+}
 
 input#fileInput {
     /* border: 1px solid black; */

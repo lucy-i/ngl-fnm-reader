@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-
+fnm-reader{
+    display: block;
+}
+.help-mail{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    background-color: #cacaca;
+    padding: 2px 3px;
+    border-radius: 3px;
+}
 .text-center {
     text-align: center;
 }

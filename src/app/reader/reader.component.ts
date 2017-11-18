@@ -24,8 +24,8 @@ export class ReaderComponent implements OnInit {
     this.loanMetadata = new LoanMetadata();
     var fileInput = document.getElementById("fileInput") as HTMLInputElement;
     var fileDisplayArea = document.getElementById("fileDisplayArea");
-    this.fileContent = sampleFNM;
-    this.processFNMContent();
+    //this.fileContent = sampleFNM;
+    //this.processFNMContent();
     fileInput.addEventListener("change", e => {
       this.file = fileInput.files[0];
       var textType = /text.*/;

@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-fnm-reader{
+
+fnm-reader {
     display: block;
 }
-.help-mail{
+
+.help-mail {
     position: fixed;
     bottom: 0px;
     right: 0px;
@@ -10,11 +12,49 @@ fnm-reader{
     padding: 2px 3px;
     border-radius: 3px;
 }
+
 .text-center {
     text-align: center;
 }
-.value{
+
+.value {
     background-color: #f3f31896;
+}
+
+input[type="text"] {
+    display: flex;
+    border: none;
+    flex: 1 1 auto;
+    background-color: #f8f877;
+    font-style: italic;
+}
+
+input:active,
+input:focus {
+    background-color: #77edf8;
+}
+
+label {
+    display: flex;
+    flex-wrap: wrap;
+    /* flex: 1 1 auto; */
+}
+
+input[type="checkbox"]:checked+label {
+    background-color: #f8f877;
+    font-style: italic;
+}
+
+input[type="checkbox"]:hover+label
+/* input[type="checkbox"]+label:hover */
+
+{
+    background-color: #77edf8;
+    font-style: italic;
+}
+
+input[type="text"]:hover {
+    background-color: #77edf8;
 }
 
 input#fileInput {
@@ -94,15 +134,19 @@ input#fileInput:focus:before {
     flex-wrap: wrap;
 }
 
+
 .flex-full {
     flex: 1 1 auto;
     display: flex;
 }
 
-.flex .row,
 .row {
     display: flex;
     flex-direction: row;
+}
+
+.flex {
+    display: flex;
     flex: 1 1 auto;
 }
 
@@ -110,6 +154,27 @@ input#fileInput:focus:before {
 .column {
     flex-direction: column;
     display: flex;
+}
+
+.min-width-50p {
+    min-width: 50%;
+}
+
+.strike-out {}
+
+.strike-out label {
+    text-decoration: line-through;
+}
+.strike-out input[type="text"]:hover {
+    background-color: #f8f877;
+}
+.strike-out input,
+.strike-out input[type='checkbox'],
+.strike-out .value {
+    /* background-color: #bfbfbf; */
+    cursor: not-allowed;
+    /* color: #dededecf; */
+    text-decoration: line-through;
 }
 
 .width-60p {
@@ -155,11 +220,25 @@ input#fileInput:focus:before {
 .italic {
     font-style: italic;
 }
-.flex-width-50{
-    flex:1 1 50%;
+
+.flex-width-50 {
+    flex: 1 1 50%;
     max-width: 50%;
 }
+
 .space-around {
     display: flex;
     justify-content: space-around;
+}
+
+.sub-title {
+    /* flex row italic */
+    font-style: italic;
+    display: flex;
+    font-weight: 700;
+    margin-top: 0px;
+    margin-bottom: 8px;
+}
+.width-20{
+    width: 20px;
 }

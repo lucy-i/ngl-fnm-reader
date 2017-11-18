@@ -1,3 +1,4 @@
+
 export class Loan {
     LoanApplication: LoanApplication;
     constructor(fnmString: string[]) {
@@ -80,6 +81,7 @@ export class LoanApplication {
             case "Property": return new Property(rowdata);
             case "PropertyAddress": return new PropertyAddress(rowdata);
             case "PurposeOfLoan": return new PurposeOfLoan(rowdata);
+            case "RefinanceData": return new RefinanceData(rowdata);
             case "DownPayment": return new DownPayment(rowdata);
             case "HELOC": return new HELOC(rowdata);
             case "TitleHolder": return new TitleHolder(rowdata);
@@ -99,7 +101,7 @@ export class EnvelopeHeader {
     constructor(fnmdata: string) {
         this.InstitutionId = fnmdata.substr(3, 6).trim();
         this.InstitutionName = fnmdata.substr(9, 25).trim();
-        this.Date = fnmdata.substr(34, 11).trim();
+        this.Date = fnmdata.substr(34, 11).trim().toMMDDYYYY();
         this.EnvelopeControlName = fnmdata.substr(45, 9).trim();
     }
     //#020
@@ -332,7 +334,7 @@ export class PurposeOfLoan {
         this.ResidenceType = fnmdata.substr(87, 1).trim();
         this.TitleManner = fnmdata.substr(88, 60).trim();
         this.EstateHeldIn = fnmdata.substr(148, 1).trim();
-        this.LeasholdExpirationDate = fnmdata.substr(149, 8).trim();
+        this.LeasholdExpirationDate = fnmdata.substr(149, 8).trim().toMMDDYYYY();
     }
     //020
     //UnUsed
@@ -451,6 +453,9 @@ export class RefinanceData {
     //#151#15
     //Z(12).Z(2)
     Cost: string;
+    get Total(): number {
+        return parseFloat(this.PresentValueofLot) + parseFloat(this.CostofImprovements);
+    };
 }
 export class DownPayment {
     get id() {
@@ -547,7 +552,7 @@ export class Applicant {
             this.Dependents = fnmdata.substr(139, 2).trim();
             this.Jointly = fnmdata.substr(141, 1).trim();
             this.CrossReference = fnmdata.substr(142, 9).trim();
-            this.DateofBirth = fnmdata.substr(151, 8).trim();
+            this.DateofBirth = fnmdata.substr(151, 8).trim().toMMDDYYYY();
             this.EmailAddress = fnmdata.substr(159, 80).trim();
         }
     }
@@ -580,6 +585,15 @@ export class Applicant {
                 else
                     this[c.Name] = this.getInstancefor(c.Name, f);
             });
+        });
+        this.childArrays.filter(t => this[t.Name] == undefined).forEach(c => {
+            if (c.IsArray) {
+                if (!this[c.Name])
+                    this[c.Name] = [];
+                this[c.Name].push(this.getInstancefor(c.Name, c.Id));
+            }
+            else
+                this[c.Name] = this.getInstancefor(c.Name, c.Id);
         });
     }
 
@@ -655,7 +669,8 @@ export class Address {
     //#4#9
     SSN: string;
     /**
-     * "F4 = Former Residence
+     * "
+    F4 = Former Residence
     ZG = Present Address
     BH = Mailing Address"
      */
@@ -779,8 +794,8 @@ export class PreviousEmployment {
         this.ZipPlusFour = fnmdata.substr(124, 4).trim();
         this.IsSelfEmployed = fnmdata.substr(128, 1).trim();
         this.IsCurrentEmployment = fnmdata.substr(129, 1).trim();
-        this.FromDate = fnmdata.substr(130, 8).trim();
-        this.ToDate = fnmdata.substr(138, 8).trim();
+        this.FromDate = fnmdata.substr(130, 8).trim().toMMDDYYYY();
+        this.ToDate = fnmdata.substr(138, 8).trim().toMMDDYYYY();
         this.MonthlyIncome = fnmdata.substr(146, 15).trim();
         this.Position = fnmdata.substr(161, 25).trim();
         this.BusinessPhone = fnmdata.substr(186, 10).trim();
@@ -1725,7 +1740,7 @@ export class AcknowledgmentAgreement {
 
     constructor(fnmdata: string) {
         this.SSN = fnmdata.substr(3, 9).trim();
-        this.SignatureDate = fnmdata.substr(12, 8).trim();
+        this.SignatureDate = fnmdata.substr(12, 8).trim().toMMDDYYYY();
     }
     //020
     //#4#9

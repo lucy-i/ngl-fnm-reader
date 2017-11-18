@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { metadata } from "app/libs/fnm.metadata";
-import { rowMetadata } from "app/libs/fnmJSON.metadata";
+import { rowMetadata, sampleFNM } from "app/libs/fnmJSON.metadata";
 import { Loan } from "app/dataExtractor/loan";
 import { LoanMetadata } from "app/dataExtractor/metadata";
 import { convert } from "app/helpers/xmlConvertor";
@@ -18,13 +18,14 @@ export class ReaderComponent implements OnInit {
   stringarr: string[] = [];
   loan: Loan = null;
   loanMetadata: LoanMetadata;
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.loanMetadata = new LoanMetadata();
     var fileInput = document.getElementById("fileInput") as HTMLInputElement;
     var fileDisplayArea = document.getElementById("fileDisplayArea");
-
+    this.fileContent = sampleFNM;
+    this.processFNMContent();
     fileInput.addEventListener("change", e => {
       this.file = fileInput.files[0];
       var textType = /text.*/;

@@ -77,8 +77,13 @@ export class ReaderComponent implements OnInit {
       const ss = this.loan;
       console.log(JSON.stringify(ss));
       let ddd: string = convert(ss, "Loan");
+      console.log("XML document");
       console.log(ddd);
+      let fnmString: string = this.loan.toFNMString();
+      console.log("ReverseFNM String");
+      console.log(fnmString);
     }, 0);
+    
 
     this.data = data.filter(t => t.Rows.length > 0);
   }

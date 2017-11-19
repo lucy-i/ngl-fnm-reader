@@ -6,11 +6,17 @@ declare global {
     interface String {
         //  filterMap<T, U>(operator: Operator<T, U>, context?: any): U[];
         toMMDDYYYY(): string;
+        toCCMMDDYYYY(): string;
+        getEmptyStr(length: number): string;
+        fillString(length: number, preSpace?: boolean): string;
     }
 }
 
 interface StringConstructor {
     toMMDDYYYY(): string;
+    toCCMMDDYYYY(): string;
+    getEmptyStr(length: number): string;
+    fillString(length: number, preSpace?: boolean): string;
 }
 
 // I map the contextual collection onto another collection by appending defined results
@@ -28,6 +34,36 @@ export function toMMDDYYYY(this) {
         return this.substr(4, 2) + "/" + this.substr(6, 2) + "/" + this.substr(0, 4);
     }
 }
+export function toCCMMDDYYYY(this: string) {
+    if (!this)
+        return this;
+    if (typeof this === "string") {
+        try {
+            let dateStr: string[] = this.split('/');
+            return dateStr[2] + dateStr[0] + dateStr[1];
+        } catch (error) {
+            console.error(error);
+            return this;
+        }
+    }
+}
+export function getEmptyStr(length: number): string {
+    let strvalue: string = '';
+    for (let index = 0; index < length; index++) {
+        strvalue = strvalue + ' ';
+    }
+    return strvalue;
+}
+export function fillString(length: number, preSpace?: boolean): string {
+    let tempStr = this;
+    if (tempStr.length < length) {
+        if (preSpace)
+            tempStr = tempStr.getEmptyStr(length - this.length) + tempStr;
+        else
+            tempStr += tempStr.getEmptyStr(length - this.length);
+    }
+    return tempStr;
+}
 
 
 
@@ -41,4 +77,23 @@ export function externString() {
 
     }
     String.prototype.toMMDDYYYY = toMMDDYYYY;
+    if (String.prototype.toCCMMDDYYYY) {
+
+        throw (new Error("Array.prototype.toCCMMDDYYYY is already defined - overriding it will be dangerous."));
+
+    }
+    String.prototype.toCCMMDDYYYY = toCCMMDDYYYY;
+    if (String.prototype.getEmptyStr) {
+
+        throw (new Error("Array.prototype.getEmptyStr is already defined - overriding it will be dangerous."));
+
+    }
+    String.prototype.getEmptyStr = getEmptyStr;
+    if (String.prototype.fillString) {
+
+        throw (new Error("Array.prototype.fillString is already defined - overriding it will be dangerous."));
+
+    }
+    String.prototype.fillString = fillString;
+
 };

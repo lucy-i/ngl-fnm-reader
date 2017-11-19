@@ -15,6 +15,14 @@ namespace Mortgage.FNMParser
             LoanApplication = new LoanApplication(fnmString);
             LoanApplication.setData(fnmString);
         }
+
+        public string toFNMString()
+        {
+            List<string> reversefnmString = new List<string>();
+
+            reversefnmString.AddRange(this.LoanApplication.toFNMStringArray());
+            return string.Join(Environment.NewLine, reversefnmString);
+        }
     }
     internal class ChildProperty
     {
@@ -73,6 +81,16 @@ namespace Mortgage.FNMParser
             new ChildProperty(){ Name= "OtherCredits", Id= "07B" },
 
         };
+
+        internal List<string> toFNMStringArray()
+        {
+            List<string> reversefnmString = new List<string>();
+            this.Applicants.ForEach(element =>
+            {
+                reversefnmString.AddRange(element.toFNMStringArray());
+            });
+            return reversefnmString;
+        }
         private ChildProperty[] childArrays
         {
             get
@@ -110,14 +128,6 @@ namespace Mortgage.FNMParser
                     {
                         prop.SetValue(this, prePropValue, null);
                     }
-
-                    //if (c.IsArray) {
-                    //    if (this[c.Name])
-
-                    //    this[c.Name].push(this.getInstancefor(c.Name, f));
-                    //}
-                    //else
-                    //    prop.SetValue(this, propertyValue, null);
                 });
             });
         }
@@ -229,13 +239,72 @@ namespace Mortgage.FNMParser
                 Generation = fnmdata.SafeSubstring(119, 4).Trim();
                 HomePhone = fnmdata.SafeSubstring(123, 10).Trim();
                 Age = fnmdata.SafeSubstring(133, 3).Trim();
+                YrsInSchool = fnmdata.SafeSubstring(136, 2).Trim();
                 MartialStatus = fnmdata.SafeSubstring(138, 1).Trim();
                 Dependents = fnmdata.SafeSubstring(139, 2).Trim();
                 Jointly = fnmdata.SafeSubstring(141, 1).Trim();
                 CrossReference = fnmdata.SafeSubstring(142, 9).Trim();
-                DateofBirth = fnmdata.SafeSubstring(151, 8).Trim();
+                DateofBirth = fnmdata.SafeSubstring(151, 8).Trim().toMMDDYYYY();
                 EmailAddress = fnmdata.SafeSubstring(159, 80).Trim();
             }
+        }
+
+
+        internal List<string> toFNMStringArray()
+        {
+            List<string> fnmdataArray = new List<string>();
+            string fnmdata = string.Empty;
+            fnmdata += Applicant.Id.fillString(3);
+            fnmdata += this.Indicator.fillString(2);
+            fnmdata += this.SSN.fillString(9);
+            fnmdata += this.FirstName.fillString(35);
+            fnmdata += this.MiddleName.fillString(35);
+            fnmdata += this.LastName.fillString(35);
+            fnmdata += this.Generation.fillString(4);
+            fnmdata += this.HomePhone.fillString(10);
+            fnmdata += this.Age.fillString(3);
+            fnmdata += this.YrsInSchool.fillString(2, true);
+            fnmdata += this.MartialStatus.fillString(1);
+            fnmdata += this.Dependents.fillString(2, true);
+            fnmdata += this.Jointly.fillString(1);
+            fnmdata += this.CrossReference.fillString(9);
+            fnmdata += this.DateofBirth.toCCMMDDYYYY().fillString(8);
+            fnmdata += this.EmailAddress.fillString(80);
+            fnmdataArray.Add(fnmdata);
+            fnmdataArray.AddRange(this.getData());
+            return fnmdataArray;
+        }
+        internal List<string> getData()
+        {
+            List<string> fnmString = new List<string>();
+            childArrays.ToList().ForEach(c =>
+            {
+                Type type = this.GetType();
+                PropertyInfo prop = type.GetProperty(c.Name);
+
+                if (prop.PropertyType.Name.Contains("ICollection"))
+                {
+                    List<object> prePropValue = prop.GetValue(this, null) as List<object>;
+                    if (prePropValue != null)
+                    {
+                        prePropValue.ForEach(e =>
+                        {
+                            dynamic ele = e;
+                            fnmString.Add(ele.toFNMString());
+                        });
+
+                    }
+                }
+                else
+                {
+                    dynamic prePropValue = prop.GetValue(this, null);
+                    if(prePropValue!=null)
+                    fnmString.Add(prePropValue.toFNMString());
+                }
+            });
+
+
+            return fnmString;
         }
 
         public ICollection<Address> Addresses { get; set; }
@@ -285,7 +354,7 @@ namespace Mortgage.FNMParser
                         prop.SetValue(this, postPropValue, null);
                     }
 
-                   
+
                 });
             });
         }
@@ -369,6 +438,12 @@ namespace Mortgage.FNMParser
             NoofMonths = fnmdata.SafeSubstring(114, 2).Trim();
             Country = fnmdata.SafeSubstring(115, 50).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -453,6 +528,12 @@ namespace Mortgage.FNMParser
             Position = fnmdata.SafeSubstring(135, 25).Trim();
             BusinessPhone = fnmdata.SafeSubstring(160, 10).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN { get; set; }
@@ -527,12 +608,18 @@ namespace Mortgage.FNMParser
             ZipPlusFour = fnmdata.SafeSubstring(124, 4).Trim();
             IsSelfEmployed = fnmdata.SafeSubstring(128, 1).Trim();
             IsCurrentEmployment = fnmdata.SafeSubstring(129, 1).Trim();
-            FromDate = fnmdata.SafeSubstring(130, 8).Trim();
-            ToDate = fnmdata.SafeSubstring(138, 8).Trim();
+            FromDate = fnmdata.SafeSubstring(130, 8).Trim().toMMDDYYYY(); 
+            ToDate = fnmdata.SafeSubstring(138, 8).Trim().toMMDDYYYY();
             MonthlyIncome = fnmdata.SafeSubstring(146, 15).Trim();
             Position = fnmdata.SafeSubstring(161, 25).Trim();
             BusinessPhone = fnmdata.SafeSubstring(186, 10).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -609,6 +696,12 @@ namespace Mortgage.FNMParser
             PaymentTypeCode = fnmdata.SafeSubstring(13, 2).Trim();
             HousingPaymentAmount = fnmdata.SafeSubstring(15, 15).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -693,6 +786,12 @@ namespace Mortgage.FNMParser
             IncomeType = fnmdata.SafeSubstring(12, 2).Trim();
             MonthlyIncome = fnmdata.SafeSubstring(14, 15).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -775,6 +874,12 @@ namespace Mortgage.FNMParser
             CashValue = fnmdata.SafeSubstring(42, 15).Trim();
             FaceAmount = fnmdata.SafeSubstring(57, 15).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -828,6 +933,12 @@ namespace Mortgage.FNMParser
             FutureUse1 = fnmdata.SafeSubstring(263, 1).Trim();
             FutureUse2 = fnmdata.SafeSubstring(264, 2).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -952,6 +1063,12 @@ namespace Mortgage.FNMParser
             Year = fnmdata.SafeSubstring(42, 4).Trim();
             CashValue = fnmdata.SafeSubstring(47, 15).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -996,6 +1113,12 @@ namespace Mortgage.FNMParser
             LefttoPay = fnmdata.SafeSubstring(30, 3).Trim();
             OwnedTo = fnmdata.SafeSubstring(33, 60).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -1063,6 +1186,12 @@ namespace Mortgage.FNMParser
             AssetId = fnmdata.SafeSubstring(188, 2).Trim();
             ForFuture = fnmdata.SafeSubstring(190, 15).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -1218,6 +1347,12 @@ namespace Mortgage.FNMParser
             IsSubjectProperty = fnmdata.SafeSubstring(198, 1).Trim();
             IsRentalProperty = fnmdata.SafeSubstring(199, 1).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -1331,6 +1466,12 @@ namespace Mortgage.FNMParser
             ForFuture1 = fnmdata.SafeSubstring(117, 15).Trim();
             ForFuture2 = fnmdata.SafeSubstring(152, 15).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -1375,6 +1516,12 @@ namespace Mortgage.FNMParser
             AmountType = fnmdata.SafeSubstring(12, 3).Trim();
             Amount = fnmdata.SafeSubstring(15, 15).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -1410,6 +1557,12 @@ namespace Mortgage.FNMParser
             SSN = fnmdata.SafeSubstring(3, 9).Trim();
             DependentsAge = fnmdata.SafeSubstring(12, 3).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -1444,6 +1597,12 @@ namespace Mortgage.FNMParser
                 t.Value = fnmdata.SafeSubstring((t.Position.GetValueOrDefault() - 1), t.Length.GetValueOrDefault());
             });
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         public List<DeclarationSet> DeclarationSets
         {
             get
@@ -1570,6 +1729,12 @@ namespace Mortgage.FNMParser
             Filter = fnmdata.SafeSubstring(14, 30).Trim();
             SEX = fnmdata.SafeSubstring(44, 1).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //020
         //#4#9
         public string SSN;
@@ -1620,6 +1785,12 @@ namespace Mortgage.FNMParser
             Date = fnmdata.SafeSubstring(34, 11).Trim();
             EnvelopeControlName = fnmdata.SafeSubstring(45, 9).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
+
         //#020
         //#4#6
         public string InstitutionId;
@@ -1655,6 +1826,11 @@ namespace Mortgage.FNMParser
             TransactionId = fnmdata.SafeSubstring(3, 11).Trim();
             TransactionControlName = fnmdata.SafeSubstring(14, 9).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
         //#020
         //#4#11
         public string TransactionId;
@@ -1683,6 +1859,11 @@ namespace Mortgage.FNMParser
             IdentifierTypeCode = fnmdata.SafeSubstring(7, 2).Trim();
             Identifier = fnmdata.SafeSubstring(9, 30).Trim();
             ImportActionIndicator = fnmdata.SafeSubstring(39, 1).Trim();
+        }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
         }
         //#020
         //#4#5
@@ -1720,6 +1901,10 @@ namespace Mortgage.FNMParser
             FileVersionID = fnmdata.SafeSubstring(6, 5).Trim();
             ExportVersionIndicator = fnmdata.SafeSubstring(10, 1).Trim();
         }
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
         //#020
         //#3#3
         public string FileType;
@@ -1750,6 +1935,11 @@ namespace Mortgage.FNMParser
             UseAssetForQualification = fnmdata.SafeSubstring(3, 1).Trim();
             NotUseAssetForQualification = fnmdata.SafeSubstring(4, 1).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
         //#020
         //#4#1
         public string UseAssetForQualification;
@@ -1764,6 +1954,8 @@ namespace Mortgage.FNMParser
         {
 
         }
+
+
         public TypeAndTerms(string fnmdata)
         {
             MortgageAppliedFor = fnmdata.SafeSubstring(3, 2).Trim();
@@ -1776,6 +1968,11 @@ namespace Mortgage.FNMParser
             AmortizationType = fnmdata.SafeSubstring(155, 2).Trim();
             AmortizationTypeOther = fnmdata.SafeSubstring(157, 80).Trim();
             ARMTextualDescription = fnmdata.SafeSubstring(237, 80).Trim();
+        }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
         }
         /**
          * "EDI Data Element 1093:
@@ -1842,6 +2039,11 @@ namespace Mortgage.FNMParser
             SubjectProperty = fnmdata.SafeSubstring(104, 80).Trim();
             YearBuilt = fnmdata.SafeSubstring(184, 4).Trim();
         }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
         //#020
         //#4#50
         public string StreetAddress;
@@ -1876,6 +2078,11 @@ namespace Mortgage.FNMParser
         public PropertyAddress()
         {
 
+        }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
         }
 
         public string id
@@ -1916,6 +2123,11 @@ namespace Mortgage.FNMParser
         public PurposeOfLoan()
         {
 
+        }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
         }
 
         public string id
@@ -1994,6 +2206,10 @@ namespace Mortgage.FNMParser
 
         }
 
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
         public string id
         {
             get
@@ -2023,6 +2239,10 @@ namespace Mortgage.FNMParser
         public DetailsOfTransaction()
         {
 
+        }
+        internal string toFNMString()
+        {
+            return string.Empty;
         }
 
         public string id
@@ -2097,6 +2317,10 @@ namespace Mortgage.FNMParser
 
         }
 
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
         public string id
         {
             get
@@ -2171,6 +2395,10 @@ namespace Mortgage.FNMParser
         {
 
         }
+        internal string toFNMString()
+        {
+            return string.Empty;
+        }
         public string id
         {
             get
@@ -2223,6 +2451,11 @@ namespace Mortgage.FNMParser
             {
                 return 20;
             }
+        }
+
+        internal string toFNMString()
+        {
+            return string.Empty;
         }
 
         public OtherCredit(string fnmdata)

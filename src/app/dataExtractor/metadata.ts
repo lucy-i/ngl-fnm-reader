@@ -39,10 +39,10 @@ export class LoanMetadata {
         BH: "Mailing Address, if different from Present Address ",
         F4: "Former Address (street, city, state, ZIP)"
     };
-    UsageTypes=[
-        { value: "X",text:"Living Rent Free"},
-        { value: "R",text:"Rent"},
-        { value: "O",text:"Own"},
+    UsageTypes = [
+        { value: "X", text: "Living Rent Free" },
+        { value: "R", text: "Rent" },
+        { value: "O", text: "Own" },
     ];
 
 }

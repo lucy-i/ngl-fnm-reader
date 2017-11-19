@@ -4,6 +4,13 @@ export class Loan {
     constructor(fnmString: string[]) {
         this.LoanApplication = new LoanApplication(fnmString);
     }
+    private reversefnmString: string[];
+    public toFNMString(): string {
+        this.reversefnmString = [];
+        ;
+        this.reversefnmString = this.reversefnmString.concat(this.LoanApplication.toFNMStringArray());
+        return this.reversefnmString.join("\r\n");
+    }
 }
 
 export class LoanApplication {
@@ -36,6 +43,14 @@ export class LoanApplication {
             this.Applicants.push(dd);
         });
         this.setData(fnmString);
+    }
+
+    toFNMStringArray(): string[] {
+        let reversefnmString = [];
+        this.Applicants.forEach(element => {
+            reversefnmString = reversefnmString.concat(element.toFNMStringArray());
+        });
+        return reversefnmString;
     }
     public Applicants: Applicant[];
 
@@ -161,25 +176,25 @@ export class ProcessingInfo {
 
 
 }
-export class AdditionalDataSegment{
-    get id(){
+export class AdditionalDataSegment {
+    get id() {
         return "ADS";
     }
-    public get length():number{
+    public get length(): number {
         return 88;
     }
-    constructor(fnmdata:string){
-        this.LoanOrginatorId=fnmdata.substr(3,35).trim();
-        this.Value=fnmdata.substr(38,50).trim();
+    constructor(fnmdata: string) {
+        this.LoanOrginatorId = fnmdata.substr(3, 35).trim();
+        this.Value = fnmdata.substr(38, 50).trim();
 
     }
     //Must equal: LoanOriginatorID
     //020
     //#4#35
-    LoanOrginatorId:string;
+    LoanOrginatorId: string;
     //030
     //#39#50
-    Value:string;
+    Value: string;
 
 }
 export class FileIdentification {
@@ -441,6 +456,22 @@ export class RefinanceData {
         this.IsMade = fnmdata.substr(149, 1).trim();
         this.Cost = fnmdata.substr(150, 15).trim();
     }
+    toFNMString(): string {
+        let fnmdata: string = '';
+        fnmdata += this.id.fillString(3);
+        fnmdata += this.YearsLotRequired.fillString(4);
+        fnmdata += this.YearsLotRequired.fillString(4);
+        fnmdata += this.YearsLotRequired.fillString(4);
+        fnmdata += this.OriginalCosts.fillString(15);
+        fnmdata += this.AmountExistingLiens.fillString(15);
+        fnmdata += this.PresentValueofLot.fillString(15);
+        fnmdata += this.CostofImprovements.fillString(15);
+        fnmdata += this.PurposeofRefinance.fillString(2);
+        fnmdata += this.DescribeImprovements.fillString(80);
+        fnmdata += this.IsMade.fillString(1);
+        fnmdata += this.Cost.fillString(15);
+        return fnmdata;
+    }
     //020
     //#4#4
     YearsLotRequired: string;
@@ -575,6 +606,7 @@ export class Applicant {
             this.Generation = fnmdata.substr(119, 4).trim();
             this.HomePhone = fnmdata.substr(123, 10).trim();
             this.Age = fnmdata.substr(133, 3).trim();
+            this.YrsInSchool = fnmdata.substr(136, 2).trim();
             this.MartialStatus = fnmdata.substr(138, 1).trim();
             this.Dependents = fnmdata.substr(139, 2).trim();
             this.Jointly = fnmdata.substr(141, 1).trim();
@@ -582,6 +614,30 @@ export class Applicant {
             this.DateofBirth = fnmdata.substr(151, 8).trim().toMMDDYYYY();
             this.EmailAddress = fnmdata.substr(159, 80).trim();
         }
+    }
+
+    toFNMStringArray(): string[] {
+        let fnmdataArray: string[] = [];
+        let fnmdata: string = '';
+        fnmdata += Applicant.Id.fillString(3);
+        fnmdata += this.Indicator.fillString(2);
+        fnmdata += this.SSN.fillString(9);
+        fnmdata += this.FirstName.fillString(35);
+        fnmdata += this.MiddleName.fillString(35);
+        fnmdata += this.LastName.fillString(35);
+        fnmdata += this.Generation.fillString(4);
+        fnmdata += this.HomePhone.fillString(10);
+        fnmdata += this.Age.fillString(3);
+        fnmdata += this.YrsInSchool.fillString(2, true);
+        fnmdata += this.MartialStatus.fillString(1);
+        fnmdata += this.Dependents.fillString(2, true);
+        fnmdata += this.Jointly.fillString(1);
+        fnmdata += this.CrossReference.fillString(9);
+        fnmdata += this.DateofBirth.toCCMMDDYYYY().fillString(8);
+        fnmdata += this.EmailAddress.fillString(80);
+        fnmdataArray.push(fnmdata);
+        fnmdataArray = fnmdataArray.concat(this.getData());
+        return fnmdataArray;
     }
 
     public Addresses: Address[];
@@ -601,6 +657,25 @@ export class Applicant {
     public Declaration: Declaration;
     public GovernmentMonitoring: GovernmentMonitoring;
 
+    getData(): string[] {
+        let fnmString: string[] = [];
+        for (const key in this) {
+            if (this.hasOwnProperty(key)) {
+                let element: any = this[key];
+                if (Array.isArray(element)) {
+                    element.forEach(childEle => {
+                        if (typeof childEle.toFNMString === "function")
+                            fnmString.push(childEle.toFNMString());
+                    });
+                }
+                else if (typeof element === "object") {
+                    if (typeof element.toFNMString === "function")
+                        fnmString.push(element.toFNMString());
+                }
+            }
+        }
+        return fnmString;
+    }
     setData(fnmString: string[]) {
         this.childArrays.forEach(c => {
             fnmString.filter(t => t.indexOf(c.Id) == 0 && t.indexOf(this.SSN) == 3).forEach(f => {
@@ -692,6 +767,22 @@ export class Address {
         this.NoofMonths = fnmdata.substr(114, 2).trim();
         this.Country = fnmdata.substr(115, 50).trim();
     }
+    toFNMString(): string {
+        let fnmdata: string="";
+        fnmdata += this.id.fillString(3);
+        fnmdata += this.SSN.fillString(9);
+        fnmdata += this.AddressType.fillString(2);
+        fnmdata += this.StreetAddress.fillString(50);
+        fnmdata += this.City.fillString(35);
+        fnmdata += this.State.fillString(2);
+        fnmdata += this.ZipCode.fillString(5);
+        fnmdata += this.ZipPlusFour.fillString(4);
+        fnmdata += this.UsageType.fillString(1);
+        fnmdata += this.NoofYears.fillString(2);
+        fnmdata += this.NoofMonths.fillString(2);
+        fnmdata += this.Country.fillString(50);
+        return fnmdata;
+    }
     //020
     //#4#9
     SSN: string;
@@ -762,6 +853,24 @@ export class CurrentEmployment {
         this.Position = fnmdata.substr(135, 25).trim();
         this.BusinessPhone = fnmdata.substr(160, 10).trim();
     }
+    toFNMString(): string {
+        let fnmdata: string = "";
+        fnmdata += this.id.fillString(3);
+        fnmdata += this.SSN.fillString(9);
+        fnmdata += this.EmployerName.fillString(35);
+        fnmdata += this.StrretAddress.fillString(35);
+        fnmdata += this.City.fillString(35);
+        fnmdata += this.State.fillString(2);
+        fnmdata += this.ZipCode.fillString(5);
+        fnmdata += this.ZipPlusFour.fillString(4);
+        fnmdata += this.IsSelfEmployed.fillString(1);
+        fnmdata += this.YearsOnJob.fillString(2);
+        fnmdata += this.MonthsOnJob.fillString(2);
+        fnmdata += this.YersEmployedInThisLine.fillString(2);
+        fnmdata += this.Position.fillString(25);
+        fnmdata += this.BusinessPhone.fillString(10);
+        return fnmdata;
+    }
     //020
     //#4#9
     SSN: string;
@@ -826,6 +935,25 @@ export class PreviousEmployment {
         this.MonthlyIncome = fnmdata.substr(146, 15).trim();
         this.Position = fnmdata.substr(161, 25).trim();
         this.BusinessPhone = fnmdata.substr(186, 10).trim();
+    }
+    toFNMString(): string {
+        let fnmData: string='';
+        fnmData += this.id.fillString(3);
+        fnmData += this.SSN.fillString(9);
+        fnmData += this.EmployerName.fillString(35);
+        fnmData += this.StrretAddress.fillString(35);
+        fnmData += this.City.fillString(35);
+        fnmData += this.State.fillString(2);
+        fnmData += this.ZipCode.fillString(5);
+        fnmData += this.ZipPlusFour.fillString(4);
+        fnmData += this.IsSelfEmployed.fillString(1);
+        fnmData += this.IsCurrentEmployment.fillString(1);
+        fnmData += this.FromDate.toCCMMDDYYYY().fillString(8);
+        fnmData += this.ToDate.toCCMMDDYYYY().fillString(8);
+        fnmData += this.MonthlyIncome.fillString(15);
+        fnmData += this.Position.fillString(25);
+        fnmData += this.BusinessPhone.fillString(10);
+        return fnmData
     }
     //020
     //#4#9
@@ -1621,7 +1749,7 @@ export class OtherCredit {
      09 = Sweat Equity*/
     //020
     //#4#2
-        public CreditType: string;
+    public CreditType: string;
     //030
     //#6#15
     public Amount: string;
@@ -1843,16 +1971,16 @@ export class LoanOriginator {
 
     constructor(fnmdata: string) {
         this.ApplicationTakenBy = fnmdata.substr(3, 1).trim();
-        this.LoanOriginatorName = fnmdata.substr(4,60).trim();
-        this.InterviewDate = fnmdata.substr(64,8).trim();
-        this.PhoneNumber = fnmdata.substr(72,10).trim();
-        this.CompanyName = fnmdata.substr(82,35).trim();
-        this.CompanyStreetAddress = fnmdata.substr(117,35).trim();
-        this.CompanyStreetAddress2 = fnmdata.substr(152,35).trim();
-        this.CompanyCity = fnmdata.substr(187,35).trim();
-        this.CompanyStateCode = fnmdata.substr(222,2).trim();
-        this.CompanyZipCode = fnmdata.substr(224,5).trim();
-        this.CompanyZipCodePlusFour = fnmdata.substr(229,4).trim();
+        this.LoanOriginatorName = fnmdata.substr(4, 60).trim();
+        this.InterviewDate = fnmdata.substr(64, 8).trim();
+        this.PhoneNumber = fnmdata.substr(72, 10).trim();
+        this.CompanyName = fnmdata.substr(82, 35).trim();
+        this.CompanyStreetAddress = fnmdata.substr(117, 35).trim();
+        this.CompanyStreetAddress2 = fnmdata.substr(152, 35).trim();
+        this.CompanyCity = fnmdata.substr(187, 35).trim();
+        this.CompanyStateCode = fnmdata.substr(222, 2).trim();
+        this.CompanyZipCode = fnmdata.substr(224, 5).trim();
+        this.CompanyZipCodePlusFour = fnmdata.substr(229, 4).trim();
     }
     /*EDI Data Element 1079:
 F = Face-to-Face
@@ -1864,34 +1992,34 @@ I = Internet or E-Mail*/
     ApplicationTakenBy: string;
     //030
     //#5#60
-    LoanOriginatorName:string;
+    LoanOriginatorName: string;
     //040
     //#65#8
-    InterviewDate:string;
+    InterviewDate: string;
     //050
     //#73#10
-    PhoneNumber:string;
+    PhoneNumber: string;
     //060
     //#83#35
-    CompanyName:string;
+    CompanyName: string;
     //070
     //#118#35
-    CompanyStreetAddress:string;
+    CompanyStreetAddress: string;
     //080
     //#153#35
-    CompanyStreetAddress2:string;
+    CompanyStreetAddress2: string;
     //090
     //#188#35
-    CompanyCity:string;
+    CompanyCity: string;
     //100
     //#223#2
-    CompanyStateCode:string;
+    CompanyStateCode: string;
     //110
     //#225#5
-    CompanyZipCode:string;
+    CompanyZipCode: string;
     //120
     //#230#4
-    CompanyZipCodePlusFour:string;
+    CompanyZipCodePlusFour: string;
 }
 
 export class GovernmentMonitoringPurpose {
@@ -1905,7 +2033,7 @@ export class GovernmentMonitoringPurpose {
 
     constructor(fnmdata: string) {
         this.SSN = fnmdata.substr(3, 9).trim();
-        this.RaceType = fnmdata.substr(12,2).trim();
+        this.RaceType = fnmdata.substr(12, 2).trim();
     }
     //020
     //#4#9
@@ -1920,40 +2048,40 @@ export class GovernmentMonitoringPurpose {
 7 = Not applicable*/
     //030
     //#13#2
-    RaceType:string;
+    RaceType: string;
 }
-export class LoanCharacteristics{
-    public get id():string{
+export class LoanCharacteristics {
+    public get id(): string {
         return "LNC";
     }
-    public get length():number{
+    public get length(): number {
         return 91;
     }
-    constructor(fnmdata:string){
-        this.LienTypeCode=fnmdata.substr(3,1).trim();
-        this.LoanDocumentTypeCode=fnmdata.substr(4,1).trim();
-        this.SubjectPropertyTypeCode=fnmdata.substr(5,2).trim();
-        this.ReservedForFutureUse=fnmdata.substr(7,2).trim();
-        this.ReservedForFutureUse2=fnmdata.substr(9,2).trim();
-        this.ReservedForFutureUse3=fnmdata.substr(11,2).trim();
-        this.ReservedForFutureUse4=fnmdata.substr(13,2).trim();
-        this.ProjectClassificationCode=fnmdata.substr(15,2).trim();
-        this.NegativeAmortizationLimitPercent=fnmdata.substr(17,7).trim();
-        this.BalloonIndicator=fnmdata.substr(24,1).trim();
-        this.Filter=fnmdata.substr(25,1).trim();
-        this.Filter2=fnmdata.substr(26,1).trim();
-        this.EducationCompletionIndicator=fnmdata.substr(27,1).trim();
-        this.MaximumLifetimeRateIncrease=fnmdata.substr(28,7).trim();
-        this.PaymentAdjustmentPercent=fnmdata.substr(35,7).trim();
-        this.PaymentAdjustmentAmount=fnmdata.substr(42,15).trim();
-        this.WilEscrowWaived=fnmdata.substr(57,1).trim();
-        this.LoanClosingDate=fnmdata.substr(58,8).trim();
-        this.FirstPaymentDate=fnmdata.substr(66,8).trim();
-        this.MiCoveragePercent=fnmdata.substr(74,7).trim();
-        this.MiInsurerCode=fnmdata.substr(81,3).trim();
-        this.APRSpread=fnmdata.substr(84,5).trim();
-        this.HOEPA=fnmdata.substr(89,1).trim();
-        this.PreApproval=fnmdata.substr(90,1).trim();
+    constructor(fnmdata: string) {
+        this.LienTypeCode = fnmdata.substr(3, 1).trim();
+        this.LoanDocumentTypeCode = fnmdata.substr(4, 1).trim();
+        this.SubjectPropertyTypeCode = fnmdata.substr(5, 2).trim();
+        this.ReservedForFutureUse = fnmdata.substr(7, 2).trim();
+        this.ReservedForFutureUse2 = fnmdata.substr(9, 2).trim();
+        this.ReservedForFutureUse3 = fnmdata.substr(11, 2).trim();
+        this.ReservedForFutureUse4 = fnmdata.substr(13, 2).trim();
+        this.ProjectClassificationCode = fnmdata.substr(15, 2).trim();
+        this.NegativeAmortizationLimitPercent = fnmdata.substr(17, 7).trim();
+        this.BalloonIndicator = fnmdata.substr(24, 1).trim();
+        this.Filter = fnmdata.substr(25, 1).trim();
+        this.Filter2 = fnmdata.substr(26, 1).trim();
+        this.EducationCompletionIndicator = fnmdata.substr(27, 1).trim();
+        this.MaximumLifetimeRateIncrease = fnmdata.substr(28, 7).trim();
+        this.PaymentAdjustmentPercent = fnmdata.substr(35, 7).trim();
+        this.PaymentAdjustmentAmount = fnmdata.substr(42, 15).trim();
+        this.WilEscrowWaived = fnmdata.substr(57, 1).trim();
+        this.LoanClosingDate = fnmdata.substr(58, 8).trim();
+        this.FirstPaymentDate = fnmdata.substr(66, 8).trim();
+        this.MiCoveragePercent = fnmdata.substr(74, 7).trim();
+        this.MiInsurerCode = fnmdata.substr(81, 3).trim();
+        this.APRSpread = fnmdata.substr(84, 5).trim();
+        this.HOEPA = fnmdata.substr(89, 1).trim();
+        this.PreApproval = fnmdata.substr(90, 1).trim();
     }
     /*EDI Data Element 1101:
 1 = First Mortgage
@@ -1961,7 +2089,7 @@ export class LoanCharacteristics{
 F = Other Mortgage*/
     //020
     //#4#1
-    LienTypeCode:string;
+    LienTypeCode: string;
     /*EDI Data Element 1103, Loan Documentation Type Code:
 
 A = Alternative (Non-traditional documentation used to determine the credit worthiness of a borrower)
@@ -1988,7 +2116,7 @@ T = One paystub and one W-2 and VVOE or one yr 1040
 */
     //030
     //#5#1
-    LoanDocumentTypeCode:string;
+    LoanDocumentTypeCode: string;
     /*Fannie Mae Property Type Code:
 01 = Detached
 02 = Attached
@@ -2001,19 +2129,19 @@ T = One paystub and one W-2 and VVOE or one yr 1040
 10 = Manufactured Home: Condo/PUD/Co-Op*/
     //040
     //#6#2
-    SubjectPropertyTypeCode:string;
+    SubjectPropertyTypeCode: string;
     //050
     //#8#2
-    ReservedForFutureUse:string;
+    ReservedForFutureUse: string;
     //060
     //#10#2
-    ReservedForFutureUse2:string;
+    ReservedForFutureUse2: string;
     //070
     //#12#2
-    ReservedForFutureUse3:string;
+    ReservedForFutureUse3: string;
     //080
     //#14#2
-    ReservedForFutureUse4:string;
+    ReservedForFutureUse4: string;
     /*Fannie Project Classification Codes:
 
 04 = E PUD
@@ -2030,46 +2158,46 @@ T = One paystub and one W-2 and VVOE or one yr 1040
 16 = G, not in a project or development*/
     //090
     //#16#2
-    ProjectClassificationCode:string;
+    ProjectClassificationCode: string;
     //100
     //#18#7
-    NegativeAmortizationLimitPercent:string;
+    NegativeAmortizationLimitPercent: string;
     //Y=Yes  N=No
     //110
     //#25#1
-    BalloonIndicator:string;
+    BalloonIndicator: string;
     //120
     //#26#1
-    Filter:string;
+    Filter: string;
     //130
     //#27#1
-    Filter2:string;
+    Filter2: string;
     /*1 = HomeBuyer Education complete
 2 = One-on-one counseling complete*/
     //140
     //#28#1
-    EducationCompletionIndicator:string;
+    EducationCompletionIndicator: string;
     //150
     //#29#7
-    MaximumLifetimeRateIncrease:string;
+    MaximumLifetimeRateIncrease: string;
     //160
     //#36#7
-    PaymentAdjustmentPercent:string;
+    PaymentAdjustmentPercent: string;
     //170
     //#43#15
-    PaymentAdjustmentAmount:string;
+    PaymentAdjustmentAmount: string;
     //180
     //#58#1
-    WilEscrowWaived:string;
+    WilEscrowWaived: string;
     //190
     //#59#8
-    LoanClosingDate:string;
+    LoanClosingDate: string;
     //200
     //#67#8
-    FirstPaymentDate:string;
+    FirstPaymentDate: string;
     //210
     //#75#7
-    MiCoveragePercent:string;
+    MiCoveragePercent: string;
     /*Fannie “ MI Insurer Code:
 
 001 = GE Mortgage Insurance Corporation, GE"
@@ -2095,20 +2223,20 @@ T = One paystub and one W-2 and VVOE or one yr 1040
 044 = National Mortgage Insurance Company, NMI*/
     //220
     //#82#3
-    MiInsurerCode:string;
+    MiInsurerCode: string;
     //230
     //#85#5
-    APRSpread:string;
+    APRSpread: string;
     /*Y = Loan is covered under act
 N = Loan is not covered under act*/
     //240
     //#90#1
-    HOEPA:string;
+    HOEPA: string;
     /*Y = Pre-Approval loan
 N = Not a Pre-Approval loan*/
     //250
     //#91#1
-    PreApproval:string;
+    PreApproval: string;
 
 }
 export class TransmittalData {
@@ -2122,14 +2250,14 @@ export class TransmittalData {
 
     constructor(fnmdata: string) {
         this.BelowMarketFinance = fnmdata.substr(3, 1).trim();
-        this.ExistingMortgage = fnmdata.substr(4,2).trim(); 
-        this.PropertyAppraisedValue = fnmdata.substr(6,15).trim();
-        this.BuydownRate = fnmdata.substr(21,7).trim();
-        this.AppraisedValueType = fnmdata.substr(28,2).trim();
-        this.AppraiserName = fnmdata.substr(33,60).trim();
-        this.AppraiserCompany = fnmdata.substr(93,35).trim();
-        this.AppraiserLicenseNumber = fnmdata.substr(128,15).trim();
-        this.AppraiserLicenseStateCode = fnmdata.substr(143,2).trim();
+        this.ExistingMortgage = fnmdata.substr(4, 2).trim();
+        this.PropertyAppraisedValue = fnmdata.substr(6, 15).trim();
+        this.BuydownRate = fnmdata.substr(21, 7).trim();
+        this.AppraisedValueType = fnmdata.substr(28, 2).trim();
+        this.AppraiserName = fnmdata.substr(33, 60).trim();
+        this.AppraiserCompany = fnmdata.substr(93, 35).trim();
+        this.AppraiserLicenseNumber = fnmdata.substr(128, 15).trim();
+        this.AppraiserLicenseStateCode = fnmdata.substr(143, 2).trim();
     }
     /*Y = Yes
     N = No*/
@@ -2143,13 +2271,13 @@ export class TransmittalData {
 F1 = Unknown*/
     //030
     //#5#2
-    ExistingMortgage:string;
+    ExistingMortgage: string;
     //040
     //#7#15
-    PropertyAppraisedValue:string;
+    PropertyAppraisedValue: string;
     //050
     //#22#7
-    BuydownRate:string;
+    BuydownRate: string;
     /*Fannie Mae Code:
 01 = Actual
 02 = Estimated
@@ -2174,19 +2302,19 @@ Fanne Mae Property Documentation Obtained Codes:
 138 = Form 2000A Field review 2-4**/
     //060
     //#29#2
-    AppraisedValueType:string;
+    AppraisedValueType: string;
     //080
     //#34#60
-    AppraiserName:string;
+    AppraiserName: string;
     //090
     //#94#35
-    AppraiserCompany:string;
+    AppraiserCompany: string;
     //100
     //#129#15
-    AppraiserLicenseNumber:string;
+    AppraiserLicenseNumber: string;
     //110
     //#144#2
-    AppraiserLicenseStateCode:string;
+    AppraiserLicenseStateCode: string;
 }
 export class Score {
     public get id(): string {
@@ -2199,7 +2327,7 @@ export class Score {
 
     constructor(fnmdata: string) {
         this.ScoreId = fnmdata.substr(3, 3).trim();
-        this.Score = fnmdata.substr(6,3).trim();
+        this.Score = fnmdata.substr(6, 3).trim();
         this.ScoreDate = fnmdata.substr(9, 8).trim();
     }
     /*Fannie Mae “Score ID” :
@@ -2211,10 +2339,10 @@ export class Score {
     ScoreId: string;
     //030
     //#7#3
-    Score:string;
+    Score: string;
     //040
     //#10#8
-    ScoreDate:string;
+    ScoreDate: string;
 }
 
 export class Eligibility {
@@ -2254,7 +2382,7 @@ Affordable LTV*/
     ProductDescription: string;
     //030
     //#34#15
-    ProductCode:string;
+    ProductCode: string;
     /*Fannie Mae ARM Plan Number for Fannie Mae products.
 Fannie Mae Generic ARM plans:
 
@@ -2271,9 +2399,9 @@ FHAHY = FHA Hybrid ARM
 VA1YR = VA 1 yr
 VAARM = VA Hybrid ARM
 For a complete list of all active ARM Index Codes, go to the Data Standards Supporting Resources section of the Technology Integration Web page: https://www.fanniemae.com/singlefamily/technology-integration*/
-//040
-//#49#5
-ProductPlanNumber:string;
+    //040
+    //#49#5
+    ProductPlanNumber: string;
 }
 export class ProductCharacteristics {
     public get id(): string {
@@ -2297,22 +2425,22 @@ export class ProductCharacteristics {
     MortgageTerm: string;
     //030
     //#7#1
-    AssumableLoanIndicator:string;
+    AssumableLoanIndicator: string;
     /*Fannie Mae Payment Frequency Codes:
 01 = Monthly
 02 = Bi-weekly*/
     //040
     //#8#2
-    PaymentFrequencyCode:string;
+    PaymentFrequencyCode: string;
     //050
     //#10#1
-    PrepaymentPenalityIndicator:string;
+    PrepaymentPenalityIndicator: string;
     //060
     //#11#1
-    PrepaymentRestrictedIndicator:string;
+    PrepaymentRestrictedIndicator: string;
     //070
     //#12#2
-    RepaymentTypeCode:string;
+    RepaymentTypeCode: string;
 }
 export class PaymentAdjustmentOccurence {
     constructor(fnmdata: string) {

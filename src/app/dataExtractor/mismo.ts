@@ -360,6 +360,11 @@ export class ADDITIONAL_CASE_DATA {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class MORTGAGE_SCORE {
+    constructor(fnmdata: string) {
+        //this._Type = fnmdata.substr(3, 3).trim();
+        this._Value = fnmdata.substr(6,3).trim();
+        this._Date = fnmdata.substr(9, 8).trim();
+    }
     private _DateField: string;
     private _TypeField: MORTGAGE_SCORE_Type;
     private _TypeFieldSpecified: boolean;
@@ -372,6 +377,10 @@ export class MORTGAGE_SCORE {
     public set _Date(value: string) {
         this._DateField = value;
     }
+    /*Fannie Mae “Score ID” :
+001 = PMI Aura AQI Score
+002 = GE IQ Score
+003 = UGI Accuscore*/
     public get _Type(): MORTGAGE_SCORE_Type {
         return this._TypeField;
     }
@@ -420,6 +429,17 @@ export enum MORTGAGE_SCORE_Type {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class TRANSMITTAL_DATA {
+    constructor(fnmdata: string) {
+        //this.BelowMarketSubordinateFinancingIndicator = fnmdata.substr(3, 1).trim();
+        //this.CurrentFirstMortgageHolderType = fnmdata.substr(4,2).trim(); 
+        this.PropertyAppraisedValueAmount = fnmdata.substr(6,15).trim();
+        this.BuydownRatePercent = fnmdata.substr(21,7).trim();
+        this.PropertyAppraisedValueAmount = fnmdata.substr(28,2).trim();
+        //this.Appraiser_Name = fnmdata.substr(33,60).trim();
+        //this.AppraiserCompany = fnmdata.substr(93,35).trim();
+        //this.AppraiserLicenseNumber = fnmdata.substr(128,15).trim();
+        //this.AppraiserLicenseStateCode = fnmdata.substr(143,2).trim();
+    }
     private armsLengthIndicatorField: TRANSMITTAL_DATAArmsLengthIndicator;
     private armsLengthIndicatorFieldSpecified: boolean;
     private belowMarketSubordinateFinancingIndicatorField: TRANSMITTAL_DATABelowMarketSubordinateFinancingIndicator;
@@ -508,6 +528,11 @@ export class TRANSMITTAL_DATA {
     public set CreditReportAuthorizationIndicatorSpecified(value: boolean) {
         this.creditReportAuthorizationIndicatorFieldSpecified = value;
     }
+    /*Fannie Mae Owner of Existing Mortgage Codes:
+01 = Fannie Mae
+02 = Freddie Mac
+03 = Seller/Other
+F1 = Unknown*/
     public get CurrentFirstMortgageHolderType(): TRANSMITTAL_DATACurrentFirstMortgageHolderType {
         return this.currentFirstMortgageHolderTypeField;
     }
@@ -532,6 +557,28 @@ export class TRANSMITTAL_DATA {
     public set LenderRegistrationIdentifier(value: string) {
         this.lenderRegistrationIdentifierField = value;
     }
+    /*Fannie Mae Code:
+01 = Actual
+02 = Estimated
+
+Fanne Mae Property Documentation Obtained Codes:
+102 = No appraisal/inspection obtained
+103 = Form 2075 exterior inspection
+104 = Form 2055 appraisal with exterior only inspection
+110 = Form 2095 cooperative appraisal with exterior only inspection
+114 = Form 1025 appraisal with interior/exterior inspection
+116 = Form 1004 appraisal with interior/exterior inspection
+120 = Prior appraisal used for the transaction
+125 = Other
+130 = Form 26-1805, Certificate of Reasonable Value for VA
+131 = Form 26-8712, Manufactured Home Appraisal Report for VA
+132 = Form 1004C, Manufactured Home Appraisal Report with interior/exterior inspection*
+133 = Form 1073 condominium appraisal with interior/exterior inspection*
+134 = Form 1075 condominium appraisal with exterior inspection*
+135 = Form 2090 cooperative appraisal with interior/exterior inspection*
+136 = Form 1004D appraisal updated/completion report*
+137 = Form 2000 Field review one-unit*
+138 = Form 2000A Field review 2-4**/
     public get PropertyAppraisedValueAmount(): string {
         return this.propertyAppraisedValueAmountField;
     }
@@ -854,6 +901,25 @@ export enum AFFORDABLE_LENDINGFNMNeighborsMortgageEligibilityIndicator {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class ASSET {
+    constructor(fnmdata: string) {
+        //this._SSN = fnmdata.substr(3, 9).trim();
+        //this._Type = fnmdata.substr(12, 3).trim();
+        this._HolderName = fnmdata.substr(15, 35).trim();
+        this._HolderStreetAddress = fnmdata.substr(50, 35).trim();
+        this._HolderCity = fnmdata.substr(85, 35).trim();
+        this._HolderState = fnmdata.substr(120, 2).trim();
+        this._HolderPostalCode = fnmdata.substr(122, 5).trim();
+        //this._HolderPostalCode = fnmdata.substr(127, 4).trim();
+        this._AccountIdentifier = fnmdata.substr(131, 30).trim();
+        this._CashOrMarketValueAmount = fnmdata.substr(161, 15).trim();
+        this.StockBondMutualFundShareCount = fnmdata.substr(176, 7).trim();
+        this.OtherAssetTypeDescription = fnmdata.substr(183, 80).trim();
+        //this.FutureUse1 = fnmdata.substr(263, 1).trim();
+        //this.FutureUse2 = fnmdata.substr(264, 2).trim();
+        this.AutomobileMakeDescription = fnmdata.substr(12, 3).trim();
+        this.AutomobileModelYear = fnmdata.substr(42, 4).trim();
+        this._CashOrMarketValueAmount = fnmdata.substr(47, 15).trim();
+    }
     private borrowerIDField: string;
     private _AccountIdentifierField: string;
     private _CashOrMarketValueAmountField: string;
@@ -893,6 +959,26 @@ export class ASSET {
     public set _CashOrMarketValueAmount(value: string) {
         this._CashOrMarketValueAmountField = value;
     }
+    /*EDI Data Element 569:
+03 = Checking Account
+F1 = Cash Deposit on Sales Contract
+SG = Savings Account
+F2 = Gift
+01 = Certificate of Deposit
+F3 = Money Market Fund
+F4 = Mutual Funds
+05 = Stock
+06 = Bond
+F5 = Secured Borrowed Funds
+F7 = Bridge Loan
+08 = Retirement Funds
+F8 = Net Worth of Business Owned
+11 = Trust Funds
+M1 = Other Non-Liquid Asset
+OL = Other Liquid Asset
+NE = Net Equity
+COH = Cash On Hand
+GE = Gift of Equity*/
     public get _Type(): ASSET_Type {
         return this._TypeField;
     }
@@ -3183,6 +3269,19 @@ export enum GOVERNMENT_REPORTINGHMDA_HOEPALoanStatusIndicator {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class INTERVIEWER_INFORMATION {
+    constructor(fnmdata: string) {
+        //this.ApplicationTakenMethodType = fnmdata.substr(3, 1).trim();
+        this.InterviewersName = fnmdata.substr(4,60).trim();
+        this.InterviewerApplicationSignedDate= fnmdata.substr(64,8).trim();
+        this.InterviewersTelephoneNumber= fnmdata.substr(72,10).trim();
+        this.InterviewersEmployerName = fnmdata.substr(82,35).trim();
+        this.InterviewersEmployerStreetAddress= fnmdata.substr(117,35).trim();
+        this.InterviewersEmployerStreetAddress2 = fnmdata.substr(152,35).trim();
+        this.InterviewersEmployerCity = fnmdata.substr(187,35).trim();
+        this.InterviewersEmployerState= fnmdata.substr(222,2).trim();
+        this.InterviewersEmployerPostalCode = fnmdata.substr(224,5).trim();
+        //this.InterviewersEmployerPostalCode= fnmdata.substr(229,4).trim();
+    }
     private interviewersEmployerStreetAddressField: string;
     private interviewersEmployerCityField: string;
     private interviewersEmployerStateField: string;
@@ -3225,6 +3324,11 @@ export class INTERVIEWER_INFORMATION {
     public set InterviewersTelephoneNumber(value: string) {
         this.interviewersTelephoneNumberField = value;
     }
+    /*EDI Data Element 1079:
+F = Face-to-Face
+M = Mail or Fax
+T = Telephone
+I = Internet or E-Mail*/
     public get ApplicationTakenMethodType(): INTERVIEWER_INFORMATIONApplicationTakenMethodType {
         return this.applicationTakenMethodTypeField;
     }
@@ -3283,6 +3387,31 @@ export enum INTERVIEWER_INFORMATIONApplicationTakenMethodType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class LIABILITY {
+    constructor(fnmdata: string) {
+     //   this._SSN = fnmdata.substr(3, 9).trim();
+        //this._Type = fnmdata.substr(12, 3).trim();
+        this._MonthlyPaymentAmount = fnmdata.substr(15, 15).trim();
+        this._RemainingTermMonths = fnmdata.substr(30, 3).trim();
+        this.AlimonyOwedToName = fnmdata.substr(33, 60).trim();
+        //this._Type = fnmdata.substr(12, 2).trim();
+        this._HolderName = fnmdata.substr(14, 35).trim();
+        this._HolderStreetAddress = fnmdata.substr(49, 35).trim();
+        this._HolderCity = fnmdata.substr(84, 35).trim();
+        this._HolderState= fnmdata.substr(119, 2).trim();
+        this._HolderPostalCode = fnmdata.substr(121, 5).trim();
+        //this.ZipPlusFour = fnmdata.substr(126, 4).trim();
+        this._AccountIdentifier = fnmdata.substr(130, 30).trim();
+        this._MonthlyPaymentAmount = fnmdata.substr(160, 15).trim();
+        this._RemainingTermMonths = fnmdata.substr(175, 3).trim();
+        this._UnpaidBalanceAmount = fnmdata.substr(178, 15).trim();
+        //this._PayoffStatusIndicator = fnmdata.substr(193, 1).trim();
+        this.REO_ID = fnmdata.substr(194, 2).trim();
+        //this.SubjectLoanResubordinationIndicator = fnmdata.substr(196, 1).trim();
+        //this._ExclusionIndicator = fnmdata.substr(197, 1).trim();
+        //this.FNMSubjectPropertyIndicator = fnmdata.substr(198, 1).trim();
+        //this.IsRentalProperty = fnmdata.substr(199, 1).trim();
+        
+    }
     private _IDField: string;
     private borrowerIDField: string;
     private rEO_IDField: string;
@@ -4234,6 +4363,43 @@ export enum BUYDOWN_SubsidyCalculationType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class LOAN_FEATURES {
+    constructor(fnmdata:string){
+        //this.LienPriorityType=fnmdata.substr(3,1).trim();
+//        this.LoanDocumentationType=fnmdata.substr(4,1).trim();
+        //this.GSEPropertyType=fnmdata.substr(5,2).trim();
+        // this.ReservedForFutureUse=fnmdata.substr(7,2).trim();
+        // this.ReservedForFutureUse2=fnmdata.substr(9,2).trim();
+        // this.ReservedForFutureUse3=fnmdata.substr(11,2).trim();
+        // this.ReservedForFutureUse4=fnmdata.substr(13,2).trim();
+        //this.GSEProjectClassificationType=fnmdata.substr(15,2).trim();
+        this.NegativeAmortizationLimitPercent=fnmdata.substr(17,7).trim();
+        //this.BalloonIndicator=fnmdata.substr(24,1).trim();
+        //this.Filter=fnmdata.substr(25,1).trim();
+        //this.Filter2=fnmdata.substr(26,1).trim();
+        //this.CounselingConfirmationIndicator=fnmdata.substr(27,1).trim();
+        //this.MaximumLifetimeRateIncrease=fnmdata.substr(28,7).trim();
+        //this.PaymentAdjustmentLifetimeCapPercent=fnmdata.substr(35,7).trim();
+        //this.PaymentAdjustmentCapAmount=fnmdata.substr(42,15).trim();
+        //this.EscrowWaiverIndicator=fnmdata.substr(57,1).trim();
+        this.LoanScheduledClosingDate=fnmdata.substr(58,8).trim();
+        this.ScheduledFirstPaymentDate=fnmdata.substr(66,8).trim();
+        this.MICoveragePercent=fnmdata.substr(74,7).trim();
+        //this.MICompanyNameType=fnmdata.substr(81,3).trim();
+        // this.APRSpread=fnmdata.substr(84,5).trim();
+        // this.HOEPA=fnmdata.substr(89,1).trim();
+        // this.PreApproval=fnmdata.substr(90,1).trim();  
+        this.ProductDescription = fnmdata.substr(3, 30).trim();
+        this.ProductName = fnmdata.substr(33, 15).trim();
+        this.FNMProductPlanIdentifier = fnmdata.substr(48, 5).trim();
+            this.balloonLoanMaturityTermMonthsField = fnmdata.substr(3, 3).trim();
+            //this.AssumabilityIndicator = fnmdata.substr(6, 1).trim();
+            //this.PaymentFrequencyType = fnmdata.substr(7, 2).trim();
+            //this.PrepaymentPenaltyIndicator = fnmdata.substr(9, 1).trim();
+            //this.PrepaymentRestrictionIndicator = fnmdata.substr(10, 1).trim();
+            //this.LoanRepaymentType = fnmdata.substr(11, 2).trim();
+          
+    }
+
     private lATE_CHARGEField: LATE_CHARGE;
     private nOTE_PAY_TOField: NOTE_PAY_TO;
     private assumabilityIndicatorField: LOAN_FEATURESAssumabilityIndicator;
@@ -4410,6 +4576,8 @@ export class LOAN_FEATURES {
     public set BuydownTemporarySubsidyIndicatorSpecified(value: boolean) {
         this.buydownTemporarySubsidyIndicatorFieldSpecified = value;
     }
+    //1=HomeBuyer EducationComplete
+    //2=One-on-one counselling complete
     public get CounselingConfirmationIndicator(): LOAN_FEATURESCounselingConfirmationIndicator {
         return this.counselingConfirmationIndicatorField;
     }
@@ -4446,6 +4614,22 @@ export class LOAN_FEATURES {
     public set EscrowWaiverIndicatorSpecified(value: boolean) {
         this.escrowWaiverIndicatorFieldSpecified = value;
     }
+    /*Fannie Mae ARM Plan Number for Fannie Mae products.
+Fannie Mae Generic ARM plans:
+
+NGAM = Negative Amortization
+GEN06 = 6 Month
+GEN1A = 1 yr, 1% annual cap
+GEN1B = 1 yr, 2% annual cap
+GEN3 = 3 yr
+GEN5 = 5 yr
+GEN7 = 7 yr
+GEN10 = 10 yr
+251 = FHA 1 yr
+FHAHY = FHA Hybrid ARM
+VA1YR = VA 1 yr
+VAARM = VA Hybrid ARM
+For a complete list of all active ARM Index Codes, go to the Data Standards Supporting Resources section of the Technology Integration Web page: https://www.fanniemae.com/singlefamily/technology-integration*/
     public get FNMProductPlanIdentifier(): string {
         return this.fNMProductPlanIdentifierField;
     }
@@ -4458,6 +4642,22 @@ export class LOAN_FEATURES {
     public set FREOfferingIdentifier(value: string) {
         this.fREOfferingIdentifierField = value;
     }
+    /**
+     Fannie Project Classification Codes:
+
+04 = E PUD
+05 = F PUD"
+07 = 1 CO-OP
+08 = 2 CO-OP
+09 = P Condo
+10 = Q Condo
+11 = R Condo
+12 = S Condo
+13 = T Condo
+14 = U Condo
+15 = V Condo
+16 = G, not in a project or development
+     */
     public get GSEProjectClassificationType(): LOAN_FEATURESGSEProjectClassificationType {
         return this.gSEProjectClassificationTypeField;
     }
@@ -4470,6 +4670,16 @@ export class LOAN_FEATURES {
     public set GSEProjectClassificationTypeSpecified(value: boolean) {
         this.gSEProjectClassificationTypeFieldSpecified = value;
     }
+    /*Fannie Mae Property Type Code:
+01 = Detached
+02 = Attached
+03 = Condominium
+04 = Planned Unit Development (PUD)
+05 = Co-Operative (Co-Op)
+07 = High Rise Condo
+08 = Manufactured Home
+09 = Detached Condo
+10 = Manufactured Home: Condo/PUD/Co-Op*/
     public get GSEPropertyType(): LOAN_FEATURESGSEPropertyType {
         return this.gSEPropertyTypeField;
     }
@@ -4512,6 +4722,10 @@ export class LOAN_FEATURES {
     public set LenderSelfInsuredIndicatorSpecified(value: boolean) {
         this.lenderSelfInsuredIndicatorFieldSpecified = value;
     }
+    /*EDI Data Element 1101:
+1 = First Mortgage
+2 = Second Mortgage
+F = Other Mortgage*/
     public get LienPriorityType(): LOAN_FEATURESLienPriorityType {
         return this.lienPriorityTypeField;
     }
@@ -4536,6 +4750,30 @@ export class LOAN_FEATURES {
     public set LoanClosingStatusTypeSpecified(value: boolean) {
         this.loanClosingStatusTypeFieldSpecified = value;
     }
+    /*EDI Data Element 1103, Loan Documentation Type Code:
+
+A = Alternative (Non-traditional documentation used to determine the credit worthiness of a borrower)
+F = Full
+R = Reduced
+B = Streamlined Refinance
+C = No documentation
+D = No Ratio
+E = Limited Documentation
+U = No Income, No Employment and No Assets on 1003
+G = No Income and No Assets on 1003
+H = No Assets on 1003
+I = No Income and No Employment on 1003
+J = No Income on 1003
+K = No Verification of Stated Income, Employment or Assets
+L = No Verification of Stated Income or Assets
+M = No Verification of Stated Assets
+N = No Verification of Stated Income or Employment
+O = No Verification of Stated Income
+P = Verbal Verification of Employment
+Q = One paystub
+S = One paystub and VVOE
+T = One paystub and one W-2 and VVOE or one yr 1040
+ */
     public get LoanDocumentationType(): LOAN_FEATURESLoanDocumentationType {
         return this.loanDocumentationTypeField;
     }
@@ -4548,6 +4786,12 @@ export class LOAN_FEATURES {
     public set LoanDocumentationTypeSpecified(value: boolean) {
         this.loanDocumentationTypeFieldSpecified = value;
     }
+    /*See Fannie Mae and EDI Code Conversions Table, EDI Data Element 1087:
+N = Fully Amortizing (No Negative Amortization)
+F1 = Scheduled Amortization
+F2 = Interest Only (no longer supported after 11/16/2013)
+P = Possible Negative Amortization
+S = Scheduled Negative Amortization */
     public get LoanRepaymentType(): LOAN_FEATURESLoanRepaymentType {
         return this.loanRepaymentTypeField;
     }
@@ -4578,6 +4822,18 @@ export class LOAN_FEATURES {
     public set MICertificationStatusTypeSpecified(value: boolean) {
         this.mICertificationStatusTypeFieldSpecified = value;
     }
+    /*Fannie “ MI Insurer Code:
+
+001 = GE Mortgage Insurance Corporation, GE"
+006 = Mortgage Guarantee Insurance Corporation, MGIC
+011 = PMI Mortgage Insurance Company, PMI
+012 = United Guarantee Residential Insurance Company, UG
+013 = Republic Mortgage Insurance Company, RMIC
+017 = Radian Guaranty Incorporated
+024 = Triad Guarantee Residential Insurance Company, Triad
+038 = CMG Mortgage Insurance Co., an affiliate of PMI (credit unions only),CMG
+043 = Essent Guaranty, Inc
+044 = National Mortgage Insurance Company, NMI*/
     public get MICompanyNameType(): LOAN_FEATURESMICompanyNameType {
         return this.mICompanyNameTypeField;
     }
@@ -4614,6 +4870,9 @@ export class LOAN_FEATURES {
     public set NegativeAmortizationLimitPercent(value: string) {
         this.negativeAmortizationLimitPercentField = value;
     }
+    /*Fannie Mae Payment Frequency Codes:
+01 = Monthly
+02 = Bi-weekly*/
     public get PaymentFrequencyType(): LOAN_FEATURESPaymentFrequencyType {
         return this.paymentFrequencyTypeField;
     }
@@ -9881,6 +10140,13 @@ export enum PROPERTY_PreviouslyOccupiedIndicator {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class PROPOSED_HOUSING_EXPENSE {
+    
+    constructor(fnmdata: string) {
+        //this._SSN = fnmdata.substr(3, 9).trim();
+        //this.ExpenseIndicator = fnmdata.substr(12, 1).trim();
+        //this.HousingExpenseType = fnmdata.substr(13, 2).trim();
+        this._PaymentAmount = fnmdata.substr(15, 15).trim();
+    }
     private housingExpenseTypeField: PROPOSED_HOUSING_EXPENSEHousingExpenseType;
     private housingExpenseTypeFieldSpecified: boolean;
     private _PaymentAmountField: string;
@@ -9952,6 +10218,27 @@ export enum PROPOSED_HOUSING_EXPENSEHousingExpenseType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class REO_PROPERTY {
+    constructor(fnmdata: string) {
+        //this._SSN = fnmdata.substr(3, 9).trim();
+        this._StreetAddress = fnmdata.substr(12, 35).trim();
+        this._City = fnmdata.substr(47, 35).trim();
+        this._State = fnmdata.substr(82, 2).trim();
+        this._PostalCode = fnmdata.substr(84, 5).trim();
+        //this._PostalCode = fnmdata.substr(89, 4).trim();
+        //this._DispositionStatusType = fnmdata.substr(93, 1).trim();
+        //this._GSEPropertyType = fnmdata.substr(94, 2).trim();
+        this._MarketValueAmountField = fnmdata.substr(96, 15).trim();
+        this._LienUPBAmount = fnmdata.substr(111, 15).trim();
+        this._RentalIncomeGrossAmount = fnmdata.substr(127, 15).trim();
+        this._LienInstallmentAmount = fnmdata.substr(141, 15).trim();
+        this._MaintenanceExpenseAmount = fnmdata.substr(156, 15).trim();
+        this._RentalIncomeNetAmount = fnmdata.substr(171, 15).trim();
+        //this._CurrentResidenceIndicator = fnmdata.substr(186, 1).trim();
+        //this._SubjectIndicator = fnmdata.substr(187, 1).trim();
+        this.REO_ID = fnmdata.substr(188, 2).trim();
+        //this.ForFuture = fnmdata.substr(190, 15).trim();
+    }
+
     private rEO_IDField: string;
     private borrowerIDField: string;
     private liabilityIDField: string;
@@ -10034,6 +10321,11 @@ export class REO_PROPERTY {
     public set _CurrentResidenceIndicatorSpecified(value: boolean) {
         this._CurrentResidenceIndicatorFieldSpecified = value;
     }
+    /*EDI Data Element 1075:
+S = Sold
+H = Retained
+P = Pending Sale
+R = Rental*/
     public get _DispositionStatusType(): REO_PROPERTY_DispositionStatusType {
         return this._DispositionStatusTypeField;
     }
@@ -11012,6 +11304,19 @@ export enum TITLE_HOLDERLandTrustType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class TRANSACTION_DETAIL {
+    constructor(fnmdata: string) {
+        this.PurchasePriceAmount = fnmdata.substr(3, 15).trim();
+        this.AlterationsImprovementsAndRepairsAmount = fnmdata.substr(18, 15).trim();
+        //this.FNMCostOLandAcquiredSeparatelyAmount = fnmdata.substr(33, 15).trim();
+        this.RefinanceIncludingDebtsToBePaidOffAmount = fnmdata.substr(48, 15).trim();
+        this.PrepaidItemsEstimatedAmount = fnmdata.substr(63, 15).trim();
+        this.EstimatedClosingCostsAmount = fnmdata.substr(78, 15).trim();
+        this.MIAndFundingFeeTotalAmount = fnmdata.substr(93, 15).trim();
+        this.BorrowerPaidDiscountPointsTotalAmount = fnmdata.substr(108, 15).trim();
+        this.SubordinateLienAmount = fnmdata.substr(123, 15).trim();
+        this.SellerPaidClosingCostsAmount = fnmdata.substr(139, 15).trim();
+        this.MIAndFundingFeeFinancedAmount = fnmdata.substr(154, 15).trim();
+    }
     private pURCHASE_CREDITField: PURCHASE_CREDIT[];
     private alterationsImprovementsAndRepairsAmountField: string;
     private borrowerPaidDiscountPointsTotalAmountField: string;
@@ -11166,6 +11471,10 @@ export class TRANSACTION_DETAIL {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class PURCHASE_CREDIT {
+    constructor(fnmdata: string) {
+        //this._Type = fnmdata.substr(3, 2).trim();
+        this._Amount = fnmdata.substr(5, 15).trim();
+    }
     private _AmountField: string;
     private _SourceTypeField: PURCHASE_CREDIT_SourceType;
     private _SourceTypeFieldSpecified: boolean;
@@ -11195,6 +11504,16 @@ export class PURCHASE_CREDIT {
     public get _Type(): PURCHASE_CREDIT_Type {
         return this._TypeField;
     }
+    /*Fannie Mae data element Other Credit Type Code:
+01 = Cash Deposit on sales contract
+02 = Seller Credit
+03 = Lender Credit
+04 = Relocation Funds
+05 = Employer Assisted Housing
+06 = Lease Purchase Fund
+07 = Other
+08 = Borrower Paid Fees
+09 = Sweat Equity*/
     public set _Type(value: PURCHASE_CREDIT_Type) {
         this._TypeField = value;
     }
@@ -11298,6 +11617,10 @@ export enum TRANSACTION_DETAILSubordinateLienPurposeType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class BORROWER {
+    constructor(fnmdata: string) {
+        this._SSN = fnmdata.substr(3, 9).trim();
+        this._ApplicationSignedDate = fnmdata.substr(12, 8).trim().toMMDDYYYY();
+    }
     private _ALIASField: _ALIAS[];
     private _MAIL_TOField: _MAIL_TO;
     private _RESIDENCEField: _RESIDENCE[];
@@ -11683,6 +12006,14 @@ export class BORROWER {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class _ALIAS {
+    constructor(fnmdata: string) {
+        //this._SSN = fnmdata.substr(3, 9).trim();
+        this._FirstName = fnmdata.substr(12, 35).trim();
+        this._MiddleName = fnmdata.substr(47, 35).trim();
+        this._LastName = fnmdata.substr(82, 35).trim();
+        //this.ForFuture1 = fnmdata.substr(117, 15).trim();
+        //this.ForFuture2 = fnmdata.substr(152, 15).trim();
+    }
     private _FirstNameField: string;
     private _LastNameField: string;
     private _MiddleNameField: string;
@@ -11877,6 +12208,20 @@ export enum _MAIL_TO_AddressSameAsPropertyIndicator {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class _RESIDENCE {
+    constructor(fnmdata: string) {
+        //ToDo
+        //this.SSN = fnmdata.substr(3, 9).trim();
+       // this.BorrowerResidencyBasisType= fnmdata.substr(12, 2).trim();
+        this._StreetAddress= fnmdata.substr(14, 50).trim();
+        this._City = fnmdata.substr(64, 35).trim();
+        this._State = fnmdata.substr(99, 2).trim();
+        this._PostalCode = fnmdata.substr(101, 5).trim();
+        //this.ZipPlusFour = fnmdata.substr(106, 4).trim();
+        // this.UsageType = fnmdata.substr(110, 1).trim();
+        this.BorrowerResidencyDurationYears = fnmdata.substr(111, 2).trim();
+        this.BorrowerResidencyDurationMonths = fnmdata.substr(114, 2).trim();
+        this._CountryField = fnmdata.substr(115, 50).trim();
+    }
     private lANDLORDField: LANDLORD;
     private _StreetAddressField: string;
     private _CityField: string;
@@ -12066,6 +12411,11 @@ export enum _RESIDENCEBorrowerResidencyType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class CURRENT_INCOME {
+    constructor(fnmdata: string) {
+     //   this._SSN = fnmdata.substr(3, 9).trim();
+        //this.IncomeType = fnmdata.substr(12, 2).trim();
+        this._MonthlyTotalAmount = fnmdata.substr(14, 15).trim();
+    }
     private incomeTypeField: CURRENT_INCOMEIncomeType;
     private incomeTypeFieldSpecified: boolean;
     private _MonthlyTotalAmountField: string;
@@ -12637,6 +12987,40 @@ export class DEPENDENT {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class EMPLOYER {
+    constructor(fnmdata: string) {
+        if(fnmdata.startsWith("04A"))
+        {
+        //this._SSN = fnmdata.substr(3, 9).trim();
+        this._Name = fnmdata.substr(12, 35).trim();
+        this._StreetAddress = fnmdata.substr(47, 35).trim();
+        this._City = fnmdata.substr(82, 35).trim();
+        this._State = fnmdata.substr(117, 2).trim();
+        this._PostalCode = fnmdata.substr(119, 5).trim();
+        //this.ZipPlusFour = fnmdata.substr(124, 4).trim();
+        //this.EmploymentBorrowerSelfEmployedIndicator = fnmdata.substr(128, 1).trim();
+        this.CurrentEmploymentYearsOnJob = fnmdata.substr(129, 2).trim();
+        this.CurrentEmploymentMonthsOnJob = fnmdata.substr(131, 2).trim();
+        this.CurrentEmploymentTimeInLineOfWorkYears = fnmdata.substr(133, 2).trim();
+        this.EmploymentPositionDescription = fnmdata.substr(135, 25).trim();
+        this._TelephoneNumber = fnmdata.substr(160, 10).trim();
+        }
+        else if(fnmdata.startsWith("04B")){
+            //this.SSN = fnmdata.substr(3, 9).trim();
+            this._Name = fnmdata.substr(12, 35).trim();
+            this._StreetAddress = fnmdata.substr(47, 35).trim();
+            this._City = fnmdata.substr(82, 35).trim();
+            this._State = fnmdata.substr(117, 2).trim();
+            this._PostalCode = fnmdata.substr(119, 5).trim();
+            //this.ZipPlusFour = fnmdata.substr(124, 4).trim();
+            //this.EmploymentBorrowerSelfEmployedIndicator = fnmdata.substr(128, 1).trim();
+            //this.EmploymentCurrentIndicator = fnmdata.substr(129, 1).trim();
+            this.PreviousEmploymentStartDate = fnmdata.substr(130, 8).trim().toMMDDYYYY();
+            this.previousEmploymentEndDateField = fnmdata.substr(138, 8).trim().toMMDDYYYY();
+            this.IncomeEmploymentMonthlyAmount = fnmdata.substr(146, 15).trim();
+            this.EmploymentPositionDescription = fnmdata.substr(161, 25).trim();
+            this._TelephoneNumber = fnmdata.substr(186, 10).trim();
+        }
+    }
     private _NameField: string;
     private _StreetAddressField: string;
     private _CityField: string;
@@ -12961,6 +13345,13 @@ export enum FHA_VA_BORROWER_CertificationSalesPriceExceedsAppraisedValueType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class GOVERNMENT_MONITORING {
+    constructor(fnmdata: string) {
+        //this._SSN = fnmdata.substr(3, 9).trim();
+        //this.RaceNationalOriginRefusalIndicator = fnmdata.substr(12, 1).trim();
+        //this.HMDAEthnicityType = fnmdata.substr(13, 1).trim();
+        //this.Filter = fnmdata.substr(14, 30).trim();
+        //this.GenderType = fnmdata.substr(44, 1).trim();
+    }
     private hMDA_RACEField: HMDA_RACE[];
     private hMDAEthnicityTypeField: GOVERNMENT_MONITORINGHMDAEthnicityType;
     private hMDAEthnicityTypeFieldSpecified: boolean;
@@ -12978,6 +13369,11 @@ export class GOVERNMENT_MONITORING {
     public set HMDA_RACE(value: HMDA_RACE[]) {
         this.hMDA_RACEField = value;
     }
+    /*1108 Ethnicity Code:
+1-Hispanic or Latino
+2-Not Hispanic or Latino
+3-Information not provided by applicant in mail, internet or telephone application
+4-Not applicable */
     public get HMDAEthnicityType(): GOVERNMENT_MONITORINGHMDAEthnicityType {
         return this.hMDAEthnicityTypeField;
     }
@@ -12990,6 +13386,10 @@ export class GOVERNMENT_MONITORING {
     public set HMDAEthnicityTypeSpecified(value: boolean) {
         this.hMDAEthnicityTypeFieldSpecified = value;
     }
+    /*F = Female
+M = Male
+I = Information not provided by applicant in mail, internet or telephone application
+N = Not applicable*/
     public get GenderType(): GOVERNMENT_MONITORINGGenderType {
         return this.genderTypeField;
     }
@@ -13045,9 +13445,21 @@ export class GOVERNMENT_MONITORING {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class HMDA_RACE {
+    constructor(fnmdata: string) {
+        //this._SSN = fnmdata.substr(3, 9).trim();
+        //this._Type = fnmdata.substr(12,2).trim();
+    }
     private _TypeField: HMDA_RACE_Type;
     private _TypeFieldSpecified: boolean;
     private _IDField: string;
+    /*1107 Race Code:
+1= American Indian or Alaska Native
+2 = Asian
+3 = Black or African American
+4 = Native Hawaiian or Other Pacific Islander
+5 = White
+6 = Information not provided by applicant in mail, internet, or telephone application
+7 = Not applicable */
     public get _Type(): HMDA_RACE_Type {
         return this._TypeField;
     }
@@ -13199,6 +13611,11 @@ export enum PRESENT_HOUSING_EXPENSEHousingExpenseType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 //[System.Xml.Serialization.XmlRootAttribute(Namespace="", IsNullable=false)]*/
 export class SUMMARY {
+    constructor(fnmdata: string) {
+        //this._SSN = fnmdata.substr(3, 9).trim();
+       // this._AmountType = fnmdata.substr(12, 3).trim();
+        this._Amount = fnmdata.substr(15, 15).trim();
+    }
     private _AmountField: string;
     private _AmountTypeField: SUMMARY_AmountType;
     private _AmountTypeFieldSpecified: boolean;

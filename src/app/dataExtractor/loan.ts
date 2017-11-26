@@ -82,6 +82,18 @@ export class LoanApplication {
                     this[c.Name] = this.getInstancefor(c.Name, f);
             });
         });
+        this.childArrays.forEach(c => {
+            if(fnmString.filter(t => t.indexOf(c.Id) == -1))
+            {
+                if (c.IsArray) {
+                    if (!this[c.Name])
+                        this[c.Name] = [];
+                    this[c.Name].push(this.getInstancefor(c.Name, c.Id));
+                }
+                else
+                    this[c.Name] = this.getInstancefor(c.Name, c.Id);
+            }
+        });
     }
     //#endregion
     private getInstancefor(key, rowdata: string) {

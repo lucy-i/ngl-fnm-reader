@@ -445,15 +445,46 @@
                         </span>
                     </span>
                 </div>
-                <div class="flex column">
-                    <h4>
-                        Income
-                    </h4>
+                <div class="flex column border-bottom" *ngFor="let employ of item.PreviousEmployments">
                     <span class="flex row" *ngFor="let income of item.Incomes">
                         <span class="flex-width">{{ income.IncomeType}} </span>
                         <span class="flex-width  value">: {{ income.MonthlyIncome}}</span>
                     </span>
                 </div>
+
+
+            </div>
+        </div>
+        <h4 class="text-center space-around">
+            V. MONTHLY INCOME AND COMBINED HOUSING EXPENSE INFORMATION
+        </h4>
+        <div class="flex row">
+            <div class="flex column">
+                <div class="col-head">
+                    Gross Monthly Income
+                </div>
+
+            </div>
+            <div class="flex column" *ngFor="let item of loan.LoanApplication.Applicants">
+                <div class="col-head">
+                    Borrower
+                </div>
+                <div class="row" *ngFor="let income of item.Incomes">
+                    <div>
+                        {{income.IncomeType}}
+                    </div>
+                    <div>
+                        {{income.MonthlyIncome}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="flex column">
+                <div class="col-head">
+                    Total
+                </div>
+            </div>
+            <div class="flex column flex-width-50 border-left" *ngFor="let item of loan.LoanApplication.Applicants">
                 <div class="flex column">
                     <h4>
                         Housing Expence
@@ -464,6 +495,21 @@
                         <span class="flex-width  value">: {{expense.HousingPaymentAmount}}</span>
                     </span>
                 </div>
+
+            </div>
+        </div>
+        <h4 class="text-center space-around">
+            VI. ASSETS AND LIABILITIES
+        </h4>
+        <p>
+            This Statement and any applicable supporting schedules may be completed jointly by both married and unmarried Co-Borrowers
+            if their assets and liabilities are sufficiently joined so that the Statement can be meaningfully and fairly
+            presented on a combined basis; otherwise, separate Statements and Schedules are required. If the Co-Borrower
+            section was completed about a non-applicant spouse or other person, this Statement and supporting schedules must
+            be completed about that spouse or other person also.
+        </p>
+        <div class="flex row">
+            <div class="flex column flex-width-50 border-left" *ngFor="let item of loan.LoanApplication.Applicants">
                 <div class="flex column">
                     <h4>
                         Assets
@@ -472,10 +518,10 @@
                         <span class="flex-width">Type</span>
                         <span class="flex-width">Institution</span>
                         <!-- <span class="flex-width">Street Address</span>
-                            <span class="flex-width">City</span>
-                            <span class="flex-width">State</span>
-                            <span class="flex-width">Zipcode</span>
-                            <span class="flex-width">ZipPlusFour</span> -->
+                                        <span class="flex-width">City</span>
+                                        <span class="flex-width">State</span>
+                                        <span class="flex-width">Zipcode</span>
+                                        <span class="flex-width">ZipPlusFour</span> -->
                         <span class="flex-width">Account Number</span>
                         <span class="flex-width">Cash Value</span>
                         <span class="flex-width">No of Shares</span>
@@ -486,10 +532,10 @@
                         <span class="flex-width  value">{{asset.AssetTypeValue}}</span>
                         <span class="flex-width value">{{asset.InstitutionName}} </span>
                         <!-- <span class="flex-width">{{asset.StreetAddress}}</span>
-                                <span class="flex-width">{{asset.City}}</span>
-                                <span class="flex-width">{{asset.State}}</span>
-                                <span class="flex-width">{{asset.Zipcode}}</span>
-                                <span class="flex-width">{{asset.ZipPlusFour}}</span> -->
+                                            <span class="flex-width">{{asset.City}}</span>
+                                            <span class="flex-width">{{asset.State}}</span>
+                                            <span class="flex-width">{{asset.Zipcode}}</span>
+                                            <span class="flex-width">{{asset.ZipPlusFour}}</span> -->
                         <span class="flex-width value">{{asset.AccountNumber}}</span>
                         <span class="flex-width value">{{asset.CashValue}}</span>
                         <span class="flex-width value">{{asset.NofShares}}</span>
@@ -504,10 +550,10 @@
                         <span class="flex-width">Type</span>
                         <span class="flex-width">Creditor </span>
                         <!-- <span class="flex-width">Street Address</span>
-                                <span class="flex-width">City</span>
-                                <span class="flex-width">State</span>
-                                <span class="flex-width">Zipcode</span>
-                                <span class="flex-width">ZipPlusFour</span> -->
+                                            <span class="flex-width">City</span>
+                                            <span class="flex-width">State</span>
+                                            <span class="flex-width">Zipcode</span>
+                                            <span class="flex-width">ZipPlusFour</span> -->
                         <span class="flex-width">Account Number</span>
                         <span class="flex-width">Monthly Payment</span>
                         <span class="flex-width">Left to Pay</span>
@@ -531,10 +577,10 @@
                         <span class="flex-width">PropertyType</span>
                         <span class="flex-width">Address </span>
                         <!-- <span class="flex-width">Street Address</span>
-                                    <span class="flex-width">City</span>
-                                    <span class="flex-width">State</span>
-                                    <span class="flex-width">Zipcode</span>
-                                    <span class="flex-width">ZipPlusFour</span> -->
+                                                <span class="flex-width">City</span>
+                                                <span class="flex-width">State</span>
+                                                <span class="flex-width">Zipcode</span>
+                                                <span class="flex-width">ZipPlusFour</span> -->
                         <span class="flex-width">Disposition</span>
                         <span class="flex-width">Market Value</span>
                         <span class="flex-width">MortgageAmount</span>

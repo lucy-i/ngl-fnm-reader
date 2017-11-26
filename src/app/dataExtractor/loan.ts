@@ -90,7 +90,7 @@ export class LoanApplication {
                         this[c.Name] = [];
                     this[c.Name].push(this.getInstancefor(c.Name, c.Id));
                 }
-                else
+                else if(!this[c.Name])
                     this[c.Name] = this.getInstancefor(c.Name, c.Id);
             }
         });

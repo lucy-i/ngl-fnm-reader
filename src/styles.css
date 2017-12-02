@@ -25,7 +25,8 @@ input[type="text"] {
     display: flex;
     border: none;
     flex: 1 1 auto;
-    background-color: #f8f877;
+    /* background-color: #f8f877; */
+    color: #1900fa;
     font-style: italic;
 }
 
@@ -41,7 +42,8 @@ label {
 }
 
 input[type="checkbox"]:checked+label {
-    background-color: #f8f877;
+    /* background-color: #f8f877; */
+    color: #1900fa;
     font-style: italic;
 }
 
@@ -166,7 +168,7 @@ input#fileInput:focus:before {
     text-decoration: line-through;
 }
 .strike-out input[type="text"]:hover {
-    background-color: #f8f877;
+    color: #1900fa;
 }
 .strike-out input,
 .strike-out input[type='checkbox'],

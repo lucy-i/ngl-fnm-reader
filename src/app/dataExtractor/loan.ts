@@ -1,4 +1,7 @@
+import { LoanMetadata } from "app/dataExtractor/metadata";
 
+
+const loanMetadata = new LoanMetadata();
 export class Loan {
     LoanApplication: LoanApplication;
     constructor(fnmString: string[]) {
@@ -83,14 +86,13 @@ export class LoanApplication {
             });
         });
         this.childArrays.forEach(c => {
-            if(fnmString.filter(t => t.indexOf(c.Id) == -1))
-            {
+            if (fnmString.filter(t => t.indexOf(c.Id) == -1)) {
                 if (c.IsArray) {
                     if (!this[c.Name])
                         this[c.Name] = [];
                     this[c.Name].push(this.getInstancefor(c.Name, c.Id));
                 }
-                else if(!this[c.Name])
+                else if (!this[c.Name])
                     this[c.Name] = this.getInstancefor(c.Name, c.Id);
             }
         });
@@ -586,6 +588,9 @@ export class Applicant {
     get length(): number {
         return 239;
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     get childArrays(): ChildProperty[] {
         return [
             //
@@ -750,12 +755,16 @@ export class DependentsAge {
         this.SSN = fnmdata.substr(3, 9).trim();
         this.DependentsAge = fnmdata.substr(12, 3).trim();
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     //020
     //#4#9
     SSN: string;
     //020
     //#13#3
     DependentsAge: string;
+   
 }
 export class Address {
     public get id(): string {
@@ -780,7 +789,7 @@ export class Address {
         this.Country = fnmdata.substr(115, 50).trim();
     }
     toFNMString(): string {
-        let fnmdata: string="";
+        let fnmdata: string = "";
         fnmdata += this.id.fillString(3);
         fnmdata += this.SSN.fillString(9);
         fnmdata += this.AddressType.fillString(2);
@@ -794,6 +803,9 @@ export class Address {
         fnmdata += this.NoofMonths.fillString(2);
         fnmdata += this.Country.fillString(50);
         return fnmdata;
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -883,6 +895,9 @@ export class CurrentEmployment {
         fnmdata += this.BusinessPhone.fillString(10);
         return fnmdata;
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     //020
     //#4#9
     SSN: string;
@@ -949,7 +964,7 @@ export class PreviousEmployment {
         this.BusinessPhone = fnmdata.substr(186, 10).trim();
     }
     toFNMString(): string {
-        let fnmData: string='';
+        let fnmData: string = '';
         fnmData += this.id.fillString(3);
         fnmData += this.SSN.fillString(9);
         fnmData += this.EmployerName.fillString(35);
@@ -966,6 +981,9 @@ export class PreviousEmployment {
         fnmData += this.Position.fillString(25);
         fnmData += this.BusinessPhone.fillString(10);
         return fnmData
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -1029,6 +1047,9 @@ export class HousingExpense {
         this.PaymentTypeCode = fnmdata.substr(13, 2).trim();
         this.HousingPaymentAmount = fnmdata.substr(15, 15).trim();
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     //020
     //#4#9
     SSN: string;
@@ -1087,6 +1108,10 @@ export class Income {
         this.SSN = fnmdata.substr(3, 9).trim();
         this.IncomeType = fnmdata.substr(12, 2).trim();
         this.MonthlyIncome = fnmdata.substr(14, 15).trim();
+        this.getMetaValues();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -1139,6 +1164,14 @@ export class Income {
     //040
     //#15#15
     MonthlyIncome: string;
+    Primary: boolean;
+    Order: number;
+    private getMetaValues(): void {
+        loanMetadata.IncomeType.filter(t => t.value == this.IncomeType).forEach(t => {
+            this.Primary = t.primary;
+            this.Order = t.order;
+        })
+    }
 }
 //ToDo : Find Purpose of 06A
 // export class Asset {
@@ -1182,6 +1215,9 @@ export class LifeInsurance {
         this.CashValue = fnmdata.substr(42, 15).trim();
         this.FaceAmount = fnmdata.substr(57, 15).trim();
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     //020
     //#4#9
     SSN: string;
@@ -1220,6 +1256,9 @@ export class Asset {
         this.Description = fnmdata.substr(183, 80).trim();
         this.FutureUse1 = fnmdata.substr(263, 1).trim();
         this.FutureUse2 = fnmdata.substr(264, 2).trim();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -1325,6 +1364,9 @@ export class Automobile {
         this.Year = fnmdata.substr(42, 4).trim();
         this.CashValue = fnmdata.substr(47, 15).trim();
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     //020
     //#4#9
     SSN: string;
@@ -1353,6 +1395,9 @@ export class RelatedExpense {
         this.MonthlyPayment = fnmdata.substr(15, 15).trim();
         this.LefttoPay = fnmdata.substr(30, 3).trim();
         this.OwnedTo = fnmdata.substr(33, 60).trim();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -1406,6 +1451,9 @@ export class RealEstateOwned {
         this.IsSubjectProperty = fnmdata.substr(187, 1).trim();
         this.AssetId = fnmdata.substr(188, 2).trim();
         this.ForFuture = fnmdata.substr(190, 15).trim();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -1528,6 +1576,9 @@ export class Alias {
         this.ForFuture1 = fnmdata.substr(117, 15).trim();
         this.ForFuture2 = fnmdata.substr(152, 15).trim();
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     //020
     //#4#9
     SSN: string;
@@ -1575,6 +1626,9 @@ export class Liability {
         this.IsOmitted = fnmdata.substr(197, 1).trim();
         this.IsSubjectProperty = fnmdata.substr(198, 1).trim();
         this.IsRentalProperty = fnmdata.substr(199, 1).trim();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -1669,6 +1723,9 @@ export class HELOC {
         this.SSN = fnmdata.substr(3, 9).trim();
         this.AmountType = fnmdata.substr(12, 3).trim();
         this.Amount = fnmdata.substr(15, 15).trim();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -1882,6 +1939,9 @@ export class DeclarationExplanation {
         this.DeclarationType = fnmdata.substr(12, 2).trim();
         this.DeclarationExplanation = fnmdata.substr(14, 255).trim();
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     //020
     //#4#9
     SSN: string;
@@ -1919,6 +1979,9 @@ export class AcknowledgmentAgreement {
         this.SSN = fnmdata.substr(3, 9).trim();
         this.SignatureDate = fnmdata.substr(12, 8).trim().toMMDDYYYY();
     }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
+    }
     //020
     //#4#9
     SSN: string;
@@ -1942,6 +2005,9 @@ export class GovernmentMonitoring {
         this.Ethnicity = fnmdata.substr(13, 1).trim();
         this.Filter = fnmdata.substr(14, 30).trim();
         this.SEX = fnmdata.substr(44, 1).trim();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -2046,6 +2112,9 @@ export class GovernmentMonitoringPurpose {
     constructor(fnmdata: string) {
         this.SSN = fnmdata.substr(3, 9).trim();
         this.RaceType = fnmdata.substr(12, 2).trim();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9
@@ -2368,6 +2437,9 @@ export class Eligibility {
 
     constructor(fnmdata: string) {
         this.SSN = fnmdata.substr(3, 9).trim();
+    }
+    get hasValue(): boolean {
+        return this.SSN && this.SSN.length > 0 ? true : false;
     }
     //020
     //#4#9

@@ -463,16 +463,17 @@
                 <div class="col-head">
                     Gross Monthly Income
                 </div>
-
+                <div class="row" *ngFor="let incomeType of loanMetadata.requiredIncomeTypes() | orderBy: {property: 'order', direction: 1}">
+                    <div>
+                        {{incomeType.text}}
+                    </div>
+                </div>
             </div>
             <div class="flex column" *ngFor="let item of loan.LoanApplication.Applicants">
                 <div class="col-head">
                     Borrower
                 </div>
-                <div class="row" *ngFor="let income of item.Incomes | orderBy: {property: 'order', direction: 1}">
-                    <div>
-                        {{income.Label}}
-                    </div>
+                <div class="row" *ngFor="let income of item.Incomes | orderBy: {property: 'Order', direction: 1}">
                     <div>
                         {{income.MonthlyIncome}}
                     </div>

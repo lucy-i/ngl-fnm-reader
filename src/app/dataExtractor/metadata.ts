@@ -89,6 +89,9 @@ export class LoanMetadata {
         { value: "TL", text: "Temporary Leave*" },
         { value: "TI", text: "Tip Income*" }
     ];
+    requiredIncomeTypes() {
+        return this.IncomeType.filter(t => t.primary);
+    }
     AssetType: EnumTypeModel[] = [
         { value: "03", text: "Checking Account" },
         { value: "F1", text: "Cash Deposit on Sales Contract" },

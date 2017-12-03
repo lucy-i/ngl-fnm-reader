@@ -45,6 +45,8 @@ export class LoanApplication {
             dd.setData(fnmString);
             this.Applicants.push(dd);
         });
+        if(this.Applicants.length==1)
+        this.Applicants.push(new Applicant(Applicant.Id));
         this.setData(fnmString);
     }
 

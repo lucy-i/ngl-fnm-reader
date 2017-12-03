@@ -469,9 +469,9 @@
                 <div class="col-head">
                     Borrower
                 </div>
-                <div class="row" *ngFor="let income of item.Incomes">
+                <div class="row" *ngFor="let income of item.Incomes | orderBy: {property: 'order', direction: 1}">
                     <div>
-                        {{income.IncomeType}}
+                        {{income.Label}}
                     </div>
                     <div>
                         {{income.MonthlyIncome}}

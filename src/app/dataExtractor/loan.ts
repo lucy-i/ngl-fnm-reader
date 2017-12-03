@@ -764,7 +764,7 @@ export class DependentsAge {
     //020
     //#13#3
     DependentsAge: string;
-   
+
 }
 export class Address {
     public get id(): string {
@@ -1166,10 +1166,12 @@ export class Income {
     MonthlyIncome: string;
     Primary: boolean;
     Order: number;
+    Label: string;
     private getMetaValues(): void {
         loanMetadata.IncomeType.filter(t => t.value == this.IncomeType).forEach(t => {
             this.Primary = t.primary;
             this.Order = t.order;
+            this.Label = t.label || t.text;
         })
     }
 }

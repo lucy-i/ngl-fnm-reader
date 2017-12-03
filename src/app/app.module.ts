@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { ReaderComponent } from "app/reader/reader.component";
 import { FNMDatePipe } from 'app/reader/reader.pipes';
 import { externString } from 'app/libs/string';
+import { OrderByPipe } from 'app/orderBy.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReaderComponent,
-    FNMDatePipe
+    FNMDatePipe,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,522 @@
+<div class="flex-width text-center fixed-ele">
+    <label>FNM Reader :</label>
+    <div>
+        <input type="file" name="nfmfile" id="fileInput">
+    </div>
+</div>
+
+<div class="flex column">
+    <div class="flex column" *ngIf="loan">
+        <h2 class="text-center">Uniform Residential Loan Application </h2>
+        <p class="form-top">This application is designed to be completed by the applicant(s) with the Lender’s assistance. Applicants should
+            complete this form as “Borrower” or “Co-Borrower,” as applicable. Co-Borrower information must also be provided
+            (and the appropriate box checked) when  the income or assets of a person other than the Borrower (including
+            the Borrower’s spouse) will be used as a basis for loan qualification or  the income or assets of the Borrower’s
+            spouse or other person who has community property rights pursuant to state law will not be used as a basis for
+            loan qualification, but his or her liabilities must be considered because the spouse or other person has community
+            property rights pursuant to applicable law and Borrower resides in a community property state, the security property
+            is located in a community property state, or the Borrower is relying on other property located in a community
+            property state as a basis for repayment of the loan.
+        </p>
+        <p> If this is an application for joint credit, Borrower and Co-Borrower each agree that we intend to apply for joint
+            credit (sign below): </p>
+        <div class="flex column">
+            <h4 class="text-center">
+                I. TYPE OF MORTGAGE AND TERMS OF LOAN
+            </h4>
+            <span class="flex row">
+                <span class="flex-width">Mortgage Applied For</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.MortgageAppliedFor}} </span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Mortgage Applied For Other (Explain)</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.MortgageAppliedForOther}} </span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Agency Case Number</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.AgencyCaseNumber}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Card Number</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.CardNumber}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Loan Amount</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.LoanAmount}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Interest Rate</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.InterestRate}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">No of Months</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.NoOfMonths}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Amortization Type</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.AmortizationType}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Other Amortization (Explain)</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.AmortizationTypeOther}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">ARM Textual Description</span>
+                <span class="flex-width">: {{loan.LoanApplication.TypeAndTerms.ARMTextualDescription}}</span>
+            </span>
+        </div>
+
+
+        <div class="flex column">
+            <h4 class="text-center">
+                II. PROPERTY INFORMATION AND PURPOSE OF LOAN
+            </h4>
+            <span class="flex row">
+                <span class="flex-width">Street Address</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.StreetAddress}} </span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">City</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.City}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">State</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.State}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Zip Code</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.ZipCode}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Zip Plus Four</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.City}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">No of Units</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.NoofUnits}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Subject Property Code</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.SubjectPropertyCode}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Subject Property</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.SubjectProperty}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex-width">Year Built</span>
+                <span class="flex-width">: {{loan.LoanApplication.Property.YearBuilt}}</span>
+            </span>
+        </div>
+
+
+        <h4 class="text-center">III. BORROWER INFORMATION </h4>
+        <div class="flex row">
+
+            <div class="flex column" *ngFor="let item of loan.LoanApplication.Applicants; #i = index" [attr.data-index]="i">
+                <div class="flex column">
+                    <h4 class="text-center">
+                        {{item.Indicator==="BW"?"Applicant":"Co-Applicant"}} Information
+                    </h4>
+                    <span class="flex row">
+                        <span class="flex flex-width">SSN </span>
+                        <span class="flex-width">: {{item.SSN}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width"> First Name </span>
+                        <span class="flex-width">: {{item.FirstName}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width"> Last Name </span>
+                        <span class="flex-width">: {{item.LastName}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Middle Name </span>
+                        <span class="flex-width">: {{item.MiddleName}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">DOB </span>
+                        <span class="flex-width">: {{item.DateofBirth}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Generation </span>
+                        <span class="flex-width">: {{item.Generation}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">HomePhone </span>
+                        <span class="flex-width">: {{item.HomePhone}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Age </span>
+                        <span class="flex-width">: {{item.Age}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Yrs. School </span>
+                        <span class="flex-width">: {{item.YrsInSchool}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Marital Status </span>
+                        <span class="flex-width">: {{item.MaritalStatus}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Dependents </span>
+                        <span class="flex-width">: {{item.Dependents}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Jointly </span>
+                        <span class="flex-width">: {{item.Jointly}}</span>
+                    </span>
+                </div>
+                <div class="flex column" *ngFor="let addr of item.Addresses">
+                    <h4>
+                        {{addr.AddressType==="F4"?"Former Residence":(addr.AddressType==="ZG"?"Present Address":(addr.AddressType==="BH"?"Mailing
+                        Address":"Address"))}}
+                    </h4>
+                    <span class="flex row">
+                        <span class="flex flex-width">Street Address </span>
+                        <span class="flex-width">: {{addr.StreetAddress}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">City</span>
+                        <span class="flex-width">: {{addr.City}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">State </span>
+                        <span class="flex-width">: {{addr.State}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Country </span>
+                        <span class="flex-width">: {{addr.Country}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">ZipCode </span>
+                        <span class="flex-width">: {{addr.ZipCode}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">ZipPlusFour </span>
+                        <span class="flex-width">: {{addr.ZipPlusFour}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">No of Years</span>
+                        <span class="flex-width">: {{addr.NoofYears}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">No of Months </span>
+                        <span class="flex-width">: {{addr.NoofMonths}}</span>
+                    </span>
+
+                </div>
+                <div class="flex column" *ngFor="let employ of item.CurrentEmployments">
+                    <h4>
+                        Current Employment
+                    </h4>
+                    <span class="flex row">
+                        <span class="flex flex-width">Employer Name </span>
+                        <span class="flex-width">: {{employ.EmployerName}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">City</span>
+                        <span class="flex-width">: {{employ.City}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">State </span>
+                        <span class="flex-width">: {{employ.State}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Country </span>
+                        <span class="flex-width">: {{employ.Country}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">ZipCode </span>
+                        <span class="flex-width">: {{employ.ZipCode}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">ZipPlusFour </span>
+                        <span class="flex-width">: {{employ.ZipPlusFour}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Is Self Employed</span>
+                        <span class="flex-width">: {{employ.IsSelfEmployed}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Years On Job </span>
+                        <span class="flex-width">: {{employ.YearsOnJob}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Months On Job </span>
+                        <span class="flex-width">: {{employ.MonthsOnJob}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Position </span>
+                        <span class="flex-width">: {{employ.Position}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Business Phone </span>
+                        <span class="flex-width">: {{employ.BusinessPhone}}</span>
+                    </span>
+                </div>
+                <div class="flex column" *ngFor="let employ of item.PreviousEmployments">
+                    <h4>
+                        Previous Employment
+                    </h4>
+                    <span class="flex row">
+                        <span class="flex flex-width">Employer Name </span>
+                        <span class="flex-width">: {{employ.EmployerName}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">City</span>
+                        <span class="flex-width">: {{employ.City}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">State </span>
+                        <span class="flex-width">: {{employ.State}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Country </span>
+                        <span class="flex-width">: {{employ.Country}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">ZipCode </span>
+                        <span class="flex-width">: {{employ.ZipCode}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">ZipPlusFour </span>
+                        <span class="flex-width">: {{employ.ZipPlusFour}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Is Self Employed</span>
+                        <span class="flex-width">: {{employ.IsSelfEmployed}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">From Date </span>
+                        <span class="flex-width">: {{employ.FromDate}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">To Date </span>
+                        <span class="flex-width">: {{employ.ToDate}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Monthly Income </span>
+                        <span class="flex-width">: {{employ.MonthlyIncome}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Position </span>
+                        <span class="flex-width">: {{employ.Position}}</span>
+                    </span>
+                    <span class="flex row">
+                        <span class="flex flex-width">Business Phone </span>
+                        <span class="flex-width">: {{employ.BusinessPhone}}</span>
+                    </span>
+                </div>
+                <div class="flex column">
+                    <h4>
+                        Income
+                    </h4>
+                    <span class="flex row" *ngFor="let income of item.Incomes">
+                        <span class="flex-width">{{ income.IncomeType}} </span>
+                        <span class="flex-width">: {{ income.MonthlyIncome}}</span>
+                    </span>
+                </div>
+                <div class="flex column">
+                    <h4>
+                        Housing Expence
+                    </h4>
+                    <span class="flex row" *ngFor="let expense of item.HousingExpences">
+                        <span class="flex-width">{{expense.ExpenseIndicatorValue}}</span>
+                        <span class="flex-width">{{expense.PaymentTypeValue}} </span>
+                        <span class="flex-width">: {{expense.HousingPaymentAmount}}</span>
+                    </span>
+                </div>
+                <div class="flex column">
+                    <h4>
+                        Assets
+                    </h4>
+                    <span class="flex row">
+                        <span class="flex-width">Type</span>
+                        <span class="flex-width">Institution</span>
+                        <!-- <span class="flex-width">Street Address</span>
+                            <span class="flex-width">City</span>
+                            <span class="flex-width">State</span>
+                            <span class="flex-width">Zipcode</span>
+                            <span class="flex-width">ZipPlusFour</span> -->
+                        <span class="flex-width">Account Number</span>
+                        <span class="flex-width">Cash Value</span>
+                        <span class="flex-width">No of Shares</span>
+                        <span class="flex-width">Description</span>
+
+                    </span>
+                    <span class="flex row" *ngFor="let asset of item.Assets">
+                        <span class="flex-width">{{asset.AssetTypeValue}}</span>
+                        <span class="flex-width">{{asset.InstitutionName}} </span>
+                        <!-- <span class="flex-width">{{asset.StreetAddress}}</span>
+                                <span class="flex-width">{{asset.City}}</span>
+                                <span class="flex-width">{{asset.State}}</span>
+                                <span class="flex-width">{{asset.Zipcode}}</span>
+                                <span class="flex-width">{{asset.ZipPlusFour}}</span> -->
+                        <span class="flex-width">{{asset.AccountNumber}}</span>
+                        <span class="flex-width">{{asset.CashValue}}</span>
+                        <span class="flex-width">{{asset.NofShares}}</span>
+                        <span class="flex-width">{{asset.Description}}</span>
+                    </span>
+                </div>
+                <div class="flex column">
+                    <h4>
+                        Liabilities
+                    </h4>
+                    <span class="flex row">
+                        <span class="flex-width">Type</span>
+                        <span class="flex-width">Creditor </span>
+                        <!-- <span class="flex-width">Street Address</span>
+                                <span class="flex-width">City</span>
+                                <span class="flex-width">State</span>
+                                <span class="flex-width">Zipcode</span>
+                                <span class="flex-width">ZipPlusFour</span> -->
+                        <span class="flex-width">Account Number</span>
+                        <span class="flex-width">Monthly Payment</span>
+                        <span class="flex-width">Left to Pay</span>
+                        <span class="flex-width">Unpaid Balance</span>
+
+                    </span>
+                    <span class="flex row" *ngFor="let liability of item.Liabilities">
+                        <span class="flex-width">{{liability.LiabilityTypeValue}}</span>
+                        <span class="flex-width">{{liability.CreditorName}} </span>
+                        <span class="flex-width">{{liability.AccountNumber}}</span>
+                        <span class="flex-width">{{liability.MonthlyPayment}}</span>
+                        <span class="flex-width">{{liability.LeftToPay}}</span>
+                        <span class="flex-width">{{liability.UnpaidBalance}}</span>
+                    </span>
+                </div>
+                <div class="flex column">
+                    <h4>
+                        Real Estate Owned
+                    </h4>
+                    <span class="flex row">
+                        <span class="flex-width">PropertyType</span>
+                        <span class="flex-width">Address </span>
+                        <!-- <span class="flex-width">Street Address</span>
+                                    <span class="flex-width">City</span>
+                                    <span class="flex-width">State</span>
+                                    <span class="flex-width">Zipcode</span>
+                                    <span class="flex-width">ZipPlusFour</span> -->
+                        <span class="flex-width">Disposition</span>
+                        <span class="flex-width">Market Value</span>
+                        <span class="flex-width">MortgageAmount</span>
+                        <span class="flex-width">GroissRentalIncome</span>
+                        <span class="flex-width">MortgagePayments</span>
+                        <span class="flex-width">MonthlyExpense</span>
+                        <span class="flex-width">NetRentalIncome</span>
+
+                    </span>
+                    <span class="flex row" *ngFor="let reo of item.RealEstateOwneds">
+                        <span class="flex-width">{{reo.PropertyTypeValue}}</span>
+                        <span class="flex-width">{{reo.StrretAddress }} ,{{reo.City }} ,{{reo.State }} ,{{reo.Zipcode }}-{{reo.ZipPlusFour }} </span>
+                        <span class="flex-width">{{reo.DispositionValue}}</span>
+                        <span class="flex-width">{{reo.MarketValue}}</span>
+                        <span class="flex-width">{{reo.MortgageAmount}}</span>
+                        <span class="flex-width">{{reo.GroissRentalIncome}}</span>
+                        <span class="flex-width">{{reo.MortgagePayments}}</span>
+                        <span class="flex-width">{{reo.MonthlyExpense}}</span>
+                        <span class="flex-width">{{reo.NetRentalIncome}}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="flex column">
+            <h4>
+                DETAILS OF TRANSACTION
+            </h4>
+            <span class="flex row">
+                <span class="flex flex-width">a. Purchase price </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.PurchasePrice}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">b. Alterations, improvements, repairs </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.Alterations}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">c. Land (if acquired separately) </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.Land}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">d. Refinance (incl. debts to be paid off) </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.Refinane}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">e. Estimated prepaid items </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.EstimatedPrePaid}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">f. Estimated closing costs </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.ExtimatedClosinfCosts}}</span>
+            </span>
+
+            <span class="flex row">
+                <span class="flex flex-width">g. PMI, MIP, Funding Fee </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.FundingFee}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">h. Discount (if Borrower will pay) </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.Discount}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">i. Total costs (add items a through h) </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.TotalCosts}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">Subordinate Financing </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.SubordinateFinancing}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">Seller Closing Costs </span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.SellerClosingCosts}}</span>
+            </span>
+            <span class="flex row">
+                <span class="flex flex-width">Funding Fee Financed</span>
+                <span class="flex-width">: {{loan.LoanApplication.DetailsOfTransaction.FundingFeeFinanced}}</span>
+            </span>
+        </div>
+        <div class="flex row">
+            <div class="flex" *ngFor="let item of loan.LoanApplication.Applicants">
+                <div class="flex column">
+                    <h4>
+                        {{item.Indicator==="BW"?"Applicant":"Co-Applicant"}} Declaration
+                    </h4>
+                    <span class="flex row" *ngFor="let declaration of item.Declaration.DeclarationSets">
+                        <span class="flex flex-width">{{declaration.Label}} </span>
+                        <span class="width-50">: {{declaration.Value}}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <pre *ngIf="1==2" id="fileDisplayArea" class="flex">
+
+    </pre> -->
+<!-- <div class="flex" style="width:30%">
+        <ul>
+            <pre>*****************************************************************************************************************************************************</pre>
+            <li *ngFor="let item of stringarr">
+                <pre>  {{item.substring(3)}}</pre>
+            </li>
+        </ul>
+    </div> -->
+<!-- <div class="flex">
+        <ul>
+
+            <li *ngFor="let item of data">
+                {{item.Title}}
+
+                <ul>
+                    <li *ngFor="let childItems of item.Rows">
+                        <pre>
+                            {{childItems.substring(3,childItems.length)}}
+                      </pre>
+                    </li>
+                </ul>
+
+            </li>
+        </ul>
+    </div> -->

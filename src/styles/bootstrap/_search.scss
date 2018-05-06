@@ -1,0 +1,41 @@
+search {
+    display: block;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1111;
+    &.closed {
+        display: none;
+    }
+    input {
+        margin: 0px auto;
+        font-size: 36px;
+        top: 50px;
+        left: 50px;
+        position: absolute;
+        background: transparent;
+        border: transparent;
+        border-bottom: 1px solid rgb(100, 100, 100);
+        color: rgb(100, 100, 100);
+        width: 500px;
+        &:focus {
+            outline-offset: px;
+        }
+        &:focus {
+            outline: -webkit-focus-ring-color auto 0px;
+        }
+    }
+    .close-btn {
+        font-size: 30px;
+        position: absolute;
+        right: 50px;
+        top: 30px;
+        padding: 0px 12px;
+        border-radius: 50%;
+        padding-bottom: 2px;
+        /* line-height: 34px; */
+    }
+}

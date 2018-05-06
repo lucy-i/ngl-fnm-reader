@@ -89,6 +89,16 @@ export class LoanMetadata {
         { value: "TL", text: "Temporary Leave*" },
         { value: "TI", text: "Tip Income*" }
     ];
+    ExpensePaymmentTypes: EnumTypeModel[] = [
+        { value: "25", text: "Rent" },
+        { value: "26", text: "First Mortgage P&I" },
+        { value: "22", text: "Other Financing P&I" },
+        { value: "01", text: "Hazard Insurance" },
+        { value: "14", text: "Real Estate Taxes" },
+        { value: "02", text: "Mortgage Insurance" },
+        { value: "06", text: "Homeowner Association Dues" },
+        { value: "23", text: "Other" }
+    ];
     requiredIncomeTypes() {
         return this.IncomeType.filter(t => t.primary);
     }
@@ -114,6 +124,32 @@ export class LoanMetadata {
         { value: "GE", text: "Gift of Equity" }
     ]
 
+    LibilityType: EnumTypeModel[] = [
+        { value: "I", text: "Installment Loan" },
+        { value: "O", text: "30 Day Charge Account (open)" },
+        { value: "R", text: "Revolving Charge Account" },
+        { value: "C", text: "HELOC" },
+        { value: "M", text: "Mortgage" },
+        { value: "F", text: "Lease Payments" },
+        { value: "N", text: "Liens" },
+        { value: "A", text: "Taxes" },
+        { value: "Z", text: "Other Liability" }
+    ];
+
+    PropertyType: EnumTypeModel[] = [
+        { value: "14", text: "Single Family" },
+        { value: "04", text: "Condominium" },
+        { value: "16", text: "Townhouse" },
+        { value: "13", text: "Co-operative" },
+        { value: "15", text: "Two-to-four unit property" },
+        { value: "18", text: "Multifamily (more than 4 units)" },
+        { value: "08", text: "Manufactured/Mobile Home" },
+        { value: "02", text: "Commercial – Non-Residential" },
+        { value: "F1", text: "Mixed Use – Residential" },
+        { value: "05", text: "Farm" },
+        { value: "03", text: "Home and Business Combined" },
+        { value: "07", text: "Land" }
+    ];
 
 }
 
@@ -123,4 +159,46 @@ export class EnumTypeModel {
     label?: string;
     primary?: boolean;
     order?: number;
+}
+export const IncomeEnumConst = {
+    "MilitaryBasePay": "F1",
+    "MilitaryRationsAllowance": "07",
+    "MilitaryFlightPay": "F2",
+    "MilitaryHazardPay": "F3",
+    "MilitaryClothesAllowance": "02",
+    "MilitaryQuartersAllowance": "04",
+    "MilitaryPropPay": "03",
+    "MilitaryOverseasPay": "F4",
+    "MilitaryCombatPay": "F5",
+    "MilitaryVariableHousingAllowance": "F6",
+    "AlimonyChildSupportIncome": "F7",
+    "NotesReceivableInstallment": "F8",
+    "PensionRetirementIncome": "41",
+    "SocialSecurityDisabilityIncome": "42",
+    "RealEstateMortgageDifferential": "30",
+    "TrustIncome": "F9",
+    "AccessoryUnitIncome*": "AU",
+    "UnemploymentPublicAssistance": "M1",
+    "AutomobileExpenseAccountIncome": "M2",
+    "FosterCare": "M3",
+    "VABenefits_noneducation)": "M4",
+    "NonBorrowerHouseholdIncome*": "NB",
+    "OtherIncome": "45",
+    "BaseEmploymentIncome": "20",
+    "Overtime": "09",
+    "Bonuses": "08",
+    "Commissions": "10",
+    "DividendsInterest": "17",
+    "SubjectPropertyNetCashFlow": "SI",
+    "HousingChoiceVoucherSec8": "S8",
+    "NetRentalIncome": "33",
+    "BoarderIncome": "BI",
+    "MortgageCreditCertificate": "MC",
+    "CapitalGains": "CG",
+    "EmploymentRelatedAssets": "EA",
+    "ForeignIncome": "FI",
+    "RoyaltyPayment": "RP",
+    "SeasonalIncome": "SE",
+    "TemporaryLeave": "TL",
+    "TipIncome": "TI"
 }

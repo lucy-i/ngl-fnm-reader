@@ -1,674 +1,1127 @@
-<div class="flex-width text-center fixed-ele">
-    <label>FNM Reader :</label>
-    <div>
-        <input type="file" name="nfmfile" id="fileInput">
-    </div>
-</div>
+<div class="container-fluid">
 
-<div class="flex column">
-    <div class="flex column" *ngIf="loan">
-        <h2 class="text-center">Uniform Residential Loan Application </h2>
-        <p class="form-top">This application is designed to be completed by the applicant(s) with the Lender’s assistance. Applicants should
-            complete this form as “Borrower” or “Co-Borrower,” as applicable. Co-Borrower information must also be provided
-            (and the appropriate box checked) when  the income or assets of a person other than the Borrower (including
-            the Borrower’s spouse) will be used as a basis for loan qualification or  the income or assets of the Borrower’s
-            spouse or other person who has community property rights pursuant to state law will not be used as a basis for
-            loan qualification, but his or her liabilities must be considered because the spouse or other person has community
-            property rights pursuant to applicable law and Borrower resides in a community property state, the security property
-            is located in a community property state, or the Borrower is relying on other property located in a community
-            property state as a basis for repayment of the loan.
-        </p>
-        <p> If this is an application for joint credit, Borrower and Co-Borrower each agree that we intend to apply for joint
-            credit (sign below): </p>
-        <div class="flex column">
-            <h4 class="text-center">
-                I. TYPE OF MORTGAGE AND TERMS OF LOAN
-            </h4>
-            <div class="flex row">
-                <div class="flex-width width-60p">
-                    <span class="width-100">Mortgage Applied For</span>
-                    <span class="flex-width">
-                        <span class="min-width-30p row" *ngFor="let checkbox of loanMetadata.MortgageAppliedForList">
-                            <input type="checkbox" name="AppliedFor" id="" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.TypeAndTerms.MortgageAppliedFor"
-                                (change)="loan.LoanApplication.TypeAndTerms.MortgageAppliedFor=checkbox.value"> {{loan.LoanApplication.TypeAndTerms.MortgageAppliedForOther?": "+loan.LoanApplication.TypeAndTerms.MortgageAppliedForOther:""}}
-                            <label for="{{checkbox.value}}">{{checkbox.text}}</label>
-                        </span>
-                    </span>
-                </div>
-                <div class="width-40p row">
-                    <div class="column flex-width border-left">
-                        <label for="AgencyCaseNumber">Agency Case Number</label>
-
-                        <input type="text" name="AgencyCaseNumber" [(ngModel)]="loan.LoanApplication.TypeAndTerms.AgencyCaseNumber">
-
-                    </div>
-                    <div class="column flex-width border-left">
-                        <label for="CardNumber">Lender Case Number</label>
-                        <input type="text" name="CardNumber" [(ngModel)]="loan.LoanApplication.TypeAndTerms.CardNumber">
-                    </div>
-                </div>
-            </div>
-            <div class="flex row border-top">
-                <div class="width-40p row">
-                    <div class="width-40p column">
-                        <label for="Amount">Amount</label>
-                        <input type="text" name="Amount" [(ngModel)]="loan.LoanApplication.TypeAndTerms.LoanAmount">
-                    </div>
-                    <div class="width-30p column border-left">
-                        <label for="InterestRate">Interest Rate</label>
-                        <input type="text" name="InterestRate" [(ngModel)]="loan.LoanApplication.TypeAndTerms.InterestRate">
-                    </div>
-                    <div class="width-30p column border-left">
-                        <label for="NoOfMonths">Interest Rate</label>
-                        <input type="text" name="NoOfMonths" [(ngModel)]="loan.LoanApplication.TypeAndTerms.NoOfMonths">
-                    </div>
-                </div>
-                <div class="width-60p row border-left">
-                    <span class="width-100">Mortgage Applied For</span>
-                    <div class="flex-width">
-                        <span class="min-width-30p row" *ngFor="let checkbox of loanMetadata.AmortizationTypeList">
-                            <input type="checkbox" name="AmortizationType" id="" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.TypeAndTerms.AmortizationType"
-                                (change)="loan.LoanApplication.TypeAndTerms.AmortizationType=checkbox.value"> {{loan.LoanApplication.TypeAndTerms.AmortizationTypeOther?": "+loan.LoanApplication.TypeAndTerms.AmortizationTypeOther:""}}
-                            <label for="{{checkbox.value}}">{{checkbox.text}}</label>
-                        </span>
-                        <span class="min-width-30p">
-                            <label for="ARMTextualDescription">ARM</label>
-                            <input type="text" name="ARMTextualDescription" [(ngModel)]="loan.LoanApplication.TypeAndTerms.ARMTextualDescription">
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-
+    <div class="container-header">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" name="nfmfile" id="fileInput" lang="es">
+            <label class="custom-file-label" for="customFileLang">FNM File </label>
         </div>
+    </div>
+    <div class="container-sidebar">
+        <div class=" " *ngIf="loan">
+            <h5 class="">
+                I. TYPE OF MORTGAGE AND TERMS OF LOAN
+            </h5>
+
+            <div class="row">
+                <div class="col">
+                    <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Mortgage Applied For</legend>
+                        <div class="form-check" *ngFor="let checkbox of loanMetadata.MortgageAppliedForList">
+                            <input class="form-check-input" type="radio" name="AppliedFor" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.TypeAndTerms.MortgageAppliedFor"
+                                (change)="loan.LoanApplication.TypeAndTerms.MortgageAppliedFor=checkbox.value">
+                            <label class="form-check-label" for="{{checkbox.value}}">{{checkbox.text}}</label>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col">
+                    <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">Amortization Type</legend>
+                        <div class="form-check" *ngFor="let checkbox of loanMetadata.AmortizationTypeList">
+                            <input class="form-check-input" type="radio" name="AmortizationType" id="" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.TypeAndTerms.AmortizationType"
+                                (change)="loan.LoanApplication.TypeAndTerms.AmortizationType=checkbox.value">
+                            <label class="form-check-label" for="{{checkbox.value}}">{{checkbox.text}}</label>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
 
 
-        <div class="flex column">
-            <h4 class="text-center">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="AgencyCaseNumber">Agency Case Number</label>
+                        <input type="text" class="form-control" name="AgencyCaseNumber" [(ngModel)]="loan.LoanApplication.TypeAndTerms.AgencyCaseNumber">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="CardNumber">Lender Case Number</label>
+                        <input type="text" class="form-control" name="CardNumber" [(ngModel)]="loan.LoanApplication.TypeAndTerms.CardNumber">
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="Amount">Amount</label>
+                        <input type="text" class="form-control" name="Amount" [(ngModel)]="loan.LoanApplication.TypeAndTerms.LoanAmount">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="InterestRate">Interest Rate</label>
+                        <input type="text" class="form-control" name="InterestRate" [(ngModel)]="loan.LoanApplication.TypeAndTerms.InterestRate">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="NoOfMonths">No Of Months</label>
+                        <input type="text" class="form-control" name="NoOfMonths" [(ngModel)]="loan.LoanApplication.TypeAndTerms.NoOfMonths">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="ARMTextualDescription">ARM</label>
+                        <input type="text" class="form-control" name="ARMTextualDescription" [(ngModel)]="loan.LoanApplication.TypeAndTerms.ARMTextualDescription">
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <h5 class="">
                 II. PROPERTY INFORMATION AND PURPOSE OF LOAN
-            </h4>
-            <div class="flex row ">
-                <div class="flex-full column">
-                    <label for="StreetAddress">Subject Property Address (street, city, state & ZIP)</label>
-
-                    <span class="row">
-                        <input type="text" name="StreetAddress" [(ngModel)]="loan.LoanApplication.Property.StreetAddress">,
-                        <input type="text" name="City" [(ngModel)]="loan.LoanApplication.Property.City">,
-                        <input type="text" name="State" [(ngModel)]="loan.LoanApplication.Property.State">,
-                        <input type="text" name="ZipCode" [(ngModel)]="loan.LoanApplication.Property.ZipCode">-
-                        <input type="text" name="ZipCode" [(ngModel)]="loan.LoanApplication.Property.ZipPlusFour">
-                        <!-- {{loan.LoanApplication.Property.StreetAddress}}, {{loan.LoanApplication.Property.City}}, {{loan.LoanApplication.Property.State}},
-                        {{loan.LoanApplication.Property.ZipCode}}-{{loan.LoanApplication.Property.ZipPlusFour}} -->
-                    </span>
+            </h5>
+            <fieldset class="">
+                <legend class="col-form-label pt-0">Subject Property Address (street, city, state & ZIP)</legend>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="sr-only">Street Address</label>
+                            <input type="text" class="form-control" name="StreetAddress" [(ngModel)]="loan.LoanApplication.Property.StreetAddress">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="sr-only">City</label>
+                            <input type="text" class="form-control" name="City" [(ngModel)]="loan.LoanApplication.Property.City">
+                        </div>
+                    </div>
                 </div>
-                <div class="width-100 column border-left">
-                    <label for="NoofUnits">No of Units </label>
-                    <input type="text" name="NoofUnits" [(ngModel)]="loan.LoanApplication.Property.NoofUnits">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="sr-only">State</label>
+                            <input type="text" class="form-control" name="State" [(ngModel)]="loan.LoanApplication.Property.State">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="sr-only">ZipCode</label>
+                            <input type="text" class="form-control" name="ZipCode" [(ngModel)]="loan.LoanApplication.Property.ZipCode">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label class="sr-only">ZipPlusFour</label>
+                            <input type="text" class="form-control" name="ZipPlusFour" [(ngModel)]="loan.LoanApplication.Property.ZipPlusFour">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="ARMTextualDescription">ARM</label>
+                        <input type="text" class="form-control" name="ARMTextualDescription" [(ngModel)]="loan.LoanApplication.TypeAndTerms.ARMTextualDescription">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="NoofUnits">No of Units </label>
+                        <input type="text" class="form-control" name="NoofUnits" [(ngModel)]="loan.LoanApplication.Property.NoofUnits">
+                    </div>
+                </div>
+                <div class="col">
+
+                    <div class="form-group">
+                        <label for="NoofUnits">Year Built</label>
+                        <input type="text" name="YearBuilt" class="form-control" [(ngModel)]="loan.LoanApplication.Property.YearBuilt">
+                    </div>
                 </div>
             </div>
-            <div class="flex row border-top">
-                <div class="flex-full column">
-                    <label for="SubjectPropertyCode">Legal Description of Subject Property (attach description if necessary)</label>
-                    <span class="row">
-                        <input type="text" name="SubjectPropertyCode" [(ngModel)]="loan.LoanApplication.Property.SubjectPropertyCode">
-                        <input type="text" name="SubjectProperty" [(ngModel)]="loan.LoanApplication.Property.SubjectProperty">
-                    </span>
-                </div>
-                <div class="width-100 column border-left">
-                    <label for="NoofUnits">Year Built</label>
-                    <input type="text" name="YearBuilt" [(ngModel)]="loan.LoanApplication.Property.YearBuilt">
+
+            <div class="form-group">
+                <label for="SubjectPropertyCode">Legal Description of Subject Property (attach description if necessary)</label>
+                <div class="row">
+                    <div class="col">
+                        <input type="text" class="form-control" name="SubjectPropertyCode" [(ngModel)]="loan.LoanApplication.Property.SubjectPropertyCode">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name="SubjectProperty" [(ngModel)]="loan.LoanApplication.Property.SubjectProperty">
+                    </div>
                 </div>
             </div>
-            <div class="flex row border-top border-bottom">
-                <div class="flex-width column">
-                    <label for="PuposeOfLoan">Purpose of Loan</label>
+            <div class="row">
+                <div class="col">
 
-                    <span class="row">
-                        <span class="min-width-30p row " *ngFor="let checkbox of loanMetadata.PuposeOfLoan">
-                            <input type="checkbox" name="PuposeOfLoan" id="" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.PurposeOfLoan.PurposeofLoan"
+                    <fieldset class="form-group">
+                        <legend class="col-form-label pt-0">
+                            Purpose of Loan
+                        </legend>
+                        <div class="form-check" *ngFor="let checkbox of loanMetadata.PuposeOfLoan">
+                            <input type="radio" class=" form-check-input" name="PuposeOfLoan" id="" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.PurposeOfLoan.PurposeofLoan"
                                 (change)="loan.LoanApplication.PurposeOfLoan.PurposeofLoan=checkbox.value">
-                            <label for="{{checkbox.value}}">{{checkbox.text}}</label>
-                        </span>
-                    </span>
+                            <label class="form-check-label" for="{{checkbox.value}}">{{checkbox.text}}</label>
+                        </div>
+                    </fieldset>
                 </div>
-                <div class="flex-width column border-left">
-                    <span>Property will be: </span>
-                    <span class="row">
-                        <span class="min-width-30p row" *ngFor="let checkbox of loanMetadata.ResidenceType">
-                            <input type="checkbox" name="ResidenceType" id="" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.PurposeOfLoan.ResidenceType"
+                <div class="col">
+
+                    <fieldset class="form-group">
+
+                        <legend class="col-form-label pt-0">
+                            Property will be:
+                        </legend>
+
+                        <div class="form-check" *ngFor="let checkbox of loanMetadata.ResidenceType">
+                            <input type="radio" class=" form-check-input" name="ResidenceType" id="" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.PurposeOfLoan.ResidenceType"
                                 (change)="loan.LoanApplication.PurposeOfLoan.ResidenceType=checkbox.value">
-                            <label for="{{checkbox.value}}">{{checkbox.text}}</label>
-                        </span>
-                    </span>
+                            <label class="form-check-label" for="{{checkbox.value}}">{{checkbox.text}}</label>
+                        </div>
+
+
+                    </fieldset>
                 </div>
             </div>
+
             <p class="sub-title">Complete this line if construction or construction-permanent loan.</p>
-            <div class="flex row min-height-60 border-bottom" [ngClass]="{'strike-out': loan.LoanApplication.PurposeOfLoan.PurposeofLoan!='13'&&loan.LoanApplication.PurposeOfLoan.PurposeofLoan!='04'}">
-                <div class="flex-width row">
-                    <span class="flex-width min-width-20p column">
+            <div class="row" [hidden]="loan.LoanApplication.PurposeOfLoan.PurposeofLoan!='13'&&loan.LoanApplication.PurposeOfLoan.PurposeofLoan!='04'">
+
+                <div class="col">
+                    <div class="form-group">
                         <label for="YearsLotRequired">Year Lot Acquired</label>
-                        <input type="text" name="YearsLotRequired" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired">
-                    </span>
-                    <span class="flex-width border-left column">
+                        <input type="text" class="form-control" name="YearsLotRequired" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired">
+                    </div>
+                    <div class="form-group">
                         <label for="OriginalCosts">Original Cost</label>
-                        <input type="text" name="OriginalCosts" id="OriginalCosts" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts">
-                    </span>
-                    <span class="flex-width border-left column">
+                        <input type="text" class="form-control" name="OriginalCosts" id="OriginalCosts" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts">
+                    </div>
+
+                    <div class="form-group">
                         <label for="AmountExistingLiens">Amount Existing Liens</label>
-                        <input type="text" name="AmountExistingLiens" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens">
-                    </span>
-                    <span class="flex-width border-left column">
+                        <input type="text" class="form-control" name="AmountExistingLiens" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
                         <label for="PresentValueofLot">(a) Present Value of Lot</label>
-                        <input type="text" name="PresentValueofLot" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.PresentValueofLot">
-                    </span>
-                    <span class="flex-width border-left column">
+                        <input type="text" class="form-control" name="PresentValueofLot" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.PresentValueofLot">
+                    </div>
+
+
+                    <div class="form-group">
                         <label for="CostofImprovements">(b) Cost of Improvements</label>
-                        <input type="text" name="CostofImprovements" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.CostofImprovements">
-                    </span>
-                    <span class="flex-width border-left column">
+                        <input type="text" class="form-control" name="CostofImprovements" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.CostofImprovements">
+                    </div>
+                    <div class="form-group">
                         <label for="Total">Total (a + b)</label>
-                        <!-- <input type="text" name="Total" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Total"> -->
-                        <span class="flex value">{{loan.LoanApplication.RefinanceData.Total}}</span>
-                    </span>
+                        <input type="text" class="form-control readonly" readonly name="Total" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Total">
+
+                    </div>
                 </div>
             </div>
             <p class="sub-title">Complete this line if this is a refinance loan.</p>
-            <div class="flex row min-height-60 border-bottom" [ngClass]="{'strike-out': loan.LoanApplication.PurposeOfLoan.PurposeofLoan!='05'}">
-                <div class="flex-width row">
-                    <span class="flex-width min-width-20p column">
-                        <label for="YearsLotRequired">Year Lot Acquired</label>
-                        <input type="text" name="YearsLotRequired" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired">
-                    </span>
-                    <span class="flex-width border-left column">
-                        <label for="OriginalCosts">Original Cost</label>
-                        <input type="text" name="OriginalCosts" id="OriginalCosts" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts">
-                    </span>
-                    <span class="flex-width border-left column">
-                        <label for="AmountExistingLiens">Amount Existing Liens</label>
-                        <input type="text" name="AmountExistingLiens" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens">
-                    </span>
-                    <span class="flex-width border-left column">
-                        <label for="PurposeofRefinance">Purpose of Refinance</label>
-
-                        <input type="text" name="PurposeofRefinance" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.PurposeofRefinance">
-                    </span>
-                    <span class="flex-width border-left column">
-                        <label for="PurposeofRefinance">Describe Improvements</label>
-                        <input type="text" name="DescribeImprovements" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.DescribeImprovements">
-                    </span>
-                    <span class="border-left flex-width column">
-                        <span class="row">
-                            <input type="checkbox" name="Total" value="Y" [checked]="'Y'==loan.LoanApplication.RefinanceData.IsMade" (change)="loan.LoanApplication.PurposeOfLoan.ResidenceType='Y'">
-                            <label for="Y">made</label>
-                            <input type="checkbox" name="Total" value="N" [checked]="'N'==loan.LoanApplication.RefinanceData.IsMade" (change)="loan.LoanApplication.PurposeOfLoan.ResidenceType='N'">
-                            <label for="N">to be made</label>
-                        </span>
-                        <span class="flex row">
-                            <label for="Cost">Cost</label>
-                            <input type="text" name="Cost" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Cost">
-                        </span>
-                    </span>
-                </div>
-            </div>
-            <div class="flex row min-height-60 border-bottom">
-                <div class="flex-width row">
-                    <div class="flex-width  column">
-                        <div class="row border-bottom">
-                            <div class="flex-width column">
-                                <label for="TitleManner">Title will be held in what Name(s):</label>
-                                <input type="text" name="TitleManner" id="" [(ngModel)]="loan.LoanApplication.PurposeOfLoan.TitleManner">
-
-                            </div>
-                            <div class="min-width-30p border-left column">
-                                <label for="TitleManner">Manner in which Title will be held:</label>
-                                <input type="text" name="TitleManner" id="" [(ngModel)]="loan.LoanApplication.PurposeOfLoan.TitleManner">
-
-                            </div>
+            <div class="" [hidden]="loan.LoanApplication.PurposeOfLoan.PurposeofLoan!='05'">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="YearsLotRequired">Year Lot Acquired</label>
+                            <input type="text" class="form-control" name="YearsLotRequired" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired">
                         </div>
-                        <div class="min-height-60 column">
-                            <label for="PurposeofLoanOther">Source of Down Payment, Settlement Charges, and/or Subordinate Financing (explain):</label>
-                            <input type="text" name="PurposeofLoanOther" id="" [(ngModel)]="loan.LoanApplication.PurposeOfLoan.PurposeofLoanOther">
-                        </div>
-
 
                     </div>
-                    <div class="min-width-20p border-left column">
-                        Estate will be held in:
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="OriginalCosts">Original Cost</label>
+                            <input type="text" class="form-control" name="OriginalCosts" id="OriginalCosts" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="AmountExistingLiens">Amount Existing Liens</label>
+                            <input type="text" class="form-control" name="AmountExistingLiens" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="PurposeofRefinance">Purpose of Refinance</label>
+
+                            <input type="text" class="form-control" name="PurposeofRefinance" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.PurposeofRefinance">
+                        </div>
+                    </div>
+                </div>
+                <fieldset class="form-group">
+                    <legend class="col-form-label pt-0 pb-0">
+
                         <div class="row">
+                            <div class="col-sm-5">Describe Improvements</div>
+                            <div class=" col">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="checkbox" name="Total" value="Y" [checked]="'Y'==loan.LoanApplication.RefinanceData.IsMade" (change)="loan.LoanApplication.PurposeOfLoan.ResidenceType='Y'">
+                                        <label for="Y">made</label>
 
-                            <span class="min-width-30p row" *ngFor="let checkbox of loanMetadata.EstateHeldIn">
-                                <input type="checkbox" name="LeaseHold" [value]="checkbox.value" [checked]="loan.LoanApplication.PurposeOfLoan.EstateHeldIn==checkbox.value"
-                                    (change)="loan.LoanApplication.PurposeOfLoan.EstateHeldIn=checkbox.value" id="">
-                                <label for="{{checkbox.value}}">{{checkbox.text}}</label>
-                            </span>
+                                    </div>
+                                    <div class="col">
+                                        <input type="checkbox" name="Total" value="N" [checked]="'N'==loan.LoanApplication.RefinanceData.IsMade" (change)="loan.LoanApplication.PurposeOfLoan.ResidenceType='N'">
+                                        <label for="N">to be made</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </legend>
+                    <input type="text" class="form-control" name="DescribeImprovements" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.DescribeImprovements">
 
-                        <!-- <input type="text" name="Total" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Total">  -->
-                        <div class="value row">
-                            {{loan.LoanApplication.PurposeOfLoan?.LeasholdExpirationDate}}
+                </fieldset>
+
+                <div class="form-group">
+                    <label for="Cost">Cost</label>
+                    <input type="text" class="form-control" name="Cost" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Cost">
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="TitleManner">Title will be held in what Name(s):</label>
+                        <input type="text" class="form-control" name="TitleManner" id="" [(ngModel)]="loan.LoanApplication.PurposeOfLoan.TitleManner">
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="TitleManner">Manner in which Title will be held:</label>
+                        <input type="text" class="form-control" name="TitleManner" id="" [(ngModel)]="loan.LoanApplication.PurposeOfLoan.TitleManner">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="PurposeofLoanOther">Source of Down Payment, Settlement Charges, and/or Subordinate Financing (explain):</label>
+                <input type="text" class="form-control" name="PurposeofLoanOther" id="" [(ngModel)]="loan.LoanApplication.PurposeOfLoan.PurposeofLoanOther">
+            </div>
+            <div class=" ">
+
+                <fieldset class="form-group">
+                    <legend class="col-form-label pt-0 pb-0">
+                        Estate will be held in:
+                    </legend>
+                    <div class=" form-check" *ngFor="let checkbox of loanMetadata.EstateHeldIn">
+                        <input type="checkbox" class="form-check-input" name="LeaseHold" [value]="checkbox.value" [checked]="loan.LoanApplication.PurposeOfLoan.EstateHeldIn==checkbox.value"
+                            (change)="loan.LoanApplication.PurposeOfLoan.EstateHeldIn=checkbox.value" id="">
+                        <label class="form-check-label" for="{{checkbox.value}}">{{checkbox.text}}</label>
+                    </div>
+                </fieldset>
+
+
+                <!-- <input type="text" name="Total" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Total">  -->
+                <div class="value ">
+                    {{loan.LoanApplication.PurposeOfLoan?.LeasholdExpirationDate}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-body">
+        <div *ngIf="loan">
+            <h2 class="">Uniform Residential Loan Application </h2>
+            <p class="text-justify">This application is designed to be completed by the applicant(s) with the Lender’s assistance. Applicants should
+                complete this form as “Borrower” or “Co-Borrower,” as applicable. Co-Borrower information must also be provided
+                (and the appropriate box checked) when  the income or assets of a person other than the Borrower (including
+                the Borrower’s spouse) will be used as a basis for loan qualification or  the income or assets of the Borrower’s
+                spouse or other person who has community property rights pursuant to state law will not be used as a basis
+                for loan qualification, but his or her liabilities must be considered because the spouse or other person
+                has community property rights pursuant to applicable law and Borrower resides in a community property state,
+                the security property is located in a community property state, or the Borrower is relying on other property
+                located in a community property state as a basis for repayment of the loan.
+            </p>
+            <p> If this is an application for joint credit, Borrower and Co-Borrower each agree that we intend to apply for joint
+                credit (sign below): </p>
+
+            <div class="form-group">
+                <label>
+                    Borrowers
+                </label>
+                <select class="form-control" [(ngModel)]="selectedBorrower">
+                    <option *ngFor="let borrower of loan.LoanApplication.Applicants" [value]="borrower.ApplicantId">
+                        {{ borrower.FirstName}} {{ borrower.LastName}}
+                    </option>
+                </select>
+            </div>
+            <div class=" " *ngIf="selectedBorrower">
+
+
+                <h5 class="text-uppercase">
+                    III. {{loan.LoanApplication.ApplicantObject[selectedBorrower].IndicatorName}} INFORMATION
+                </h5>
+                <div class="row">
+                    <!-- loan.LoanApplication.ApplicantObject -->
+                    <!-- <div class="col" *ngFor="let item of loan.LoanApplication.Applicants"> -->
+                    <div class="col">
+                        <div class=" ">
+                            <fieldset class="form-group">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    Borrower’s Name (include Jr. or Sr. if applicable)
+                                </legend>
+                                <div class="row">
+                                    <div class="col">
+                                        <label class="sr-only">First Name</label>
+                                        <input type="text" class="form-control" name="FirstName" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].FirstName">
+                                    </div>
+                                    <div class="col">
+                                        <label class="sr-only">Middle Name</label>
+                                        <input type="text" class="form-control" name="MiddleName" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].MiddleName">
+                                    </div>
+                                    <div class="col">
+                                        <label class="sr-only">Last Name</label>
+                                        <input type="text" class="form-control" name="LastName" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].LastName">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="ssn">Social Security Number</label>
+                                        <input type="text" class="form-control" name="ssn" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].SSN">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="HomePhone">Home Phone (incl. area code)</label>
+                                        <input type="text" class="form-control" name="HomePhone" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].HomePhone">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="DateofBirth">DOB (mm/dd/yyyy) :</label>
+                                        <input type="text" class="form-control" name="DateofBirth" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].DateofBirth">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="YrsInSchool">Yrs. School :</label>
+                                        <input type="text" class="form-control" name="YrsInSchool" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].YrsInSchool">
+                                    </div>
+                                </div>
+                            </div>
+                            <fieldset class="form-group">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    Marital Status
+                                </legend>
+                                <div class="row">
+                                    <div class="col " *ngFor="let checkbox of loanMetadata.MartialStatus">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="MartialStatus" id="" [value]="checkbox.value" [checked]="checkbox.value==loan.LoanApplication.ApplicantObject[selectedBorrower].MartialStatus"
+                                                (change)="loan.LoanApplication.ApplicantObject[selectedBorrower].MartialStatus=checkbox.value">
+                                            <label class="form-check-label" for="{{checkbox.value}}"> {{checkbox.text}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    Dependents (not listed by Other-Borrower)
+                                </legend>
+                                <div class="row">
+                                    <div class="col ">
+                                        <div class="form-group">
+                                            <label for="Dependents">no.</label>
+                                            <input type="text" class="form-control" name="Dependents" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].Dependents">
+                                        </div>
+                                    </div>
+                                    <div class="col ">
+                                        <div class="form-group">
+                                            <label for="Dependents">ages</label>
+                                            <input type="text" class="form-control" name="DependentsAge" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].DependentsAge.DependentsAge">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class=" " *ngFor="let addr of loan.LoanApplication.ApplicantObject[selectedBorrower].Addresses">
+                            <fieldset class="form-group">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    {{loanMetadata.AddressLabel[addr.AddressType]}}
+                                </legend>
+                                <div class="row">
+                                    <div class="col-2" *ngFor="let checkbox of loanMetadata.UsageTypes">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="Usage" id="" value="{{checkbox.value}}" [checked]="checkbox.value">
+                                            <label class="form-check-label" for="{{checkbox.value}}">{{checkbox.text}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group row">
+
+                                                    <label for="NoofYears" class="col-2">
+                                                        Yrs
+                                                    </label>
+                                                    <div class="col-10">
+                                                        <input class="form-control" name="NoofYears" type="text" [(ngModel)]="addr.NoofYears">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col">
+
+                                                <div class="form-group row">
+                                                    <label for="NoofMonths" class="col-2">
+                                                        Mts
+                                                    </label>
+                                                    <div class="col-10">
+
+                                                        <input type="text" class="form-control" name="NoofMonths" [(ngModel)]="addr.NoofMonths">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">Street Address</label>
+                                            <input type="text" class="form-control" [(ngModel)]="addr.StreetAddress">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">City</label>
+                                            <input type="text" class="form-control" [(ngModel)]="addr.City">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">State</label>
+                                            <input type="text" class="form-control" [(ngModel)]="addr.State">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only"> ZipCode</label>
+                                            <input type="text" class="form-control" [(ngModel)]="addr.ZipCode">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">ZipPlusFour</label>
+                                            <input type="text" class="form-control" [(ngModel)]="addr.ZipPlusFour">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <h5 class=" ">
+                    IV. EMPLOYMENT INFORMATION
+                </h5>
+                <div class="row">
+                    <!-- <div class="col" *ngFor="let item of loan.LoanApplication.Applicants"> -->
+                    <div class="col">
+                        <div class="  " *ngFor="let employ of loan.LoanApplication.ApplicantObject[selectedBorrower].CurrentEmployments">
+
+                            <fieldset class="form-group">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    <div class="row">
+                                        <div class="col-sm-6">Name & Address of Employer</div>
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" [(ngModel)]="employ.IsSelfEmployed">
+                                                <label class="form-check-label">Self Employed</label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </legend>
 
 
-        <h4 class="text-center space-around">
-            <div>Borrower</div>
-            <div>III. BORROWER INFORMATION</div>
-            <div>Co-Borrower</div>
-        </h4>
-        <div class="flex row">
 
-            <div class="flex column flex-width-50 border-left" *ngFor="let item of loan.LoanApplication.Applicants">
-                <div class="flex column">
-                    <span class="flex column border-bottom min-height-60">
-                        <label for="borrowerName">Borrower’s Name (include Jr. or Sr. if applicable)</label>
-                        <span class="flex row">
-                            <input type="text" name="FirstName" id="" [(ngModel)]="item.FirstName">
-                            <input type="text" name="MiddleName" id="" [(ngModel)]="item.MiddleName">
-                            <input type="text" name="LastName" id="" [(ngModel)]="item.LastName">
-                        </span>
-                    </span>
-                    <span class="min-height-60 flex row border-bottom">
-                        <span class="flex-width">
-                            <label for="ssn">Social Security Number</label>
-                            <input type="text" name="ssn" id="" [(ngModel)]="item.SSN">
-                        </span>
-                        <span class="flex-width border-left">
-                            <label for="HomePhone">Home Phone (incl. area code)</label>
-                            <input type="text" name="HomePhone" id="" [(ngModel)]="item.HomePhone">
-                        </span>
-                        <span class="flex-width border-left">
-                            <label for="DateofBirth">DOB (mm/dd/yyyy) :</label>
-                            <input type="text" name="DateofBirth" id="" [(ngModel)]="item.DateofBirth">
-                        </span>
-                        <span class="flex-width border-left">
-                            <label for="YrsInSchool">Yrs. School :</label>
-                            <input type="text" name="YrsInSchool" id="" [(ngModel)]="item.YrsInSchool">
-                        </span>
-                    </span>
-                    <span class="min-height-60 flex row border-bottom">
-                        <span class="flex-width ">
-                            <span class="row flex-width min-width-50p" *ngFor="let checkbox of loanMetadata.MartialStatus">
-                                <input type="checkbox" name="MartialStatus" id="" [value]="checkbox.value" [checked]="checkbox.value==item.MartialStatus"
-                                    (change)="item.MartialStatus=checkbox.value">
-                                <label for="{{checkbox.value}}"> {{checkbox.text}}</label>
-                            </span>
-                        </span>
-
-                        <span class="flex-width column border-left">
-                            <label for="Dependents">Dependents (not listed by Other-Borrower)</label>
-                            <span class="flex row">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="EmployerName" [(ngModel)]="employ.EmployerName">
+                                </div>
                                 <span class="row">
-                                    <label for="Dependents">no.</label>
-                                    <input type="text" name="Dependents" id="" [(ngModel)]="item.Dependents">
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">Strret Address</label>
+                                            <input type="text" class="form-control" name="StrretAddress" [(ngModel)]="employ.StrretAddress">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">City</label>
+                                            <input type="text" class="form-control" name="City" [(ngModel)]="employ.City">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">City</label>
+                                            <input type="text" class="form-control" name="City" [(ngModel)]="employ.State">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">ZipCode</label>
+                                            <input type="text" class="form-control" name="ZipCode" [(ngModel)]="employ.ZipCode">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">ZipPlus Four</label>
+                                            <input type="text" class="form-control" ame="ZipPlusFour" [(ngModel)]="employ.ZipPlusFour">
+                                        </div>
+                                    </div>
                                 </span>
+                            </fieldset>
+                            <div class="row">
+                                <div class="col-4">
+                                    <fieldset class="form-group">
+                                        <legend class="col-form-label pt-0">
+                                            Yrs. / Mts. on this job
+                                        </legend>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="sr-only">Years On Job</label>
+                                                    <input class="form-control" type="text" name="YearsOnJob" [(ngModel)]="employ.YearsOnJob">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">/</div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="sr-only">Months On Job</label>
+                                                    <input class="form-control" type="text" name="MonthsOnJob" [(ngModel)]="employ.MonthsOnJob">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="YearsOnJob">Yrs. employed in this line of work/profession </label>
+                                        <input type="text" class="form-control" name="YearsOnJob" [(ngModel)]="employ.YersEmployedInThisLine">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class=" ">Position/Title/Type of Business </label>
+                                        <input type="text" class="form-control" [(ngModel)]="employ.Position">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class=" ">Business Phone (incl. area code) </label>
+                                        <input type="text" class="form-control" [(ngModel)]="employ.BusinessPhone">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="  " *ngFor="let employ of loan.LoanApplication.ApplicantObject[selectedBorrower].PreviousEmployments">
+
+                            <fieldset class="form-group">
+                                <legend class="col-form-label pt-0 pb-0">
+                                    <div class="row">
+                                        <div class="col-sm-6">Name & Address of Employer</div>
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" [(ngModel)]="employ.IsSelfEmployed">
+                                                <label class="form-check-label">Self Employed</label>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </legend>
+
+
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="EmployerName" [(ngModel)]="employ.EmployerName">
+                                </div>
                                 <span class="row">
-                                    <label for="Dependents">ages</label>
-                                    <input type="text" name="DependentsAge" id="" [(ngModel)]="item.DependentsAge.DependentsAge">
+
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">Strret Address</label>
+                                            <input type="text" class="form-control" name="StrretAddress" [(ngModel)]="employ.StrretAddress">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">City</label>
+                                            <input type="text" class="form-control" name="City" [(ngModel)]="employ.City">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">City</label>
+                                            <input type="text" class="form-control" name="City" [(ngModel)]="employ.State">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">ZipCode</label>
+                                            <input type="text" class="form-control" name="ZipCode" [(ngModel)]="employ.ZipCode">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">ZipPlus Four</label>
+                                            <input type="text" class="form-control" ame="ZipPlusFour" [(ngModel)]="employ.ZipPlusFour">
+                                        </div>
+                                    </div>
                                 </span>
-                            </span>
-                        </span>
-                    </span>
-                </div>
-                <div class="flex column" *ngFor="let addr of item.Addresses">
-                    <span class="row">
-                        <label for="StreetAddress">
-                            {{loanMetadata.AddressLabel[addr.AddressType]}}
-                        </label>
-                        <span class="row">
-                            <span class="row" *ngFor="let checkbox of loanMetadata.UsageTypes">
-                                <input type="checkbox" name="Usage" id="" value="{{checkbox.value}}" [checked]="checkbox.value">
-                                <label for="{{checkbox.value}}">{{checkbox.text}}</label>
-                            </span>
-                        </span>
-                        <span class="row">
-                            <input class="width-20" name="NoofYears" type="text" [(ngModel)]="addr.NoofYears">
-                            <label for="NoofYears">
-                                Yrs
-                            </label>
-                        </span>
-                        <span class="row">
-                            <input class="width-20" type="text" name="NoofMonths" [(ngModel)]="addr.NoofMonths">
-                            <label for="NoofMonths">
-                                Mts
-                            </label>
-                        </span>
-                    </span>
-                    <span class="flex-width row">
-                        <input type="text" [(ngModel)]="addr.StreetAddress">,
-                        <input type="text" [(ngModel)]="addr.City">,
-                        <input type="text" [(ngModel)]="addr.State">,
-                        <input type="text" [(ngModel)]="addr.ZipCode">-
-                        <input type="text" [(ngModel)]="addr.ZipPlusFour">
-                    </span>
-                </div>
-            </div>
-        </div>
-        <h4 class="text-center space-around">
-            <div>Borrower</div>
-            <div>IV. EMPLOYMENT INFORMATION</div>
-            <div>Co-Borrower</div>
-        </h4>
-        <div class="flex row">
-            <div class="flex column flex-width-50 border-left" *ngFor="let item of loan.LoanApplication.Applicants">
-                <div class="flex column border-bottom" *ngFor="let employ of item.CurrentEmployments">
-                    <span class="flex row border-bottom">
-                        <span class="flex flex-width column">
-                            <span class="row">
-                                <label class="flex">Name & Address of Employer </label>
-                                <span>
-                                    <input type="checkbox" [(ngModel)]="employ.IsSelfEmployed"> Self Employed</span>
-                            </span>
-                            <span class="row flex-width">
-                                <input type="text" name="EmployerName" [(ngModel)]="employ.EmployerName">,
-                                <input type="text" name="StrretAddress" [(ngModel)]="employ.StrretAddress">,
-                                <input type="text" name="City" [(ngModel)]="employ.City">,
-                                <input type="text" name="City" [(ngModel)]="employ.State">,
-                                <input type="text" name="ZipCode" [(ngModel)]="employ.ZipCode">-
-                                <input type="text" name="ZipPlusFour" [(ngModel)]="employ.ZipPlusFour">
-                            </span>
-                        </span>
-                        <span class="flex-width border-left">
-                            <span class="column border-bottom">
-                                <label for="YearsOnJob">Yrs. / Mts. on this job </label>
-                                <span class="row">
-                                    <input class="width-20" type="text" name="YearsOnJob" [(ngModel)]="employ.YearsOnJob">
-                                    <span>/</span>
-                                    <input class="width-20" type="text" name="MonthsOnJob" [(ngModel)]="employ.MonthsOnJob">
-                                </span>
-                            </span>
-                            <span class="column">
-                                <label for="YearsOnJob">Yrs. employed in this line of work/profession </label>
-                                <input type="text" name="YearsOnJob" [(ngModel)]="employ.YersEmployedInThisLine">
-                            </span>
-                        </span>
-
-                    </span>
-                    <span class="flex row">
-                        <span class="flex column">
-                            <label class="flex flex-width">Position/Title/Type of Business </label>
-                            <input type="text" [(ngModel)]="employ.Position">
-                        </span>
-
-                        <span class="flex column border-left">
-                            <label class="flex flex-width">Business Phone (incl. area code) </label>
-
-                            <input type="text" [(ngModel)]="employ.BusinessPhone">
-                        </span>
-                    </span>
-                </div>
-                <div class="flex column border-bottom" *ngFor="let employ of item.PreviousEmployments">
-                    <span class="flex row border-bottom">
-                        <span class="flex flex-width column">
-                            <span class="row">
-                                <label class="flex">Name & Address of Employer </label>
-                                <span>
-                                    <input type="checkbox" [(ngModel)]="employ.IsSelfEmployed"> Self Employed</span>
-                            </span>
-                            <span class="row flex-width">
-                                <input type="text" name="EmployerName" [(ngModel)]="employ.EmployerName">,
-                                <input type="text" name="StrretAddress" [(ngModel)]="employ.StrretAddress">,
-                                <input type="text" name="City" [(ngModel)]="employ.City">,
-                                <input type="text" name="City" [(ngModel)]="employ.State">,
-                                <input type="text" name="ZipCode" [(ngModel)]="employ.ZipCode">-
-                                <input type="text" name="ZipPlusFour" [(ngModel)]="employ.ZipPlusFour">
-                            </span>
-                        </span>
-                        <span class="flex-width border-left">
-                            <span class="column border-bottom">
-                                <label for="YearsOnJob">Dates (from – to) </label>
-                                <span class="row">
-                                    <input class="width-20" type="text" name="FromDate" [(ngModel)]="employ.FromDate">
-                                    <span> - </span>
-                                    <input class="width-20" type="text" name="ToDate" [(ngModel)]="employ.ToDate">
-                                </span>
-                            </span>
-                            <span class="column">
-                                <label for="YearsOnJob">Monthly Income </label>
-                                <input type="text" name="MonthlyIncome" [(ngModel)]="employ.MonthlyIncome">
-                            </span>
-                        </span>
-
-                    </span>
-                    <span class="flex row">
-                        <span class="flex column">
-                            <label class="flex flex-width">Position/Title/Type of Business </label>
-                            <input type="text" [(ngModel)]="employ.Position">
-                        </span>
-
-                        <span class="flex column border-left">
-                            <label class="flex flex-width">Business Phone (incl. area code) </label>
-
-                            <input type="text" [(ngModel)]="employ.BusinessPhone">
-                        </span>
-                    </span>
-                </div>
-                <div class="flex column border-bottom" *ngFor="let employ of item.PreviousEmployments">
-                    <span class="flex row" *ngFor="let income of item.Incomes">
-                        <span class="flex-width">{{ income.IncomeType}} </span>
-                        <span class="flex-width  value">: {{ income.MonthlyIncome}}</span>
-                    </span>
-                </div>
-
-
-            </div>
-        </div>
-        <h4 class="text-center space-around">
-            V. MONTHLY INCOME AND COMBINED HOUSING EXPENSE INFORMATION
-        </h4>
-        <div class="flex row">
-            <div class="flex column">
-                <div class="col-head">
-                    Gross Monthly Income
-                </div>
-                <div class="row" *ngFor="let incomeType of loanMetadata.requiredIncomeTypes() | orderBy: {property: 'order', direction: 1}">
-                    <div>
-                        {{incomeType.text}}
+                            </fieldset>
+                            <div class="row">
+                                <div class="col-4">
+                                    <fieldset class="form-group">
+                                        <legend class="col-form-label pt-0  pb-0">
+                                            <label for="YearsOnJob">Dates (from – to) </label>
+                                        </legend>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="sr-only">FromDate</label>
+                                                    <input class="form-control" type="text" name="FromDate" [(ngModel)]="employ.FromDate">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">-</div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label class="sr-only">ToDate</label>
+                                                    <input class="form-control" type="text" name="ToDate" [(ngModel)]="employ.ToDate">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label for="YearsOnJob">Monthly Income </label>
+                                        <input type="text" class="form-control" name="MonthlyIncome" [(ngModel)]="employ.MonthlyIncome">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class=" ">Position/Title/Type of Business </label>
+                                        <input type="text" class="form-control" [(ngModel)]="employ.Position">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class=" ">Business Phone (incl. area code) </label>
+                                        <input type="text" class="form-control" [(ngModel)]="employ.BusinessPhone">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="flex column" *ngFor="let item of loan.LoanApplication.Applicants">
-                <div class="col-head">
-                    Borrower
+                <h5 class=" ">
+                    V. MONTHLY INCOME AND COMBINED HOUSING EXPENSE INFORMATION
+                </h5>
+                <div class="row">
+                    <!-- <div class="col" *ngFor="let item of loan.LoanApplication.Applicants"> -->
+
+                    <div class="col">
+                        <fieldset class="">
+                            <legend class="col-form-label sub-section">
+                                MONTHLY INCOME
+                            </legend>
+                            <div class="row" *ngFor="let income of loan.LoanApplication.ApplicantObject[selectedBorrower].Incomes | orderBy: {property: 'Order', direction: 1}">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select class="form-control" [(ngModel)]="income.IncomeType">
+                                            <option *ngFor="let option of loanMetadata.IncomeType" [value]="option.value"> {{option.text}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="Income" id="" [(ngModel)]="income.MonthlyIncome">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </fieldset>
+                    </div>
                 </div>
-                <div class="row" *ngFor="let income of item.Incomes | orderBy: {property: 'Order', direction: 1}">
-                    <div>
-                        {{income.MonthlyIncome}}
+                <div class="row">
+                    <!-- <div class="col" *ngFor="let item of loan.LoanApplication.Applicants"> -->
+
+                    <div class="col">
+                        <fieldset class="">
+                            <legend class="col-form-label sub-section">
+                                Housing Expense
+                            </legend>
+
+                            <div class="row" *ngFor="let expense of loan.LoanApplication.ApplicantObject[selectedBorrower].HousingExpences | orderBy: {property: 'Order', direction: 1}">
+                                <div class="col">
+                                    {{expense.ExpenseIndicatorValue}}
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <select class="form-control" [(ngModel)]="expense.PaymentTypeCode">
+                                            <option *ngFor="let option of loanMetadata.ExpensePaymmentTypes" [value]="option.value"> {{option.text}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="Income" id="" [(ngModel)]="expense.HousingPaymentAmount">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
                     </div>
                 </div>
 
-            </div>
-            <div class="flex column">
-                <div class="col-head">
-                    Total
-                </div>
-            </div>
-            <div class="flex column flex-width-50 border-left" *ngFor="let item of loan.LoanApplication.Applicants">
-                <div class="flex column">
-                    <h4>
-                        Housing Expence
-                    </h4>
-                    <span class="flex row" *ngFor="let expense of item.HousingExpences">
-                        <span class="flex-width value">{{expense.ExpenseIndicatorValue}}</span>
-                        <span class="flex-width value">{{expense.PaymentTypeValue}} </span>
-                        <span class="flex-width  value">: {{expense.HousingPaymentAmount}}</span>
-                    </span>
-                </div>
+                <h5 class=" ">
+                    VI. ASSETS AND LIABILITIES
+                </h5>
+                <p>
+                    This Statement and any applicable supporting schedules may be completed jointly by both married and unmarried Co-Borrowers
+                    if their assets and liabilities are sufficiently joined so that the Statement can be meaningfully and
+                    fairly presented on a combined basis; otherwise, separate Statements and Schedules are required. If the
+                    Co-Borrower section was completed about a non-applicant spouse or other person, this Statement and supporting
+                    schedules must be completed about that spouse or other person also.
+                </p>
+                <div class="row">
+                    <!-- <div class="col" *ngFor="let item of loan.LoanApplication.Applicants"> -->
 
-            </div>
-        </div>
-        <h4 class="text-center space-around">
-            VI. ASSETS AND LIABILITIES
-        </h4>
-        <p>
-            This Statement and any applicable supporting schedules may be completed jointly by both married and unmarried Co-Borrowers
-            if their assets and liabilities are sufficiently joined so that the Statement can be meaningfully and fairly
-            presented on a combined basis; otherwise, separate Statements and Schedules are required. If the Co-Borrower
-            section was completed about a non-applicant spouse or other person, this Statement and supporting schedules must
-            be completed about that spouse or other person also.
-        </p>
-        <div class="flex row">
-            <div class="flex column flex-width-50 border-left" *ngFor="let item of loan.LoanApplication.Applicants">
-                <div class="flex column">
-                    <h4>
-                        Assets
-                    </h4>
-                    <span class="flex row">
-                        <span class="flex-width">Type</span>
-                        <span class="flex-width">Institution</span>
-                        <!-- <span class="flex-width">Street Address</span>
-                                        <span class="flex-width">City</span>
-                                        <span class="flex-width">State</span>
-                                        <span class="flex-width">Zipcode</span>
-                                        <span class="flex-width">ZipPlusFour</span> -->
-                        <span class="flex-width">Account Number</span>
-                        <span class="flex-width">Cash Value</span>
-                        <span class="flex-width">No of Shares</span>
-                        <span class="flex-width">Description</span>
+                    <div class="col">
+                        <fieldset class=" ">
+                            <legend class="col-form-label sub-section">
+                                Assets
+                            </legend>
+                            <div class="row">
+                                <div class="col-3">Type</div>
+                                <div class="col-2">Institution</div>
+                                <div class="col-2">Account Number</div>
+                                <div class="col">Cash Value</div>
+                                <div class="col"> No of Shares</div>
+                                <div class="col-2"> Description</div>
+                            </div>
+                            <div *ngFor="let asset of loan.LoanApplication.ApplicantObject[selectedBorrower].Assets">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="sr-only">Type</label>
+                                            <select class="form-control" [(ngModel)]="asset.AssetType">
+                                                <option *ngFor="let option of loanMetadata.AssetType" [value]="option.value">{{option.text}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">
+                                                Institution
+                                            </label>
+                                            <input type="text" class="form-control" [(ngModel)]="asset.InstitutionName">
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">
+                                                Account Number
+                                            </label>
+                                            <input type="text" class="form-control" [(ngModel)]="asset.AccountNumber">
+                                        </div>
+                                    </div>
 
-                    </span>
-                    <span class="flex row" *ngFor="let asset of item.Assets">
-                        <span class="flex-width  value">{{asset.AssetTypeValue}}</span>
-                        <span class="flex-width value">{{asset.InstitutionName}} </span>
-                        <!-- <span class="flex-width">{{asset.StreetAddress}}</span>
-                                            <span class="flex-width">{{asset.City}}</span>
-                                            <span class="flex-width">{{asset.State}}</span>
-                                            <span class="flex-width">{{asset.Zipcode}}</span>
-                                            <span class="flex-width">{{asset.ZipPlusFour}}</span> -->
-                        <span class="flex-width value">{{asset.AccountNumber}}</span>
-                        <span class="flex-width value">{{asset.CashValue}}</span>
-                        <span class="flex-width value">{{asset.NofShares}}</span>
-                        <span class="flex-width value">{{asset.Description}}</span>
-                    </span>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">Cash Value</label>
+                                            <input type="text" class="form-control" [(ngModel)]="asset.CashValue">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">No of Shares</label>
+                                            <input type="text" class="form-control" [(ngModel)]="asset.NofShares">
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">Description</label>
+                                            <input type="text" class="form-control" [(ngModel)]="asset.Description">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        <fieldset class=" ">
+                            <legend class="col-form-label sub-section">
+                                Liabilities
+                            </legend>
+                            <div class="row">
+                                <div class="col-3">Type</div>
+                                <div class="col-2">Creditor</div>
+                                <div class="col-2">Account Number</div>
+                                <div class="col">Monthly Payment</div>
+                                <div class="col"> Left to Pay</div>
+                                <div class="col"> Unpaid Balance</div>
+                            </div>
+                            <div *ngFor="let liability of loan.LoanApplication.ApplicantObject[selectedBorrower].Liabilities">
+
+
+
+                                <div class="row">
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label class="sr-only">Type</label>
+                                            <select class="col form-control" [(ngModel)]="liability.LiabilityType">
+                                                <option *ngFor="let option of loanMetadata.LibilityType" [value]="option.value">{{option.text}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">
+                                                Creditor
+                                            </label>
+                                            <input type="text" class="form-control" [(ngModel)]="liability.CreditorName">
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="form-group">
+                                            <label class="sr-only">
+                                                Account Number
+                                            </label>
+                                            <input type="text" class="form-control" [(ngModel)]="liability.AccountNumber">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">Monthly Payment</label>
+                                            <input type="text" class="form-control" [(ngModel)]="liability.MonthlyPayment">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">Left to Pay</label>
+                                            <input type="text" class="form-control" [(ngModel)]="liability.LeftToPay">
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-group">
+                                            <label class="sr-only">Unpaid Balance</label>
+                                            <input type="text" class="form-control" [(ngModel)]="liability.UnpaidBalance">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class=" ">
+                            <legend class="col-form-label sub-section">
+                                Real Estate Owned
+                            </legend>
+                            <div class="row">
+                                <div class="col-md-2 d-flex flex-column justify-content-around">
+                                    <div class="form-group d-flex">PropertyType</div>
+                                    <div class="form-group d-flex">Street/City</div>
+                                    <div class="form-group d-flex">State/Zip</div>
+                                    <div class="form-group d-flex">Disposition</div>
+                                    <div class="form-group d-flex">Market Value</div>
+                                    <div class="form-group d-flex">Mortgage Amount</div>
+                                    <div class="form-group d-flex">Gross Rental Income</div>
+                                    <div class="form-group d-flex">Mortgage Payments</div>
+                                    <div class="form-group d-flex">Monthly Expense</div>
+                                    <div class="form-group d-flex">Net Rental Income</div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="row overflow-auto flex-nowrap">
+                                        <span class="col mi-w-350" *ngFor="let reo of loan.LoanApplication.ApplicantObject[selectedBorrower].RealEstateOwneds">
+                                            <div class="form-group">
+                                                <label class="sr-only">PropertyType</label>
+                                                <select class="form-control" [(ngModel)]="reo.PropertyType">
+                                                    <option *ngFor="let option of loanMetadata.PropertyType" [value]="option.value">{{option.text}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">Street/City </label>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <input type="text" class="form-control" [(ngModel)]="reo.StrretAddress">
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="text" class="form-control" [(ngModel)]="reo.City">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">State/Zip </label>
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <input type="text" class="form-control" [(ngModel)]="reo.State">
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="text" class="form-control" [(ngModel)]="reo.Zipcode">
+                                                    </div>
+                                                    <div class="col">
+                                                        <input type="text" class="form-control" [(ngModel)]="reo.ZipPlusFour">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">Disposition</label>
+                                                <input type="text" class="form-control" [(ngModel)]="reo.DispositionValue">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">Market Value</label>
+                                                <input type="text" class="form-control" [(ngModel)]="reo.MarketValue">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">Mortgage Amount</label>
+                                                <input type="text" class="form-control" [(ngModel)]="reo.MortgageAmount">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">Gross Rental Income</label>
+                                                <input type="text" class="form-control" [(ngModel)]="reo.GroissRentalIncome">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">Mortgage Payments</label>
+                                                <input type="text" class="form-control" [(ngModel)]="reo.MortgagePayments">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">Monthly Expense</label>
+                                                <input type="text" class="form-control" [(ngModel)]="reo.MonthlyExpense">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only">Net Rental Income</label>
+                                                <input type="text" class="form-control" [(ngModel)]="reo.NetRentalIncome">
+
+                                            </div>
+
+
+
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
                 </div>
-                <div class="flex column">
-                    <h4>
-                        Liabilities
-                    </h4>
-                    <span class="flex row">
-                        <span class="flex-width">Type</span>
-                        <span class="flex-width">Creditor </span>
-                        <!-- <span class="flex-width">Street Address</span>
-                                            <span class="flex-width">City</span>
-                                            <span class="flex-width">State</span>
-                                            <span class="flex-width">Zipcode</span>
-                                            <span class="flex-width">ZipPlusFour</span> -->
-                        <span class="flex-width">Account Number</span>
-                        <span class="flex-width">Monthly Payment</span>
-                        <span class="flex-width">Left to Pay</span>
-                        <span class="flex-width">Unpaid Balance</span>
+                <div class=" ">
+                    <h5>
+                        VII. DETAILS OF TRANSACTION
+                    </h5>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">a. Purchase price </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.PurchasePrice">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">b. Alterations, improvements, repairs </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.Alterations">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">c. Land (if acquired separately) </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.Land">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">d. Refinance (incl. debts to be paid off) </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.Refinane">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">e. Estimated prepaid items </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.EstimatedPrePaid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">f. Estimated closing costs </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.ExtimatedClosinfCosts">
+                        </div>
+                    </div>
 
-                    </span>
-                    <span class="flex row" *ngFor="let liability of item.Liabilities">
-                        <span class="flex-width value">{{liability.LiabilityTypeValue}}</span>
-                        <span class="flex-width value">{{liability.CreditorName}} </span>
-                        <span class="flex-width value">{{liability.AccountNumber}}</span>
-                        <span class="flex-width value">{{liability.MonthlyPayment}}</span>
-                        <span class="flex-width value">{{liability.LeftToPay}}</span>
-                        <span class="flex-width value">{{liability.UnpaidBalance}}</span>
-                    </span>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">g. PMI, MIP, Funding Fee </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.FundingFee">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">h. Discount (if Borrower will pay) </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.Discount">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">i. Total costs (add items a through h) </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.TotalCosts">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">Subordinate Financing </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.SubordinateFinancing">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">Seller Closing Costs </label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.SellerClosingCosts">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <label class="col">Funding Fee Financed</label>
+                            <input type="text" class="col-sm-2 form-control" [(ngModel)]="loan.LoanApplication.DetailsOfTransaction.FundingFeeFinanced">
+                        </div>
+                    </div>
                 </div>
-                <div class="flex column">
-                    <h4>
-                        Real Estate Owned
-                    </h4>
-                    <span class="flex row">
-                        <span class="flex-width">PropertyType</span>
-                        <span class="flex-width">Address </span>
-                        <!-- <span class="flex-width">Street Address</span>
-                                                <span class="flex-width">City</span>
-                                                <span class="flex-width">State</span>
-                                                <span class="flex-width">Zipcode</span>
-                                                <span class="flex-width">ZipPlusFour</span> -->
-                        <span class="flex-width">Disposition</span>
-                        <span class="flex-width">Market Value</span>
-                        <span class="flex-width">MortgageAmount</span>
-                        <span class="flex-width">GroissRentalIncome</span>
-                        <span class="flex-width">MortgagePayments</span>
-                        <span class="flex-width">MonthlyExpense</span>
-                        <span class="flex-width">NetRentalIncome</span>
+                <div class="row">
+                    <!-- <div class="col" *ngFor="let item of loan.LoanApplication.Applicants"> -->
 
-                    </span>
-                    <span class="flex row" *ngFor="let reo of item.RealEstateOwneds">
-                        <span class="flex-width value">{{reo.PropertyTypeValue}}</span>
-                        <span class="flex-width value">{{reo.StrretAddress }} ,{{reo.City }} ,{{reo.State }} ,{{reo.Zipcode }}-{{reo.ZipPlusFour }} </span>
-                        <span class="flex-width value">{{reo.DispositionValue}}</span>
-                        <span class="flex-width value">{{reo.MarketValue}}</span>
-                        <span class="flex-width value">{{reo.MortgageAmount}}</span>
-                        <span class="flex-width value">{{reo.GroissRentalIncome}}</span>
-                        <span class="flex-width value">{{reo.MortgagePayments}}</span>
-                        <span class="flex-width value">{{reo.MonthlyExpense}}</span>
-                        <span class="flex-width value">{{reo.NetRentalIncome}}</span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="flex column">
-            <h4>
-                DETAILS OF TRANSACTION
-            </h4>
-            <span class="flex row">
-                <span class="flex flex-width">a. Purchase price </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.PurchasePrice}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">b. Alterations, improvements, repairs </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.Alterations}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">c. Land (if acquired separately) </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.Land}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">d. Refinance (incl. debts to be paid off) </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.Refinane}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">e. Estimated prepaid items </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.EstimatedPrePaid}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">f. Estimated closing costs </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.ExtimatedClosinfCosts}}</span>
-            </span>
+                    <div class="col">
+                        <div class=" ">
+                            <h5>
+                                {{loan.LoanApplication.ApplicantObject[selectedBorrower].Indicator==="BW"?"Applicant":"Co-Applicant"}} Declaration
+                            </h5>
+                            <div class="form-group" *ngFor="let declaration of loan.LoanApplication.ApplicantObject[selectedBorrower].Declaration.DeclarationSets">
 
-            <span class="flex row">
-                <span class="flex flex-width">g. PMI, MIP, Funding Fee </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.FundingFee}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">h. Discount (if Borrower will pay) </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.Discount}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">i. Total costs (add items a through h) </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.TotalCosts}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">Subordinate Financing </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.SubordinateFinancing}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">Seller Closing Costs </span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.SellerClosingCosts}}</span>
-            </span>
-            <span class="flex row">
-                <span class="flex flex-width">Funding Fee Financed</span>
-                <span class="flex-width  value">: {{loan.LoanApplication.DetailsOfTransaction.FundingFeeFinanced}}</span>
-            </span>
-        </div>
-        <div class="flex row">
-            <div class="flex" *ngFor="let item of loan.LoanApplication.Applicants">
-                <div class="flex column">
-                    <h4>
-                        {{item.Indicator==="BW"?"Applicant":"Co-Applicant"}} Declaration
-                    </h4>
-                    <span class="flex row" *ngFor="let declaration of item.Declaration.DeclarationSets">
-                        <span class="flex flex-width">{{declaration.Label}} </span>
-                        <span class="width-50  value">: {{declaration.Value}}</span>
-                    </span>
+                                <div class="row">
+                                    <label class="col">{{declaration.Label}}</label>
+                                    <input type="checkbox" class="col-sm-2 form-control" [(ngModel)]="declaration.Value">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

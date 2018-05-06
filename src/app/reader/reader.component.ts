@@ -1,9 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { metadata } from "app/libs/fnm.metadata";
-import { rowMetadata, sampleFNM } from "app/libs/fnmJSON.metadata";
-import { Loan } from "app/dataExtractor/loan";
-import { LoanMetadata } from "app/dataExtractor/metadata";
-import { convert } from "app/helpers/xmlConvertor";
+// import { metadata } from "app/libs/fnm.metadata";
+// import { rowMetadata, sampleFNM } from "app/libs/fnmJSON.metadata";
+// import { Loan } from "app/dataExtractor/loan";
+
+// import { convert } from "app/helpers/xmlConvertor";
+import { LoanMetadata } from "../dataExtractor/metadata";
+import { metadata } from "../libs/fnm.metadata";
+import { Loan } from "../dataExtractor/loan";
+import { rowMetadata } from "../libs/fnmJSON.metadata";
+import { convert } from "../helpers/xmlConvertor";
 
 @Component({
   selector: "fnm-reader",
@@ -17,7 +22,9 @@ export class ReaderComponent implements OnInit {
   data: any[];
   stringarr: string[] = [];
   loan: Loan = null;
-  loanMetadata: LoanMetadata;
+  selectedBorrower:string;
+
+  loanMetadata: LoanMetadata= new LoanMetadata();
   constructor() { }
 
   ngOnInit() {
@@ -73,16 +80,16 @@ export class ReaderComponent implements OnInit {
       data.push(dd);
     });
     this.loan = new Loan(this.stringarr);
-    setTimeout(t => {
-      const ss = this.loan;
-      console.log(JSON.stringify(ss));
-      let ddd: string = convert(ss, "Loan");
-      console.log("XML document");
-      console.log(ddd);
-      let fnmString: string = this.loan.toFNMString();
-      console.log("ReverseFNM String");
-      console.log(fnmString);
-    }, 0);
+    // setTimeout(t => {
+    //   const ss = this.loan;
+    //   console.log(JSON.stringify(ss));
+    //   let ddd: string = convert(ss, "Loan");
+    //   console.log("XML document");
+    //   console.log(ddd);
+    //   let fnmString: string = this.loan.toFNMString();
+    //   console.log("ReverseFNM String");
+    //   console.log(fnmString);
+    // }, 0);
     
 
     this.data = data.filter(t => t.Rows.length > 0);

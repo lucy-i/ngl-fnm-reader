@@ -1,4 +1,5 @@
-import { LoanMetadata } from "app/dataExtractor/metadata";
+import { LoanMetadata, IncomeEnumConst } from "./metadata";
+
 
 
 const loanMetadata = new LoanMetadata();
@@ -44,9 +45,10 @@ export class LoanApplication {
             let dd = new Applicant(t);
             dd.setData(fnmString);
             this.Applicants.push(dd);
+            this.ApplicantObject[dd.ApplicantId] = dd;
         });
-        if(this.Applicants.length==1)
-        this.Applicants.push(new Applicant(Applicant.Id));
+        if (this.Applicants.length == 1)
+            this.Applicants.push(new Applicant(Applicant.Id));
         this.setData(fnmString);
     }
 
@@ -58,6 +60,8 @@ export class LoanApplication {
         return reversefnmString;
     }
     public Applicants: Applicant[];
+
+    public ApplicantObject: any = {};
 
     public EnvelopeHeader: EnvelopeHeader;
     public TransactionHeader: TransactionHeader;
@@ -73,6 +77,7 @@ export class LoanApplication {
     public RefinanceData: RefinanceData;
     public DownPayment: DownPayment;
     public OtherCredits: OtherCredit[];
+    //public LoanIncome: LoanIncome;
     //#endregion
     //#region
     setData(fnmString: string[]) {
@@ -560,8 +565,11 @@ class ChildProperty {
     IsArray?: boolean = false;
 }
 export class Applicant {
+
     //BW : Applicant or QZ : Co-Applicant
     public Indicator: string;
+    public get IndicatorName(): string { return this.Indicator === "BW" ? "Borrower" : "Co-Borrower" }
+    public ApplicantId: string;
     public SSN: string;
     public FirstName: string;
     public LastName: string;
@@ -617,6 +625,7 @@ export class Applicant {
 
     constructor(fnmdata: string) {
         if (fnmdata) {
+            this.ApplicantId = guid();
             this.Indicator = fnmdata.substr(3, 2).trim();
             this.SSN = fnmdata.substr(5, 9).trim();
             this.FirstName = fnmdata.substr(14, 35).trim();
@@ -1177,6 +1186,37 @@ export class Income {
         })
     }
 }
+export class LoanIncome {
+    constructor(incomes: Income[], isApplicant: boolean) {
+        incomes.forEach(t => {
+            if (t.IncomeType == IncomeEnumConst.BaseEmploymentIncome)
+                this.BaseEmplIncome = ApplicantData.InitData(this.BaseEmplIncome, isApplicant, t.IncomeType, t.Label, t.MonthlyIncome);
+            else if (t.IncomeType == IncomeEnumConst.Overtime)
+                this.Overtime = ApplicantData.InitData(this.Overtime, isApplicant, t.IncomeType, t.Label, t.MonthlyIncome);
+            else if (t.IncomeType == IncomeEnumConst.Bonuses)
+                this.Bonuses = ApplicantData.InitData(this.Bonuses, isApplicant, t.IncomeType, t.Label, t.MonthlyIncome);
+            else if (t.IncomeType == IncomeEnumConst.Commissions)
+                this.Commissions = ApplicantData.InitData(this.Commissions, isApplicant, t.IncomeType, t.Label, t.MonthlyIncome);
+            else if (t.IncomeType == IncomeEnumConst.DividendsInterest)
+                this.DividendsInterest = ApplicantData.InitData(this.DividendsInterest, isApplicant, t.IncomeType, t.Label, t.MonthlyIncome);
+            else if (t.IncomeType == IncomeEnumConst.NetRentalIncome)
+                this.NetRentalIncome = ApplicantData.InitData(this.NetRentalIncome, isApplicant, t.IncomeType, t.Label, t.MonthlyIncome);
+            else if (t.IncomeType == IncomeEnumConst.OtherIncome)
+                this.Other = ApplicantData.InitData(this.Other, isApplicant, t.IncomeType, t.Label, t.MonthlyIncome);
+
+        });
+        //this.Total= ApplicantData.InitData(this.Total, isApplicant, incomes.sum, t.Label, t.MonthlyIncome)
+
+    }
+    BaseEmplIncome: ApplicantData;
+    Overtime: ApplicantData;
+    Bonuses: ApplicantData;
+    Commissions: ApplicantData;
+    DividendsInterest: ApplicantData;
+    NetRentalIncome: ApplicantData;
+    Other: ApplicantData;
+    Total: ApplicantData;
+}
 //ToDo : Find Purpose of 06A
 // export class Asset {
 //     public get id() : string {
@@ -1186,7 +1226,6 @@ export class Income {
 //     public get length() : number {
 //         return 62;
 //     }
-
 //     constructor(fnmdata: string) {
 //         this.SSN = fnmdata.substr(3, 9).trim();
 //         this.CashDepositeHeldBy = fnmdata.substr(12, 35).trim();
@@ -2292,7 +2331,7 @@ T = One paystub and one W-2 and VVOE or one yr 1040
 013 = Republic Mortgage Insurance Company, RMIC
 017 = Radian Guaranty Incorporated
 024 = Triad Guarantee Residential Insurance Company, Triad
-038 = CMG Mortgage Insurance Co., an affiliate of PMI (credit unions only),CMG
+038 = CMG  Co., an affiliate of PMI (credit unions only),CMG
 043 = Essent Guaranty, Inc
 044 = National Mortgage Insurance Company, NMIFannie “ MI Insurer Code:
 
@@ -2585,4 +2624,36 @@ export class EnvelopeTrailer {
     constructor(fnmdata: string) {
 
     }
+}
+export class ApplicantData {
+    constructor(type: string, label: string, applicant: string = undefined, coapplicant: string = undefined) {
+
+    }
+    Type: string;
+    Label: string;
+    Applicant: string;
+    CoApplicant: string;
+    static InitData(data: ApplicantData, isApplicant: boolean, type: string, label: string, value: string): ApplicantData {
+        if (data === undefined)
+            data = new ApplicantData(type, label);
+        let borrower: string = isApplicant ? value : data.Applicant;
+        let coborrower: string = isApplicant ? data.CoApplicant : value;
+        return data;
+    }
+
+}
+
+/**
+ * Generates a GUID string.
+ * @returns {String} The generated GUID.
+ * @example af8a8416-6e18-a307-bd9c-f2c947bbb3aa
+ * @author Slavik Meltser (slavik@meltser.info).
+ * @link http://slavik.meltser.info/?p=142
+ */
+function guid() {
+    function _p8(s = undefined) {
+        var p = (Math.random().toString(16) + "000000000").substr(2, 8);
+        return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
+    }
+    return _p8() + _p8(true) + _p8(true) + _p8();
 }

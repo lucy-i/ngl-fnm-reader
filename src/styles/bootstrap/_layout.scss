@@ -1,0 +1,58 @@
+.container-fluid {
+    background: white;
+    min-width: 1330px;
+}
+
+.container-sidebar {
+    position: fixed;
+    width: 400px; // background-color: aquamarine;
+    z-index: 10;
+    padding: 10px;
+    top: 50px;
+    left: 0px;
+    bottom: 0px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.container-header {
+    position: fixed;
+    background: white;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+    padding: 10px;
+    z-index: 1;
+}
+
+.container-body {
+    margin-left: 400px;
+    padding: 10px;
+    position: absolute;
+    top: 50px;
+    padding-right: 20px;
+     min-width: 800px;
+}
+
+h5,
+.h5 {
+    text-align: center;
+}
+
+h5,
+.h5,
+.sub-section {
+    color: rgb(0, 0, 255);
+}
+
+.sub-section {
+    font-weight: 700;
+    @extend .text-capitalize;
+}
+
+.mi-w-350 {
+    min-width: 350px;
+}
+.overflow-auto{
+    overflow: auto;
+}

@@ -63,10 +63,10 @@ export abstract class ElementBase<T> extends ValueAccessorBase<T>{
     }]
 
 })
-export class CurrencyComponent extends ElementBase<string> {
+export class CurrencyComponent {
 
-    @ViewChild(NgModel)
-    protected model: NgModel;
+    // @ViewChild("display")
+    // public display: ElementRef;
 
     // @Input('ngCurrency')
     // currency: string;
@@ -75,19 +75,134 @@ export class CurrencyComponent extends ElementBase<string> {
      *
      */
     constructor() {
-        super();
+        // super();
     }
 
-    @HostListener('keyup', ['$event'])
-    keyup($event: KeyboardEvent) {
-        //(47<$event.keyCode&&$event.keyCode<58)
-        if ((47 < $event.keyCode && $event.keyCode < 58) && [188].indexOf($event.keyCode)==-1) {
-            const $ele = $event.target as HTMLInputElement;
-            let number = $ele.selectionStart;
-            $ele.value = $ele.value + ",";
-            $ele.setSelectionRange(number + 1, number + 1)
+    //@HostListener('keyup', ['$event'])
+    keydown(event: KeyboardEvent) {
+
+    }
+
+    keyup(event: KeyboardEvent) {
+        const $ele = event.target as HTMLInputElement;
+
+        //  $ele.setSelectionRange(number + 1, number + 1)
+        let number = $ele.selectionStart;
+        let isDecimalLst = false;
+
+        // When user select text in the document, also abort.
+        var selection = window.getSelection().toString();
+        if (selection !== '') {
+            return;
         }
+
+        // When the arrow keys are pressed, abort.
+        if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) {
+            return;
+        }
+        
+        //var $this = $(this);
+
+        // Get the value.
+        var input: number | string = $ele.value;
+
+        isDecimalLst = input[number - 1] == '.';
+
+        input = input.replace(/[^0-9\s.]+|\.(?!\d)/g, "");//input.replace(/[\D\s\._\-]+/g, "");
+
+        //  if (input.split('.').length >= 1) 
+        //  {
+
+        //  }
+
+        if (input.length == 18)
+            return;
+
+        input = input ? parseFloat(input) : 0;
+
+        if (input == 0) {
+            if (isDecimalLst)
+                $ele.value = '0.0'
+            else
+                $ele.value = '0';
+            return;
+        }
+
+        var lastIndex = $ele.value.split('').filter((t, i) => t == ',' && i < number);
+        //$this.val(function () {
+        $ele.value = (input === 0) ? "" : input.toLocaleString("en-US", {
+
+            minimumFractionDigits: 1,
+            maximumFractionDigits: 3
+        });
+        // });
+        var newIndex = $ele.value.split('').filter((t, i) => t == ',' && i < number);
+
+        if ($ele.value[number] == "," || newIndex > lastIndex)
+            number = number + 1;
+        $ele.setSelectionRange(number, number)
     }
 
 
 }
+
+
+// (function ($, undefined) {
+
+//     "use strict";
+
+//     // When ready.
+//     $(function () {
+
+//         var $form = $("#form");
+//         var $input = $form.find("input");
+
+//         $input.on("keyup", function (event) {
+
+
+//             // When user select text in the document, also abort.
+//             var selection = window.getSelection().toString();
+//             if (selection !== '') {
+//                 return;
+//             }
+
+//             // When the arrow keys are pressed, abort.
+//             if ($.inArray(event.keyCode, [38, 40, 37, 39]) !== -1) {
+//                 return;
+//             }
+
+
+//             var $this = $(this);
+
+//             // Get the value.
+//             var input = $this.val();
+
+//             var input = input.replace(/[\D\s\._\-]+/g, "");
+//             input = input ? parseInt(input, 10) : 0;
+
+//             $this.val(function () {
+//                 return (input === 0) ? "" : input.toLocaleString("en-US");
+//             });
+//         });
+
+//         /**
+//          * ==================================
+//          * When Form Submitted
+//          * ==================================
+//          */
+//         $form.on("submit", function (event) {
+
+//             var $this = $(this);
+//             var arr = $this.serializeArray();
+
+//             for (var i = 0; i < arr.length; i++) {
+//                 arr[i].value = arr[i].value.replace(/[($)\s\._\-]+/g, ''); // Sanitize the values.
+//             };
+
+//             console.log(arr);
+
+//             event.preventDefault();
+//         });
+
+//     });
+// })(jQuery);

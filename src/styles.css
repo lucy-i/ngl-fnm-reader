@@ -244,3 +244,7 @@ input#fileInput:focus:before {
 .width-20{
     width: 20px;
 }
+
+body{
+    font-family: Monaco!important;
+}

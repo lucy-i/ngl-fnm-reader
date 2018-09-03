@@ -10,6 +10,7 @@ import { FNMDatePipe } from './reader/reader.pipes';
 import { OrderByPipe } from './orderBy.pipe';
 import { ControlsModule } from './controls/control.module';
 import { externString } from './libs/string';
+import { FileViewComponent } from './file-view/file-view.component';
 // import { ReaderComponent } from "app/reader/reader.component";
 // import { FNMDatePipe } from 'app/reader/reader.pipes';
 // import { externString } from 'app/libs/string';
@@ -19,6 +20,7 @@ import { externString } from './libs/string';
   declarations: [
     AppComponent,
     ReaderComponent,
+    FileViewComponent,
     FNMDatePipe,
     OrderByPipe
   ],
@@ -29,7 +31,7 @@ import { externString } from './libs/string';
     ControlsModule
   ],
   providers: [],
-  bootstrap: [AppComponent, ReaderComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 

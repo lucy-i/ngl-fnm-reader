@@ -1,46 +1,46 @@
-import { Component, OnInit } from "@angular/core";
-// import { metadata } from "app/libs/fnm.metadata";
-// import { rowMetadata, sampleFNM } from "app/libs/fnmJSON.metadata";
-// import { Loan } from "app/dataExtractor/loan";
+import { Component, OnInit } from '@angular/core';
+// import { metadata } from 'app/libs/fnm.metadata';
+// import { rowMetadata, sampleFNM } from 'app/libs/fnmJSON.metadata';
+// import { Loan } from 'app/dataExtractor/loan';
 
-// import { convert } from "app/helpers/xmlConvertor";
-import { LoanMetadata } from "../dataExtractor/metadata";
-import { metadata } from "../libs/fnm.metadata";
-import { Loan } from "../dataExtractor/loan";
-import { rowMetadata } from "../libs/fnmJSON.metadata";
-import { convert } from "../helpers/xmlConvertor";
+// import { convert } from 'app/helpers/xmlConvertor';
+import { LoanMetadata } from '../dataExtractor/metadata';
+import { metadata } from '../libs/fnm.metadata';
+import { Loan } from '../dataExtractor/loan';
+import { rowMetadata } from '../libs/fnmJSON.metadata';
+import { convert } from '../helpers/xmlConvertor';
 
 @Component({
-  selector: "fnm-reader",
-  templateUrl: "reader.component.html",
-  styleUrls: ["./reader.component.css"]
+  selector: 'fnm-reader',
+  templateUrl: 'reader.component.html',
+  styleUrls: ['./reader.component.css']
 })
 export class ReaderComponent implements OnInit {
-  fileContent: string = "";
+  fileContent = '';
   file: File;
   fnmMetadata: any[] = metadata;
   data: any[];
   stringarr: string[] = [];
   loan: Loan = null;
-  selectedBorrower:string;
+  selectedBorrower: string;
 
-  loanMetadata: LoanMetadata= new LoanMetadata();
+  loanMetadata: LoanMetadata = new LoanMetadata();
   constructor() { }
 
   ngOnInit() {
     this.loanMetadata = new LoanMetadata();
-    var fileInput = document.getElementById("fileInput") as HTMLInputElement;
-    var fileDisplayArea = document.getElementById("fileDisplayArea");
-    //this.fileContent = sampleFNM;
-    //this.processFNMContent();
-    fileInput.addEventListener("change", e => {
+    const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+    const fileDisplayArea = document.getElementById('fileDisplayArea');
+    // this.fileContent = sampleFNM;
+    // this.processFNMContent();
+    fileInput.addEventListener('change', e => {
       this.file = fileInput.files[0];
-      var textType = /text.*/;
+      const textType = /text.*/;
 
-      if (this.file.type.match(textType) || this.file.type == "") {
-        var reader = new FileReader();
+      if (this.file.type.match(textType) || this.file.type === '') {
+        const reader = new FileReader();
 
-        reader.onload = e => {
+        reader.onload = () => {
           //  fileDisplayArea.innerText = reader.result;
           this.fileContent = reader.result;
           this.processFNMContent();
@@ -48,34 +48,35 @@ export class ReaderComponent implements OnInit {
 
         reader.readAsText(this.file);
       } else {
-        fileDisplayArea.innerText = "File not supported!";
+        fileDisplayArea.innerText = 'File not supported!';
       }
     });
-    let groupIds: any[] = [];
-    this.fnmMetadata.filter(t => t.Position == "1").forEach(t => {
-      if (t.DataStream)
+    const groupIds: any[] = [];
+    this.fnmMetadata.filter(t => t.Position === '1').forEach(t => {
+      if (t.DataStream) {
         groupIds.push({ FieldGroupID: t.DataStream, Description: t.Field });
+      }
     });
     // console.log(JSON.stringify(groupIds));
-    var wrap = (document.onscroll = e => {
-      if (e.target["scrollingElement"].scrollTop > 100) {
-        document.body.classList.add("on-scroll");
+    const wrap = (document.onscroll = e => {
+      if (e.target['scrollingElement'].scrollTop > 100) {
+        document.body.classList.add('on-scroll');
       } else {
-        document.body.classList.remove("on-scroll");
+        document.body.classList.remove('on-scroll');
       }
     });
   }
   processFNMContent() {
-    this.stringarr = this.fileContent.split("\n");
-    let data = [];
+    this.stringarr = this.fileContent.split('\n');
+    const data = [];
     rowMetadata.forEach(t => {
-      let dd = {
-        FieldGroupID: t["FieldGroupID"],
+      const dd = {
+        FieldGroupID: t['FieldGroupID'],
         Rows: [],
         Title: t.Description
       };
       this.stringarr.forEach(element => {
-        if (element.indexOf(t["FieldGroupID"]) == 0) dd.Rows.push(element);
+        if (element.indexOf(t['FieldGroupID']) === 0) { dd.Rows.push(element); }
       });
       data.push(dd);
     });
@@ -83,14 +84,14 @@ export class ReaderComponent implements OnInit {
     // setTimeout(t => {
     //   const ss = this.loan;
     //   console.log(JSON.stringify(ss));
-    //   let ddd: string = convert(ss, "Loan");
-    //   console.log("XML document");
+    //   let ddd: string = convert(ss, 'Loan');
+    //   console.log('XML document');
     //   console.log(ddd);
     //   let fnmString: string = this.loan.toFNMString();
-    //   console.log("ReverseFNM String");
+    //   console.log('ReverseFNM String');
     //   console.log(fnmString);
     // }, 0);
-    
+
 
     this.data = data.filter(t => t.Rows.length > 0);
   }

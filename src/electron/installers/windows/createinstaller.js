@@ -14,12 +14,12 @@ function getInstallerConfig () {
   const outPath = path.join(rootPath, 'release-builds')
 
   return Promise.resolve({
-    appDirectory: path.join(outPath, 'Electron-tutorial-app-win32-ia32/'),
+    appDirectory: path.join(outPath, 'fNM-reader-win32-ia32/'),
     authors: 'Christian Engvall',
     noMsi: true,
     outputDirectory: path.join(outPath, 'windows-installer'),
-    exe: 'electron-tutorial-app.exe',
-    setupExe: 'ElectronTutorialAppInstaller.exe',
+    exe: 'fnm-reader.exe',
+    setupExe: 'FNMReaderInstaller.exe',
     setupIcon: path.join(rootPath, 'assets', 'icons', 'win', 'icon.ico')
   })
 }

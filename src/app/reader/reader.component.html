@@ -40,13 +40,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="AgencyCaseNumber">Agency Case Number</label>
-                        <input type="text" class="form-control" name="AgencyCaseNumber" [(ngModel)]="loan.LoanApplication.TypeAndTerms.AgencyCaseNumber">
+                        <input type="text" class="form-control" name="AgencyCaseNumber" maxlength="30" [(ngModel)]="loan.LoanApplication.TypeAndTerms.AgencyCaseNumber">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="CardNumber">Lender Case Number</label>
-                        <input type="text" class="form-control" name="CardNumber" [(ngModel)]="loan.LoanApplication.TypeAndTerms.CardNumber">
+                        <input type="text" class="form-control" name="CardNumber" maxlength="15" [(ngModel)]="loan.LoanApplication.TypeAndTerms.CardNumber">
                     </div>
                 </div>
 
@@ -55,13 +55,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="Amount">Amount</label>
-                        <input type="text" class="form-control" name="Amount" [(ngModel)]="loan.LoanApplication.TypeAndTerms.LoanAmount">
+                        <input type="text" class="form-control" name="Amount" maxlength="15" [(ngModel)]="loan.LoanApplication.TypeAndTerms.LoanAmount">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="InterestRate">Interest Rate</label>
-                        <input type="text" class="form-control" name="InterestRate" [(ngModel)]="loan.LoanApplication.TypeAndTerms.InterestRate">
+                        <input type="text" class="form-control" name="InterestRate" maxlength="7" [(ngModel)]="loan.LoanApplication.TypeAndTerms.InterestRate">
                     </div>
                 </div>
             </div>
@@ -69,13 +69,13 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="NoOfMonths">No Of Months</label>
-                        <input type="text" class="form-control" name="NoOfMonths" [(ngModel)]="loan.LoanApplication.TypeAndTerms.NoOfMonths">
+                        <input type="text" class="form-control" name="NoOfMonths" maxlength="3" [(ngModel)]="loan.LoanApplication.TypeAndTerms.NoOfMonths">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="ARMTextualDescription">ARM</label>
-                        <input type="text" class="form-control" name="ARMTextualDescription" [(ngModel)]="loan.LoanApplication.TypeAndTerms.ARMTextualDescription">
+                        <input type="text" class="form-control" name="ARMTextualDescription" maxlength="80" [(ngModel)]="loan.LoanApplication.TypeAndTerms.ARMTextualDescription">
                     </div>
                 </div>
             </div>
@@ -92,13 +92,13 @@
                     <div class="col">
                         <div class="form-group">
                             <label class="sr-only">Street Address</label>
-                            <input type="text" class="form-control" name="StreetAddress" [(ngModel)]="loan.LoanApplication.Property.StreetAddress">
+                            <input type="text" class="form-control" name="StreetAddress" maxlength="50" [(ngModel)]="loan.LoanApplication.Property.StreetAddress">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label class="sr-only">City</label>
-                            <input type="text" class="form-control" name="City" [(ngModel)]="loan.LoanApplication.Property.City">
+                            <input type="text" class="form-control" name="City" maxlength="35" [(ngModel)]="loan.LoanApplication.Property.City">
                         </div>
                     </div>
                 </div>
@@ -106,19 +106,19 @@
                     <div class="col">
                         <div class="form-group">
                             <label class="sr-only">State</label>
-                            <input type="text" class="form-control" name="State" [(ngModel)]="loan.LoanApplication.Property.State">
+                            <input type="text" class="form-control" name="State" maxlength="2" [(ngModel)]="loan.LoanApplication.Property.State">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label class="sr-only">ZipCode</label>
-                            <input type="text" class="form-control" name="ZipCode" [(ngModel)]="loan.LoanApplication.Property.ZipCode">
+                            <input type="text" class="form-control" name="ZipCode" maxlength="5" [(ngModel)]="loan.LoanApplication.Property.ZipCode">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label class="sr-only">ZipPlusFour</label>
-                            <input type="text" class="form-control" name="ZipPlusFour" [(ngModel)]="loan.LoanApplication.Property.ZipPlusFour">
+                            <input type="text" class="form-control" name="ZipPlusFour" maxlength="4" [(ngModel)]="loan.LoanApplication.Property.ZipPlusFour">
                         </div>
                     </div>
                 </div>
@@ -133,14 +133,14 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="NoofUnits">No of Units </label>
-                        <input type="text" class="form-control" name="NoofUnits" [(ngModel)]="loan.LoanApplication.Property.NoofUnits">
+                        <input type="text" class="form-control" name="NoofUnits" maxlength="3" [(ngModel)]="loan.LoanApplication.Property.NoofUnits">
                     </div>
                 </div>
                 <div class="col">
 
                     <div class="form-group">
                         <label for="NoofUnits">Year Built</label>
-                        <input type="text" name="YearBuilt" class="form-control" [(ngModel)]="loan.LoanApplication.Property.YearBuilt">
+                        <input type="text" name="YearBuilt" class="form-control" maxlength="4" [(ngModel)]="loan.LoanApplication.Property.YearBuilt">
                     </div>
                 </div>
             </div>
@@ -149,10 +149,10 @@
                 <label for="SubjectPropertyCode">Legal Description of Subject Property (attach description if necessary)</label>
                 <div class="row">
                     <div class="col">
-                        <input type="text" class="form-control" name="SubjectPropertyCode" [(ngModel)]="loan.LoanApplication.Property.SubjectPropertyCode">
+                        <input type="text" class="form-control" name="SubjectPropertyCode" maxlength="2" [(ngModel)]="loan.LoanApplication.Property.SubjectPropertyCode">
                     </div>
                     <div class="col">
-                        <input type="text" class="form-control" name="SubjectProperty" [(ngModel)]="loan.LoanApplication.Property.SubjectProperty">
+                        <input type="text" class="form-control" name="SubjectProperty" maxlength="80" [(ngModel)]="loan.LoanApplication.Property.SubjectProperty">
                     </div>
                 </div>
             </div>
@@ -195,28 +195,28 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="YearsLotRequired">Year Lot Acquired</label>
-                        <input type="text" class="form-control" name="YearsLotRequired" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired">
+                        <input type="text" class="form-control" name="YearsLotRequired" id="" maxlength="4" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired">
                     </div>
                     <div class="form-group">
                         <label for="OriginalCosts">Original Cost</label>
-                        <input type="text" class="form-control" name="OriginalCosts" id="OriginalCosts" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts">
+                        <input type="text" class="form-control" name="OriginalCosts" id="OriginalCosts" maxlength="15" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts">
                     </div>
 
                     <div class="form-group">
                         <label for="AmountExistingLiens">Amount Existing Liens</label>
-                        <input type="text" class="form-control" name="AmountExistingLiens" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens">
+                        <input type="text" class="form-control" name="AmountExistingLiens" id="" maxlength="15" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens">
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="PresentValueofLot">(a) Present Value of Lot</label>
-                        <input type="text" class="form-control" name="PresentValueofLot" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.PresentValueofLot">
+                        <input type="text" class="form-control" name="PresentValueofLot" id="" maxlength="15" [(ngModel)]="loan.LoanApplication.RefinanceData.PresentValueofLot">
                     </div>
 
 
                     <div class="form-group">
                         <label for="CostofImprovements">(b) Cost of Improvements</label>
-                        <input type="text" class="form-control" name="CostofImprovements" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.CostofImprovements">
+                        <input type="text" class="form-control" name="CostofImprovements" id=""  maxlength="15"  [(ngModel)]="loan.LoanApplication.RefinanceData.CostofImprovements">
                     </div>
                     <div class="form-group">
                         <label for="Total">Total (a + b)</label>
@@ -231,14 +231,14 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="YearsLotRequired">Year Lot Acquired</label>
-                            <input type="text" class="form-control" name="YearsLotRequired" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired">
+                            <input type="text" class="form-control" name="YearsLotRequired" id=""  maxlength="4" [(ngModel)]="loan.LoanApplication.RefinanceData.YearsLotRequired">
                         </div>
 
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="OriginalCosts">Original Cost</label>
-                            <input type="text" class="form-control" name="OriginalCosts" id="OriginalCosts" [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts">
+                            <input type="text" class="form-control" name="OriginalCosts" id="OriginalCosts"  maxlength="15"  [(ngModel)]="loan.LoanApplication.RefinanceData.OriginalCosts">
                         </div>
                     </div>
                 </div>
@@ -246,14 +246,14 @@
                     <div class="col">
                         <div class="form-group">
                             <label for="AmountExistingLiens">Amount Existing Liens</label>
-                            <input type="text" class="form-control" name="AmountExistingLiens" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens">
+                            <input type="text" class="form-control" name="AmountExistingLiens" id=""  maxlength="15"  [(ngModel)]="loan.LoanApplication.RefinanceData.AmountExistingLiens">
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <label for="PurposeofRefinance">Purpose of Refinance</label>
 
-                            <input type="text" class="form-control" name="PurposeofRefinance" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.PurposeofRefinance">
+                            <input type="text" class="form-control" name="PurposeofRefinance" id=""  maxlength="2"  [(ngModel)]="loan.LoanApplication.RefinanceData.PurposeofRefinance">
                         </div>
                     </div>
                 </div>
@@ -277,13 +277,13 @@
                             </div>
                         </div>
                     </legend>
-                    <input type="text" class="form-control" name="DescribeImprovements" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.DescribeImprovements">
+                    <input type="text" class="form-control" name="DescribeImprovements" id=""  maxlength="15"  [(ngModel)]="loan.LoanApplication.RefinanceData.DescribeImprovements">
 
                 </fieldset>
 
                 <div class="form-group">
                     <label for="Cost">Cost</label>
-                    <input type="text" class="form-control" name="Cost" id="" [(ngModel)]="loan.LoanApplication.RefinanceData.Cost">
+                    <input type="text" class="form-control" name="Cost" id=""  maxlength="15"  [(ngModel)]="loan.LoanApplication.RefinanceData.Cost">
                 </div>
 
             </div>
@@ -291,7 +291,7 @@
                 <div class="col">
                     <div class="form-group">
                         <label for="TitleManner">Title will be held in what Name(s):</label>
-                        <input type="text" class="form-control" name="TitleManner" id="" [(ngModel)]="loan.LoanApplication.PurposeOfLoan.TitleManner">
+                        <input type="text" class="form-control" name="TitleManner" id=""   maxlength="30"  [(ngModel)]="loan.LoanApplication.PurposeOfLoan.TitleManner">
 
                     </div>
                 </div>
@@ -348,6 +348,7 @@
                     Borrowers
                 </label>
                 <select class="form-control" [(ngModel)]="selectedBorrower">
+                    <option value='undefined' disabled="true">-Select Borrower-</option>
                     <option *ngFor="let borrower of loan.LoanApplication.Applicants" [value]="borrower.ApplicantId">
                         {{ borrower.FirstName}} {{ borrower.LastName}}
                     </option>
@@ -371,15 +372,15 @@
                                 <div class="row">
                                     <div class="col">
                                         <label class="sr-only">First Name</label>
-                                        <input type="text" class="form-control" name="FirstName" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].FirstName">
+                                        <input type="text" class="form-control" name="FirstName" id=""   maxlength="35"  [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].FirstName">
                                     </div>
                                     <div class="col">
                                         <label class="sr-only">Middle Name</label>
-                                        <input type="text" class="form-control" name="MiddleName" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].MiddleName">
+                                        <input type="text" class="form-control" name="MiddleName" id=""   maxlength="35"  [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].MiddleName">
                                     </div>
                                     <div class="col">
                                         <label class="sr-only">Last Name</label>
-                                        <input type="text" class="form-control" name="LastName" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].LastName">
+                                        <input type="text" class="form-control" name="LastName" id=""   maxlength="35" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].LastName">
                                     </div>
                                 </div>
                             </fieldset>
@@ -387,13 +388,13 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="ssn">Social Security Number</label>
-                                        <input type="text" class="form-control" name="ssn" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].SSN">
+                                        <input type="password" class="form-control" name="ssn" id=""   maxlength="9"  [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].SSN">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="HomePhone">Home Phone (incl. area code)</label>
-                                        <input type="text" class="form-control" name="HomePhone" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].HomePhone">
+                                        <input type="text" class="form-control" name="HomePhone" id=""   maxlength="10"  [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].HomePhone">
                                     </div>
                                 </div>
                             </div>
@@ -401,13 +402,13 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="DateofBirth">DOB (mm/dd/yyyy) :</label>
-                                        <input type="text" class="form-control" name="DateofBirth" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].DateofBirth">
+                                        <input type="text" class="form-control" name="DateofBirth" id=""   maxlength="8"  [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].DateofBirth">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="YrsInSchool">Yrs. School :</label>
-                                        <input type="text" class="form-control" name="YrsInSchool" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].YrsInSchool">
+                                        <input type="text" class="form-control" name="YrsInSchool" id=""   maxlength="2"  [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].YrsInSchool">
                                     </div>
                                 </div>
                             </div>
@@ -433,7 +434,7 @@
                                     <div class="col ">
                                         <div class="form-group">
                                             <label for="Dependents">no.</label>
-                                            <input type="text" class="form-control" name="Dependents" id="" [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].Dependents">
+                                            <input type="text" class="form-control" name="Dependents" id=""   maxlength="2"  [(ngModel)]="loan.LoanApplication.ApplicantObject[selectedBorrower].Dependents">
                                         </div>
                                     </div>
                                     <div class="col ">
@@ -466,7 +467,7 @@
                                                         Yrs
                                                     </label>
                                                     <div class="col-10">
-                                                        <input class="form-control" name="NoofYears" type="text" [(ngModel)]="addr.NoofYears">
+                                                        <input class="form-control" name="NoofYears" type="text"   maxlength="2"  [(ngModel)]="addr.NoofYears">
                                                     </div>
 
                                                 </div>
@@ -479,7 +480,7 @@
                                                     </label>
                                                     <div class="col-10">
 
-                                                        <input type="text" class="form-control" name="NoofMonths" [(ngModel)]="addr.NoofMonths">
+                                                        <input type="text" class="form-control" name="NoofMonths"   maxlength="2"  [(ngModel)]="addr.NoofMonths">
                                                     </div>
                                                 </div>
                                             </div>
@@ -492,31 +493,31 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">Street Address</label>
-                                            <input type="text" class="form-control" [(ngModel)]="addr.StreetAddress">
+                                            <input type="text" class="form-control"   maxlength="50"  [(ngModel)]="addr.StreetAddress" >
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">City</label>
-                                            <input type="text" class="form-control" [(ngModel)]="addr.City">
+                                            <input type="text" class="form-control"   maxlength="35"  [(ngModel)]="addr.City">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="sr-only">State</label>
-                                            <input type="text" class="form-control" [(ngModel)]="addr.State">
+                                            <input type="text" class="form-control"   maxlength="2"  [(ngModel)]="addr.State">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="sr-only"> ZipCode</label>
-                                            <input type="text" class="form-control" [(ngModel)]="addr.ZipCode">
+                                            <input type="text" class="form-control"   maxlength="5"  [(ngModel)]="addr.ZipCode">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="sr-only">ZipPlusFour</label>
-                                            <input type="text" class="form-control" [(ngModel)]="addr.ZipPlusFour">
+                                            <input type="text" class="form-control"   maxlength="4"  [(ngModel)]="addr.ZipPlusFour">
                                         </div>
                                     </div>
                                 </div>
@@ -552,38 +553,38 @@
 
 
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="EmployerName" [(ngModel)]="employ.EmployerName">
+                                    <input type="text" class="form-control" name="EmployerName"   maxlength="35"  [(ngModel)]="employ.EmployerName">
                                 </div>
                                 <span class="row">
 
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">Strret Address</label>
-                                            <input type="text" class="form-control" name="StrretAddress" [(ngModel)]="employ.StrretAddress">
+                                            <input type="text" class="form-control" name="StrretAddress"   maxlength="35"  [(ngModel)]="employ.StrretAddress">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">City</label>
-                                            <input type="text" class="form-control" name="City" [(ngModel)]="employ.City">
+                                            <input type="text" class="form-control" name="City"   maxlength="35"  [(ngModel)]="employ.City">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label class="sr-only">City</label>
-                                            <input type="text" class="form-control" name="City" [(ngModel)]="employ.State">
+                                            <label class="sr-only">State</label>
+                                            <input type="text" class="form-control" name="State"   maxlength="02"  [(ngModel)]="employ.State">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="sr-only">ZipCode</label>
-                                            <input type="text" class="form-control" name="ZipCode" [(ngModel)]="employ.ZipCode">
+                                            <input type="text" class="form-control" name="ZipCode"   maxlength="5"  [(ngModel)]="employ.ZipCode">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="sr-only">ZipPlus Four</label>
-                                            <input type="text" class="form-control" ame="ZipPlusFour" [(ngModel)]="employ.ZipPlusFour">
+                                            <input type="text" class="form-control" ame="ZipPlusFour"   maxlength="4"  [(ngModel)]="employ.ZipPlusFour">
                                         </div>
                                     </div>
                                 </span>
@@ -598,14 +599,14 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label class="sr-only">Years On Job</label>
-                                                    <input class="form-control" type="text" name="YearsOnJob" [(ngModel)]="employ.YearsOnJob">
+                                                    <input class="form-control" type="text" name="YearsOnJob"   maxlength="2"  [(ngModel)]="employ.YearsOnJob">
                                                 </div>
                                             </div>
                                             <div class="col-sm-1">/</div>
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label class="sr-only">Months On Job</label>
-                                                    <input class="form-control" type="text" name="MonthsOnJob" [(ngModel)]="employ.MonthsOnJob">
+                                                    <input class="form-control" type="text" name="MonthsOnJob"   maxlength="2"  [(ngModel)]="employ.MonthsOnJob">
                                                 </div>
                                             </div>
                                         </div>
@@ -614,7 +615,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="YearsOnJob">Yrs. employed in this line of work/profession </label>
-                                        <input type="text" class="form-control" name="YearsOnJob" [(ngModel)]="employ.YersEmployedInThisLine">
+                                        <input type="text" class="form-control" name="YearsOnJob"   maxlength="2"  [(ngModel)]="employ.YersEmployedInThisLine">
                                     </div>
                                 </div>
                             </div>
@@ -622,13 +623,13 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label class=" ">Position/Title/Type of Business </label>
-                                        <input type="text" class="form-control" [(ngModel)]="employ.Position">
+                                        <input type="text" class="form-control"   maxlength="25"  [(ngModel)]="employ.Position">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label class=" ">Business Phone (incl. area code) </label>
-                                        <input type="text" class="form-control" [(ngModel)]="employ.BusinessPhone">
+                                        <input type="text" class="form-control"   maxlength="10"  [(ngModel)]="employ.BusinessPhone">
                                     </div>
                                 </div>
                             </div>
@@ -653,38 +654,38 @@
 
 
                                 <div class="form-group">
-                                    <input type="text" class="form-control" name="EmployerName" [(ngModel)]="employ.EmployerName">
+                                    <input type="text" class="form-control"   maxlength="35"  name="EmployerName" [(ngModel)]="employ.EmployerName">
                                 </div>
                                 <span class="row">
 
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">Strret Address</label>
-                                            <input type="text" class="form-control" name="StrretAddress" [(ngModel)]="employ.StrretAddress">
+                                            <input type="text" class="form-control"   maxlength="35"  name="StrretAddress" [(ngModel)]="employ.StrretAddress">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">City</label>
-                                            <input type="text" class="form-control" name="City" [(ngModel)]="employ.City">
+                                            <input type="text" class="form-control"   maxlength="35"  name="City" [(ngModel)]="employ.City">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label class="sr-only">City</label>
-                                            <input type="text" class="form-control" name="City" [(ngModel)]="employ.State">
+                                            <label class="sr-only">State</label>
+                                            <input type="text" class="form-control" name="State"   maxlength="2"  [(ngModel)]="employ.State">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="sr-only">ZipCode</label>
-                                            <input type="text" class="form-control" name="ZipCode" [(ngModel)]="employ.ZipCode">
+                                            <input type="text" class="form-control" name="ZipCode"  maxlength="5"   [(ngModel)]="employ.ZipCode">
                                         </div>
                                     </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="sr-only">ZipPlus Four</label>
-                                            <input type="text" class="form-control" ame="ZipPlusFour" [(ngModel)]="employ.ZipPlusFour">
+                                            <input type="text" class="form-control" ame="ZipPlusFour" maxlength="4"  [(ngModel)]="employ.ZipPlusFour">
                                         </div>
                                     </div>
                                 </span>
@@ -699,14 +700,14 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label class="sr-only">FromDate</label>
-                                                    <input class="form-control" type="text" name="FromDate" [(ngModel)]="employ.FromDate">
+                                                    <input class="form-control" type="text" name="FromDate"  maxlength="8"  [(ngModel)]="employ.FromDate">
                                                 </div>
                                             </div>
                                             <div class="col-sm-1">-</div>
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label class="sr-only">ToDate</label>
-                                                    <input class="form-control" type="text" name="ToDate" [(ngModel)]="employ.ToDate">
+                                                    <input class="form-control" type="text" name="ToDate"  maxlength="8" [(ngModel)]="employ.ToDate">
                                                 </div>
                                             </div>
                                         </div>
@@ -715,7 +716,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label for="YearsOnJob">Monthly Income </label>
-                                        <input type="text" class="form-control" name="MonthlyIncome" [(ngModel)]="employ.MonthlyIncome">
+                                        <input type="text" class="form-control" name="MonthlyIncome"  maxlength="15"  [(ngModel)]="employ.MonthlyIncome">
                                     </div>
                                 </div>
                             </div>
@@ -723,13 +724,13 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label class=" ">Position/Title/Type of Business </label>
-                                        <input type="text" class="form-control" [(ngModel)]="employ.Position">
+                                        <input type="text" class="form-control"  maxlength="25"  [(ngModel)]="employ.Position">
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
                                         <label class=" ">Business Phone (incl. area code) </label>
-                                        <input type="text" class="form-control" [(ngModel)]="employ.BusinessPhone">
+                                        <input type="text" class="form-control"  maxlength="10"  [(ngModel)]="employ.BusinessPhone">
                                     </div>
                                 </div>
                             </div>
@@ -751,13 +752,14 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <select class="form-control" [(ngModel)]="income.IncomeType">
+                                            <option value='undefined' disabled="true">-Select Income-</option>
                                             <option *ngFor="let option of loanMetadata.IncomeType" [value]="option.value"> {{option.text}}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Income" id="" [(ngModel)]="income.MonthlyIncome">
+                                        <input type="text" class="form-control" name="Income" id=""  maxlength="15"  [(ngModel)]="income.MonthlyIncome">
                                     </div>
                                 </div>
                             </div>
@@ -787,7 +789,7 @@
                                 </div>
                                 <div class="col">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="Income" id="" [(ngModel)]="expense.HousingPaymentAmount">
+                                        <input type="text" class="form-control" name="Income" id=""  maxlength="15"  [(ngModel)]="expense.HousingPaymentAmount">
                                     </div>
                                 </div>
                             </div>
@@ -828,6 +830,7 @@
                                         <div class="form-group">
                                             <label class="sr-only">Type</label>
                                             <select class="form-control" [(ngModel)]="asset.AssetType">
+                                                <option value='undefined' disabled="true">-Select Asset-</option>
                                                 <option *ngFor="let option of loanMetadata.AssetType" [value]="option.value">{{option.text}}</option>
                                             </select>
                                         </div>
@@ -837,7 +840,7 @@
                                             <label class="sr-only">
                                                 Institution
                                             </label>
-                                            <input type="text" class="form-control" [(ngModel)]="asset.InstitutionName">
+                                            <input type="text" class="form-control"  maxlength="35"  [(ngModel)]="asset.InstitutionName">
                                         </div>
                                     </div>
                                     <div class="col-2">
@@ -845,26 +848,26 @@
                                             <label class="sr-only">
                                                 Account Number
                                             </label>
-                                            <input type="text" class="form-control" [(ngModel)]="asset.AccountNumber">
+                                            <input type="text" class="form-control"  maxlength="30"  [(ngModel)]="asset.AccountNumber">
                                         </div>
                                     </div>
 
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">Cash Value</label>
-                                            <input type="text" class="form-control" [(ngModel)]="asset.CashValue">
+                                            <input type="text" class="form-control"  maxlength="15"  [(ngModel)]="asset.CashValue">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">No of Shares</label>
-                                            <input type="text" class="form-control" [(ngModel)]="asset.NofShares">
+                                            <input type="text" class="form-control" maxlength="7"  [(ngModel)]="asset.NofShares">
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="form-group">
                                             <label class="sr-only">Description</label>
-                                            <input type="text" class="form-control" [(ngModel)]="asset.Description">
+                                            <input type="text" class="form-control"  maxlength="80"  [(ngModel)]="asset.Description">
                                         </div>
                                     </div>
                                 </div>
@@ -892,6 +895,7 @@
                                         <div class="form-group">
                                             <label class="sr-only">Type</label>
                                             <select class="col form-control" [(ngModel)]="liability.LiabilityType">
+                                                <option value='undefined' disabled="true">-Select Liability-</option>
                                                 <option *ngFor="let option of loanMetadata.LibilityType" [value]="option.value">{{option.text}}</option>
                                             </select>
                                         </div>
@@ -909,25 +913,25 @@
                                             <label class="sr-only">
                                                 Account Number
                                             </label>
-                                            <input type="text" class="form-control" [(ngModel)]="liability.AccountNumber">
+                                            <input type="text" class="form-control"  maxlength="30"  [(ngModel)]="liability.AccountNumber">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">Monthly Payment</label>
-                                            <input type="text" class="form-control" [(ngModel)]="liability.MonthlyPayment">
+                                            <input type="text" class="form-control"  maxlength="15"  [(ngModel)]="liability.MonthlyPayment">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">Left to Pay</label>
-                                            <input type="text" class="form-control" [(ngModel)]="liability.LeftToPay">
+                                            <input type="text" class="form-control"  maxlength="3"  [(ngModel)]="liability.LeftToPay">
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <label class="sr-only">Unpaid Balance</label>
-                                            <input type="text" class="form-control" [(ngModel)]="liability.UnpaidBalance">
+                                            <input type="text" class="form-control"  maxlength="15" [(ngModel)]="liability.UnpaidBalance">
                                         </div>
                                     </div>
                                 </div>
@@ -956,6 +960,7 @@
                                             <div class="form-group">
                                                 <label class="sr-only">PropertyType</label>
                                                 <select class="form-control" [(ngModel)]="reo.PropertyType">
+                                                    <option value='undefined' disabled="true">-Select Proerty-</option>
                                                     <option *ngFor="let option of loanMetadata.PropertyType" [value]="option.value">{{option.text}}</option>
                                                 </select>
                                             </div>
